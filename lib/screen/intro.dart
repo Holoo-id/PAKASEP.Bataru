@@ -1,0 +1,87 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:pakasep/screen/components/intro_background.dart';
+import 'package:pakasep/screen/users/login/login_form.dart';
+import 'package:pakasep/screen/users/register/register_form.dart';
+import 'package:pakasep/utility/style.dart';
+
+class Intro extends StatefulWidget {
+  @override
+  _IntroState createState() => _IntroState();
+}
+
+class _IntroState extends State<Intro> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: IntroBackground(
+      child: Stack(
+        children: <Widget>[
+          Container(
+            height: size.height,
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                AutoSizeText(
+                  'Cari Rumah Tak Lagi Susah',
+                  style: title600Dark,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                ),
+                AutoSizeText(
+                  'Telusuri berbagai macam pilihan perumahan dari berbagai developer',
+                  style: subtitle600Light2,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  presetFontSizes: [16, 12, 8],
+                ),
+                SizedBox(
+                  height: 60.0,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterForm()),
+                    );
+                  },
+                  height: 60,
+                  minWidth: size.width,
+                  color: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    'DAFTAR',
+                    style: buttonTextLight,
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginForm()),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      'SUDAH PUNYA AKUN? KLIK DISINI',
+                      style: linkTextLight,
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      presetFontSizes: [14, 12, 8],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    ));
+  }
+}

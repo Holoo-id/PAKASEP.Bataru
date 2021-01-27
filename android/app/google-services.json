@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "713714126223",
+    "project_id": "pakasep-f37aa",
+    "storage_bucket": "pakasep-f37aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713714126223:android:0cfbbbc4ab1bd4c066cffa",
+        "android_client_info": {
+          "package_name": "com.holoo.pakasep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713714126223-63es5k9je03u66546kkn083jjtmv5290.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANSiGLSt2Hj2i9RkbShjCu9iqNCx8D4es"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713714126223-63es5k9je03u66546kkn083jjtmv5290.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
