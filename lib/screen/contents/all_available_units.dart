@@ -57,34 +57,135 @@ var units = [
 ];
 
 class _AllAvailableUnitsState extends State<AllAvailableUnits> {
-  TextEditingController provinceControl = TextEditingController();
-  final duplicateUnits = List<String>.generate(34, (i) => "Provinsi $i");
-  var provinces = List<String>();
+  String associationsChoose;
+  String citiesChoose;
+  String districtsChoose;
+  String filterValue = 'Terbaru';
+  String provincesChoose;
+  List associationsItem = [
+    "ASPRUMNAS",
+    "Tri Karya Lingga",
+  ];
+  List citiesItem = [
+    "Bandung",
+    "Bogor",
+    "Ciamis",
+    "Cimahi",
+    "Depok",
+    "Sumedang",
+  ];
+  List districtsItem = [
+    "Cimahi Selatan",
+    "Cimahi Tengah",
+    "Cimahi Utara",
+  ];
+  List provincesItem = [
+    "Banten",
+    "DKI Jakarta",
+    "DIY Yogyakarta",
+    "Jawa Barat",
+    "Jawa Tengah",
+    "Jawa Timur",
+  ];
   @override
   void initState() {
     super.initState();
   }
 
-  void searchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateUnits);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
-        }
-      });
-      setState(() {
-        provinces.clear();
-        provinces.addAll(dummyListData);
-      });
-      return;
-    } else {
-      setState(() {
-        provinces.clear();
-      });
-    }
+  Widget _buildAssociations() {
+    return DropdownButton(
+      value: associationsChoose,
+      onChanged: (newValue) {
+        setState(() {
+          associationsChoose = newValue;
+        });
+      },
+      items: associationsItem.map((associationItem) {
+        return DropdownMenuItem<String>(
+          value: associationItem,
+          child: AutoSizeText(associationItem),
+        );
+      }).toList(),
+      hint: AutoSizeText(
+        'Pilih Asosiasi',
+        style: text400Dark,
+      ),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_drop_down),
+      style: text400Grey,
+    );
+  }
+
+  Widget _buildCities() {
+    return DropdownButton(
+      value: citiesChoose,
+      onChanged: (newValue) {
+        setState(() {
+          citiesChoose = newValue;
+        });
+      },
+      items: citiesItem.map((cityItem) {
+        return DropdownMenuItem<String>(
+          value: cityItem,
+          child: AutoSizeText(cityItem),
+        );
+      }).toList(),
+      hint: AutoSizeText(
+        'Pilih Kabupaten/Kota',
+        style: text400Dark,
+      ),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_drop_down),
+      style: text400Grey,
+    );
+  }
+
+  Widget _buildDistricts() {
+    return DropdownButton(
+      value: districtsChoose,
+      onChanged: (newValue) {
+        setState(() {
+          districtsChoose = newValue;
+        });
+      },
+      items: districtsItem.map((districtItem) {
+        return DropdownMenuItem<String>(
+          value: districtItem,
+          child: AutoSizeText(districtItem),
+        );
+      }).toList(),
+      hint: AutoSizeText(
+        'Pilih Kecamatan',
+        style: text400Dark,
+      ),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_drop_down),
+      style: text400Grey,
+    );
+  }
+
+  Widget _buildProvinces() {
+    return DropdownButton(
+      value: provincesChoose,
+      onChanged: (newValue) {
+        setState(() {
+          provincesChoose = newValue;
+        });
+      },
+      items: provincesItem.map((provinceItem) {
+        return DropdownMenuItem<String>(
+          value: provinceItem,
+          child: AutoSizeText(provinceItem),
+        );
+      }).toList(),
+      hint: AutoSizeText(
+        'Pilih Provinsi',
+        style: text400Dark,
+      ),
+      isExpanded: true,
+      icon: Icon(Icons.arrow_drop_down),
+      style: text400Grey,
+    );
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -97,10 +198,9 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              toolbarHeight: size.height * 0.225,
-              // toolbarHeight: 300,
+              toolbarHeight: size.height * 0.25,
+              // toolbarHeight: 400,
               leadingWidth: 70,
-              // toolbarHeight: 65,
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               floating: true,
@@ -127,21 +227,30 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                   ),
                 ),
               ),
+              centerTitle: true,
+              // title: AutoSizeText(
+              //   'Galeri Perumahan',
+              //   textAlign: TextAlign.center,
+              //   style: title900Dark,
+              //   maxLines: 1,
+              //   presetFontSizes: [28, 21, 14],
+              // ),
               flexibleSpace: Container(
                 // margin: EdgeInsets.only(top: 50),
                 width: size.width,
                 height: size.height * 0.315,
+                // height: 400,
                 color: Colors.white,
                 child: WaveBackground(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(
-                          height: 75,
-                        ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
                         AutoSizeText(
                           'Galeri Perumahan',
                           textAlign: TextAlign.center,
@@ -149,46 +258,41 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                           maxLines: 1,
                           presetFontSizes: [28, 21, 14],
                         ),
-                        Stack(
+                        GridView.count(
+                          primary: false,
+                          crossAxisSpacing: 25,
+                          // mainAxisSpacing: 10,
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          childAspectRatio: (1 / 0.25),
                           children: <Widget>[
-                            TextField(
-                              style: form200Light,
-                              onChanged: (value) {
-                                searchResults(value);
-                              },
-                              controller: provinceControl,
-                              textInputAction: TextInputAction.search,
-                              decoration: InputDecoration(
-                                filled: true,
-                                isDense: true,
-                                fillColor: Color(0xffF2F3F7),
-                                hintText: 'Cari',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                  borderSide: BorderSide.none,
-                                ),
-                                // contentPadding: EdgeInsets.only(left: 25),
-                              ),
-                            ),
-                            Container(
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: provinces.length >= 3
-                                      ? 3
-                                      : provinces.length,
-                                  itemBuilder: (context, index) {
-                                    return Card(
-                                      child: ListTile(
-                                        dense: true,
-                                        title: Text(
-                                          '${provinces[index]}',
-                                          style: form200Light,
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                            ),
+                            _buildProvinces(),
+                            _buildCities(),
+                            _buildDistricts(),
+                            _buildAssociations(),
                           ],
+                        ),
+                        DropdownButton(
+                          value: filterValue,
+                          onChanged: (newFilter) {
+                            setState(() {
+                              filterValue = newFilter;
+                            });
+                          },
+                          items: <String>['Terbaru', 'Termurah', 'Terbanyak']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: AutoSizeText(value),
+                            );
+                          }).toList(),
+                          hint: AutoSizeText(
+                            'Urutkan Berdasarkan',
+                            style: text400Dark,
+                          ),
+                          isExpanded: true,
+                          icon: Icon(Icons.arrow_drop_down),
+                          style: text400Grey,
                         ),
                       ],
                     ),
