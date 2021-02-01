@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/password/new_password_complete.dart';
 import 'package:pakasep/utility/style.dart';
@@ -134,33 +135,14 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
     return Scaffold(
       body: Background(
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 7.5,
-                ),
-                Container(
-                  height: size.height - 115,
+          child: Column(
+            children: <Widget>[
+              BackOnlyAppbar(child: null),
+              Form(
+                key: _formKey,
+                child: Container(
+                  height: size.height - 125,
+                  padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -225,12 +207,14 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 1,),
+                      SizedBox(
+                        height: 1,
+                      ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

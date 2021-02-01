@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/login/login_form.dart';
 import 'package:pakasep/utility/style.dart';
@@ -259,160 +260,142 @@ class _EditProfilFormState extends State<EditProfilForm> {
     return Scaffold(
       body: Background(
         child: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Container(
-                      width: 55,
-                      height: 55,
-                      decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                          border: Border.all(color: Color(0xffe5e5e5))),
-                      child: IconButton(
-                        onPressed: () => Navigator.of(context).pop(),
-                        icon: Icon(
-                          Icons.arrow_back,
-                          color: Color(0xff3F414E),
-                          size: 30,
-                        ),
+          child: Column(
+            children: [
+              AppBar(
+                leadingWidth: 75,
+                toolbarHeight: 65,
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                leading: Container(
+                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                  width: 55,
+                  height: 55,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      border: Border.all(color: Color(0xffe5e5e5))),
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Color(0xff3F414E),
+                      size: 30,
+                    ),
+                  ),
+                ),
+                actions: [
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginForm()),
+                      );
+                    },
+                    child: Text(
+                      'logout',
+                      style: TextStyle(
+                        height: 1.08,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        color: Color(0xffF05D48),
                       ),
                     ),
-                    FlatButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginForm()),
-                        );
-                      },
-                      child: Text(
-                        'logout',
-                        style: TextStyle(
-                          height: 1.08,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          color: Color(0xffF05D48),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 7.5,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Data Diri',
-                      textAlign: TextAlign.center,
-                      style: title900Dark,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    CircleAvatar(
-                      backgroundImage: AssetImage('images/p1.png'),
-                      radius: 40,
-                    ),
-                    SizedBox(
-                      height: 90.0,
-                    ),
-                    _buildNpwp(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildNamaLengkap(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildKataSandi(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildTelepon(),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Container(
-                      width: size.width * 0.75,
-                      child: AutoSizeText.rich(
-                        TextSpan(
-                          style: text500Grey,
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Anda hanya diizinkan mengganti ',
-                            ),
-                            TextSpan(
-                              text: 'KATA SANDI ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text: 'dan ',
-                            ),
-                            TextSpan(
-                              text: 'NOMOR HANDPHONE ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text: 'saja. Klik ',
-                            ),
-                            TextSpan(
-                              text: 'SIMPAN ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            TextSpan(
-                              text: 'jika sudah selesai.',
-                            ),
-                          ],
-                        ),
-                        maxLines: 3,
+                  ),
+                ],
+              ),
+              Container(
+                height: size.height - 115,
+                padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Data Diri',
                         textAlign: TextAlign.center,
-                        presetFontSizes: [14, 10.5, 7],
+                        style: title900Dark,
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    FlatButton(
-                      onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        } else {
-                          _formKey.currentState.save();
-                          print(_namaLengkap);
-                          print(_kataSandi);
-                          print(_npwp);
-                          print(_telepon);
-                        }
-                      },
-                      height: 60,
-                      minWidth: size.width,
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      CircleAvatar(
+                        backgroundImage: AssetImage('images/p1.png'),
+                        radius: 40,
                       ),
-                      child: Text(
-                        'SIMPAN',
-                        style: buttonTextLight,
+                      _buildNpwp(),
+                      _buildNamaLengkap(),
+                      _buildKataSandi(),
+                      _buildTelepon(),
+                      Container(
+                        width: size.width * 0.75,
+                        child: AutoSizeText.rich(
+                          TextSpan(
+                            style: text500Grey,
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Anda hanya diizinkan mengganti ',
+                              ),
+                              TextSpan(
+                                text: 'KATA SANDI ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: 'dan ',
+                              ),
+                              TextSpan(
+                                text: 'NOMOR HANDPHONE ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: 'saja. Klik ',
+                              ),
+                              TextSpan(
+                                text: 'SIMPAN ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: 'jika sudah selesai.',
+                              ),
+                            ],
+                          ),
+                          maxLines: 3,
+                          textAlign: TextAlign.center,
+                          presetFontSizes: [14, 10.5, 7],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 70,
-                    ),
-                  ],
+                      FlatButton(
+                        onPressed: () {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          } else {
+                            _formKey.currentState.save();
+                            print(_namaLengkap);
+                            print(_kataSandi);
+                            print(_npwp);
+                            print(_telepon);
+                          }
+                        },
+                        height: 60,
+                        minWidth: size.width,
+                        color: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text(
+                          'SIMPAN',
+                          style: buttonTextLight,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 70,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

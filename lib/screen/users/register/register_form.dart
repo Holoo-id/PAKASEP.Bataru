@@ -58,7 +58,6 @@ class _RegisterFormState extends State<RegisterForm> {
         _namaLengkap = nama_lengkap;
       },
       style: form200Light,
-
       decoration: InputDecoration(
         hintText: 'Nama Lengkap (Sesuai KTP)',
         labelText: 'Nama Lengkap',
@@ -322,7 +321,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       onChanged: (npwp) {
         if (npwp.isNotEmpty) {
-          if(npwp.length < 15) {
+          if (npwp.length < 15) {
             setState(() {
               npwpIcon = new Icon(
                 Icons.error,
@@ -431,18 +430,23 @@ class _RegisterFormState extends State<RegisterForm> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Background(
-        child: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                leadingWidth: 75,
+                toolbarHeight: 65,
+                backgroundColor: Colors.transparent,
+                elevation: 0.0,
+                floating: false,
+                pinned: true,
+                snap: false,
+                leading: Container(
+                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
                   width: 55,
                   height: 55,
                   decoration: BoxDecoration(
-                      color: Colors.transparent,
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
                       border: Border.all(color: Color(0xffe5e5e5))),
                   child: IconButton(
@@ -454,110 +458,114 @@ class _RegisterFormState extends State<RegisterForm> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 7.5,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Isi Data Diri',
-                      textAlign: TextAlign.center,
-                      style: title900Dark,
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildNamaLengkap(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildKataSandi(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildKonfirmasiKataSandi(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildKtp(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildKonfirmasiKtp(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildNpwp(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    _buildTelepon(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () => _setAgreedToTOS(!_agreedToTOS),
-                          child: const AutoSizeText(
-                            'Saya Setuju dengan Syarat dan Ketentuan',
-                            presetFontSizes: [9, 6.75, 4.5],
-                            maxLines: 1,
-                          ),
+              ),
+            ];
+          },
+          body: SingleChildScrollView(
+            // height: size.height,
+            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Isi Data Diri',
+                    textAlign: TextAlign.center,
+                    style: title900Dark,
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  _buildNamaLengkap(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKataSandi(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKonfirmasiKataSandi(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKtp(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKonfirmasiKtp(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildNpwp(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTelepon(),
+                  // SizedBox(
+                  //   height: 20.0,
+                  // ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () => _setAgreedToTOS(!_agreedToTOS),
+                        child: const AutoSizeText(
+                          'Saya Setuju dengan Syarat dan Ketentuan',
+                          presetFontSizes: [9, 6.75, 4.5],
+                          maxLines: 1,
                         ),
-                        Checkbox(
-                          value: _agreedToTOS,
-                          onChanged: _setAgreedToTOS,
-                        ),
-                      ],
-                    ),
-                    FlatButton(
-                      onPressed: _submitable()
-                          ? () {
-                              if (!_formKey.currentState.validate()) {
-                                return this;
+                      ),
+                      Checkbox(
+                        value: _agreedToTOS,
+                        onChanged: _setAgreedToTOS,
+                      ),
+                    ],
+                  ),
+                  FlatButton(
+                    onPressed: _submitable()
+                        ? () {
+                            if (!_formKey.currentState.validate()) {
+                              return this;
+                            } else {
+                              _formKey.currentState.save();
+                              print(_namaLengkap);
+                              print(_kataSandi);
+                              print(_ktp);
+                              print(_npwp);
+                              print(_telepon);
+                              if (_ktp == '1234567890123456') {
+                                return Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AlreadyRegistered()),
+                                );
                               } else {
-                                _formKey.currentState.save();
-                                print(_namaLengkap);
-                                print(_kataSandi);
-                                print(_ktp);
-                                print(_npwp);
-                                print(_telepon);
-                                if (_ktp == '1234567890123456') {
-                                  return Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AlreadyRegistered()),
-                                  );
-                                } else {
-                                  return Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => KtpPhotoPage()),
-                                  );
-                                }
+                                return Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => KtpPhotoPage()),
+                                );
                               }
                             }
-                          : null,
-                      height: 60,
-                      minWidth: size.width,
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Text(
-                        'LANJUTKAN',
-                        style: buttonTextLight,
-                      ),
+                          }
+                        : null,
+                    height: 60,
+                    minWidth: size.width,
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                  ],
-                ),
-              ],
+                    child: Text(
+                      'LANJUTKAN',
+                      style: buttonTextLight,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
