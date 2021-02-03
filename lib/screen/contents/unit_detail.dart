@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:pakasep/screen/components/back_only_appbar.dart';
 
 import '../../utility/style.dart';
 
@@ -13,10 +12,15 @@ class UnitDetail extends StatefulWidget {
 
 class _UnitDetailState extends State<UnitDetail> {
   // CarouselController buttonCarouselController = CarouselController();
+  List<AssetImage> image = [
+    AssetImage('images/r1.jpg'),
+    AssetImage('images/r2.jpg'),
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -52,38 +56,48 @@ class _UnitDetailState extends State<UnitDetail> {
               centerTitle: true,
               flexibleSpace: Stack(
                 children: [
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      autoPlay: false,
-                      height: size.height * 0.35,
-                      initialPage: 0,
-                      scrollDirection: Axis.horizontal,
-                      disableCenter: true,
-                      // aspectRatio: 2.0,
-                      // enlargeCenterPage: false,
-                      // pageSnapping: false,
+                  Container(
+                    height: size.height * 0.33,
+                    child: Carousel(
+                      autoplay: false,
+                      boxFit: BoxFit.cover,
+                      dotBgColor: Colors.transparent,
+                      dotColor: Colors.white,
+                      dotIncreasedColor: Colors.grey,
+                      dotSize: 7,
+                      dotIncreaseSize: 1.1,
+                      showIndicator: true,
+                      // dotHorizontalPadding: 10,
+                      dotVerticalPadding: 20,
+                      // images: [
+                      //   AssetImage('images/r1.jpg'),
+                      //   AssetImage('images/r2.jpg'),
+                      // ],
+                      images: image,
+                      onImageTap: (index) {
+                        // return Drawer(
+                        //   child: Image(
+                        //     image: AssetImage('images/r1.jpg'),
+                        //     fit: BoxFit.fitWidth,
+                        //   ),
+                        // );
+                        var image_id = index + 1;
+                        return showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Image(
+                              image: image[index],
+                              fit: BoxFit.fitWidth,
+                            );
+                          },
+                        );
+                      },
                     ),
-                    items: [1, 2].map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                            // width: size.width,
-                            child: Image(
-                              image: AssetImage('images/r$i.jpg'),
-                              fit: BoxFit.cover,
-                              // height: size.height * 0.35,
-                              width: size.width,
-                            ),
-                          );
-                        },
-                      );
-                    }).toList(),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.fromLTRB(0, size.height * 0.325 - 15, 0, 20),
-                    padding: EdgeInsets.all(20),
-                    height: size.height > 800 ? size.height * 0.225 : 150,
+                    margin: EdgeInsets.fromLTRB(0, size.height * 0.3 + 9, 0, 0),
+                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    height: size.height > 800 ? size.height * 0.25 : 150,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -258,8 +272,8 @@ class _UnitDetailState extends State<UnitDetail> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 65),
                           child: Divider(
-                            thickness: 0.5,
-                            height: 5,
+                            thickness: 0.75,
+                            height: 1,
                           ),
                         ),
                       ],
@@ -270,8 +284,8 @@ class _UnitDetailState extends State<UnitDetail> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(
-                        20, size.height * 0.325 - 35, 20, 0),
+                    margin:
+                        EdgeInsets.fromLTRB(20, size.height * 0.3 - 10, 20, 0),
                     padding: EdgeInsets.symmetric(vertical: 7.5),
                     width: size.width,
                     decoration: BoxDecoration(
