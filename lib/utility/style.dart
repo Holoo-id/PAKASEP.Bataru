@@ -101,8 +101,6 @@ final text400Dark = GoogleFonts.poppins(
   letterSpacing: 0.05,
 );
 
-
-
 final title400Light = GoogleFonts.poppins(
   color: Colors.white,
   fontSize: 30.0,
@@ -124,6 +122,13 @@ final title900Dark = GoogleFonts.poppins(
   fontSize: 28.0,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w900,
+);
+
+final title700Red = GoogleFonts.poppins(
+  color: Colors.red,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 0.02,
 );
 
 final title700Light = GoogleFonts.poppins(
