@@ -52,12 +52,12 @@ final linkTextLight = GoogleFonts.poppins(
   letterSpacing: 0.05,
 );
 
-final menu700Dark = GoogleFonts.poppins(
+final formTitle700Dark = GoogleFonts.poppins(
   color: Color(0xff3F414E),
-  fontSize: 30,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
-  height: 1.35,
+  height: 4,
+  letterSpacing: 0.05,
 );
 
 final name500Dark = GoogleFonts.poppins(

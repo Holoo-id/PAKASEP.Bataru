@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/all_available_units.dart';
 import 'package:pakasep/screen/contents/filing_requirements.dart';
+import 'package:pakasep/screen/contents/filing_status.dart';
+import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/screen/users/profil.dart';
 import 'package:pakasep/utility/style.dart';
 
@@ -31,12 +33,12 @@ var menu = [
   {
     "name": "Cek Status Pengajuan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": FilingStatus(),
   },
   {
     "name": "Kalkulator & Simulasi KPR",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": KprCalcSimulation(),
   },
   {
     "name": "Panduan Penggunaan",
