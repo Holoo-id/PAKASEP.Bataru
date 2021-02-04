@@ -6,6 +6,7 @@ import 'package:pakasep/screen/contents/filing_requirements.dart';
 import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/screen/users/profil.dart';
+import 'package:pakasep/screen/users/user_guide.dart';
 import 'package:pakasep/utility/style.dart';
 
 class Home extends StatefulWidget {
@@ -43,7 +44,7 @@ var menu = [
   {
     "name": "Panduan Penggunaan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": UserGuide(),
   },
 ];
 
