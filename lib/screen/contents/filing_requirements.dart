@@ -1,6 +1,9 @@
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
+import 'package:pakasep/screen/contents/all_available_units.dart';
+import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/utility/style.dart';
 
 class FilingRequirements extends StatefulWidget {
@@ -14,6 +17,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -26,28 +30,30 @@ class _FilingRequirementsState extends State<FilingRequirements> {
               floating: true,
               pinned: true,
               snap: false,
-              leading: Container(
-                alignment: Alignment.topLeft,
-                color: Colors.transparent,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
-
+              leading: Platform.isIOS
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        width: 55,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(color: Color(0xffe5e5e5))),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Color(0xff3F414E),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               flexibleSpace: Container(
                 width: size.width,
                 color: Colors.white,
@@ -65,7 +71,9 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                           maxLines: 1,
                           presetFontSizes: [28, 21, 14],
                         ),
-                        SizedBox(height: 25,),
+                        SizedBox(
+                          height: 25,
+                        ),
                       ],
                     ),
                   ),
@@ -187,7 +195,14 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 buttonMinWidth: size.width * 0.3,
                 children: [
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AllAvailableUnits(),
+                        ),
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
@@ -204,7 +219,14 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                     ),
                   ),
                   RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FilingStatus(),
+                        ),
+                      );
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(

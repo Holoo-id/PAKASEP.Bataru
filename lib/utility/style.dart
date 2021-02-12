@@ -119,7 +119,7 @@ final text500Grey = GoogleFonts.poppins(
 
 final title900Dark = GoogleFonts.poppins(
   color: Color(0xff3F414E),
-  fontSize: 28.0,
+  fontSize: 28,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w900,
 );

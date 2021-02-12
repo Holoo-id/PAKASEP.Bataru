@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
@@ -93,98 +94,146 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
   }
 
   Widget _buildAssociations() {
-    return DropdownButton(
-      value: associationsChoose,
-      onChanged: (newValue) {
-        setState(() {
-          associationsChoose = newValue;
-        });
-      },
-      items: associationsItem.map((associationItem) {
-        return DropdownMenuItem<String>(
-          value: associationItem,
-          child: AutoSizeText(associationItem),
-        );
-      }).toList(),
-      hint: AutoSizeText(
-        'Pilih Asosiasi',
-        style: text400Dark,
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xffF2F3F7),
+        borderRadius: BorderRadius.circular(15),
       ),
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      style: text400Grey,
+      child: DropdownButtonFormField(
+        value: associationsChoose,
+        onChanged: (newValue) {
+          setState(() {
+            associationsChoose = newValue;
+          });
+        },
+        items: associationsItem.map((associationItem) {
+          return DropdownMenuItem<String>(
+            value: associationItem,
+            child: AutoSizeText(associationItem),
+          );
+        }).toList(),
+        hint: AutoSizeText(
+          'Pilih Asosiasi',
+          style: text400Dark,
+        ),
+        isExpanded: true,
+        icon: Icon(Icons.keyboard_arrow_down_sharp),
+        style: text400Grey,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(14),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildCities() {
-    return DropdownButton(
-      value: citiesChoose,
-      onChanged: (newValue) {
-        setState(() {
-          citiesChoose = newValue;
-        });
-      },
-      items: citiesItem.map((cityItem) {
-        return DropdownMenuItem<String>(
-          value: cityItem,
-          child: AutoSizeText(cityItem),
-        );
-      }).toList(),
-      hint: AutoSizeText(
-        'Pilih Kabupaten/Kota',
-        style: text400Dark,
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xffF2F3F7),
+        borderRadius: BorderRadius.circular(15),
       ),
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      style: text400Grey,
+      child: DropdownButtonFormField(
+        value: citiesChoose,
+        onChanged: (newValue) {
+          setState(() {
+            citiesChoose = newValue;
+          });
+        },
+        items: citiesItem.map((cityItem) {
+          return DropdownMenuItem<String>(
+            value: cityItem,
+            child: AutoSizeText(cityItem),
+          );
+        }).toList(),
+        hint: AutoSizeText(
+          'Kabupaten/Kota',
+          style: text400Dark,
+        ),
+        isExpanded: true,
+        icon: Icon(Icons.keyboard_arrow_down_sharp),
+        style: text400Grey,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(14),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildDistricts() {
-    return DropdownButton(
-      value: districtsChoose,
-      onChanged: (newValue) {
-        setState(() {
-          districtsChoose = newValue;
-        });
-      },
-      items: districtsItem.map((districtItem) {
-        return DropdownMenuItem<String>(
-          value: districtItem,
-          child: AutoSizeText(districtItem),
-        );
-      }).toList(),
-      hint: AutoSizeText(
-        'Pilih Kecamatan',
-        style: text400Dark,
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xffF2F3F7),
+        borderRadius: BorderRadius.circular(15),
       ),
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      style: text400Grey,
+      child: DropdownButtonFormField(
+        value: districtsChoose,
+        onChanged: (newValue) {
+          setState(() {
+            districtsChoose = newValue;
+          });
+        },
+        items: districtsItem.map((districtItem) {
+          return DropdownMenuItem<String>(
+            value: districtItem,
+            child: AutoSizeText(districtItem),
+          );
+        }).toList(),
+        hint: AutoSizeText(
+          'Pilih Kecamatan',
+          style: text400Dark,
+        ),
+        isExpanded: true,
+        icon: Icon(Icons.keyboard_arrow_down_sharp),
+        style: text400Grey,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(14),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildProvinces() {
-    return DropdownButton(
-      value: provincesChoose,
-      onChanged: (newValue) {
-        setState(() {
-          provincesChoose = newValue;
-        });
-      },
-      items: provincesItem.map((provinceItem) {
-        return DropdownMenuItem<String>(
-          value: provinceItem,
-          child: AutoSizeText(provinceItem),
-        );
-      }).toList(),
-      hint: AutoSizeText(
-        'Pilih Provinsi',
-        style: text400Dark,
+    return Container(
+      decoration: BoxDecoration(
+        color: Color(0xffF2F3F7),
+        borderRadius: BorderRadius.circular(15),
       ),
-      isExpanded: true,
-      icon: Icon(Icons.arrow_drop_down),
-      style: text400Grey,
+      child: DropdownButtonFormField(
+        value: provincesChoose,
+        onChanged: (newValue) {
+          setState(() {
+            provincesChoose = newValue;
+          });
+        },
+        items: provincesItem.map((provinceItem) {
+          return DropdownMenuItem<String>(
+            value: provinceItem,
+            child: AutoSizeText(provinceItem),
+          );
+        }).toList(),
+        hint: AutoSizeText(
+          'Pilih Provinsi',
+          style: text400Dark,
+        ),
+        isExpanded: true,
+        icon: Icon(Icons.keyboard_arrow_down_sharp),
+        style: text400Grey,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(14),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
     );
   }
 
@@ -194,6 +243,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -206,35 +256,31 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
               floating: true,
               pinned: true,
               snap: false,
-              leading: Container(
-                alignment: Alignment.topLeft,
-                color: Colors.transparent,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
+              leading: Platform.isIOS
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        width: 55,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(color: Color(0xffe5e5e5))),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Color(0xff3F414E),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               centerTitle: true,
-              // title: AutoSizeText(
-              //   'Galeri Perumahan',
-              //   textAlign: TextAlign.center,
-              //   style: title900Dark,
-              //   maxLines: 1,
-              //   presetFontSizes: [28, 21, 14],
-              // ),
               flexibleSpace: Container(
                 // margin: EdgeInsets.only(top: 50),
                 width: size.width,
@@ -261,7 +307,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                         GridView.count(
                           primary: false,
                           crossAxisSpacing: 25,
-                          // mainAxisSpacing: 10,
+                          mainAxisSpacing: 10,
                           shrinkWrap: true,
                           crossAxisCount: 2,
                           childAspectRatio: (1 / 0.25),
@@ -272,27 +318,40 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                             _buildAssociations(),
                           ],
                         ),
-                        DropdownButton(
-                          value: filterValue,
-                          onChanged: (newFilter) {
-                            setState(() {
-                              filterValue = newFilter;
-                            });
-                          },
-                          items: <String>['Terbaru', 'Termurah', 'Terbanyak']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: AutoSizeText(value),
-                            );
-                          }).toList(),
-                          hint: AutoSizeText(
-                            'Urutkan Berdasarkan',
-                            style: text400Dark,
+                        SizedBox(height: 10,),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xffF2F3F7),
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          isExpanded: true,
-                          icon: Icon(Icons.arrow_drop_down),
-                          style: text400Grey,
+                          child: DropdownButtonFormField(
+                            value: filterValue,
+                            onChanged: (newFilter) {
+                              setState(() {
+                                filterValue = newFilter;
+                              });
+                            },
+                            items: <String>['Terbaru', 'Termurah', 'Terbanyak']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: AutoSizeText(value),
+                              );
+                            }).toList(),
+                            hint: AutoSizeText(
+                              'Urutkan Berdasarkan',
+                              style: text400Dark,
+                            ),
+                            isExpanded: true,
+                            icon: Icon(Icons.keyboard_arrow_down_sharp),
+                            style: text400Grey,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(14),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

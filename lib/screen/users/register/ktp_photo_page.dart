@@ -27,117 +27,127 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BackOnlyAppbar(
-                child: null,
-              ),
-              Container(
-                padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
-                height: size.height - 115,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Foto KTP',
-                      style: title900Dark,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: imageFile == null
-                          ? Container()
-                          : Image.file(
-                              imageFile,
-                              fit: BoxFit.cover,
+        child: Container(
+          height: size.height,
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+                  height: size.height - 115,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        'Foto KTP',
+                        style: title900Dark,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Expanded(
+                        flex: 0,
+                        child: imageFile == null
+                            ? Container()
+                            : Image.file(
+                                imageFile,
+                                fit: BoxFit.cover,
+                              ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          // child: Text(result),
+                          child:
+                              isLoading ? _buildWidgetLoading() : Text(result),
+                        ),
+                      ),
+                      AutoSizeText.rich(
+                        TextSpan(
+                          style: text500Grey,
+                          children: [
+                            TextSpan(
+                              text: 'Klik ',
                             ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        // child: Text(result),
-                        child: isLoading ? _buildWidgetLoading() : Text(result),
-                      ),
-                    ),
-                    AutoSizeText.rich(
-                      TextSpan(
-                        style: text500Grey,
-                        children: [
-                          TextSpan(
-                            text: 'Klik ',
-                          ),
-                          TextSpan(
-                            text: 'LANJUTKAN ',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            TextSpan(
+                              text: 'LANJUTKAN ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          TextSpan(
-                            text:
-                                'untuk proses selanjutnya atau kembali untuk foto ulang',
-                          ),
-                        ],
+                            TextSpan(
+                              text:
+                                  'untuk proses selanjutnya atau kembali untuk foto ulang',
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        presetFontSizes: [16, 12, 8],
                       ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      presetFontSizes: [16, 12, 8],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    FlatButton(
-                      onPressed: () async {
-                        var pickedFile = await ImagePicker()
-                            .getImage(source: ImageSource.camera);
-                        if (pickedFile == null) {
-                        } else {
-                          setState(
-                            () {
-                              isLoading = true;
-                            },
-                          );
-                          imageFile = File(pickedFile.path);
-                          setState(
-                            () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ImageApproval(),
-                                ),
-                              );
-                            },
-                          );
-                          var firebaseVisionImage =
-                              FirebaseVisionImage.fromFile(imageFile);
-                          var textRecognizer =
-                              FirebaseVision.instance.textRecognizer();
-                          var visionText = await textRecognizer
-                              .processImage(firebaseVisionImage);
-                          result = 'Result: ${visionText.text}';
-                          debugPrint('result: $result');
-                          textRecognizer.close();
-                        }
-                      },
-                      height: 60,
-                      minWidth: size.width,
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      SizedBox(
+                        height: 15,
                       ),
-                      child: Text(
-                        'LANJUTKAN',
-                        style: buttonTextLight,
+                      FlatButton(
+                        onPressed: () async {
+                          var pickedFile = await ImagePicker()
+                              .getImage(source: ImageSource.camera);
+                          if (pickedFile == null) {
+                          } else {
+                            setState(
+                              () {
+                                isLoading = true;
+                              },
+                            );
+                            imageFile = File(pickedFile.path);
+                            setState(
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ImageApproval(),
+                                  ),
+                                );
+                              },
+                            );
+                            var firebaseVisionImage =
+                                FirebaseVisionImage.fromFile(imageFile);
+                            var textRecognizer =
+                                FirebaseVision.instance.textRecognizer();
+                            var visionText = await textRecognizer
+                                .processImage(firebaseVisionImage);
+                            result = 'Result: ${visionText.text}';
+                            debugPrint('result: $result');
+                            textRecognizer.close();
+                          }
+                        },
+                        height: 60,
+                        minWidth: size.width,
+                        color: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Text(
+                          'LANJUTKAN',
+                          style: buttonTextLight,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

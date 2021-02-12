@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -174,6 +175,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Nomor NPWP (15 Digit)',
         labelText: 'Nomor NPWP',
         labelStyle: form400Light,
@@ -258,144 +260,158 @@ class _EditProfilFormState extends State<EditProfilForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        leadingWidth: 75,
+        toolbarHeight: 65,
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: Platform.isIOS
+            ? Container(
+                margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                width: 55,
+                height: 55,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                    border: Border.all(color: Color(0xffe5e5e5))),
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Color(0xff3F414E),
+                    size: 30,
+                  ),
+                ),
+              )
+            : Container(),
+        actions: [
+          FlatButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginForm()),
+              );
+            },
+            child: Text(
+              'logout',
+              style: TextStyle(
+                height: 1.08,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+                decoration: TextDecoration.underline,
+                color: Color(0xffF05D48),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Background(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              AppBar(
-                leadingWidth: 75,
-                toolbarHeight: 65,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                leading: Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
+        child: Container(
+          height: size.height,
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
+            child: Form(
+              key: _formKey,
+              child: Container(
+                alignment: Alignment.center,
+                height: size.height,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      'Data Diri',
+                      textAlign: TextAlign.center,
+                      style: title900Dark,
                     ),
-                  ),
-                ),
-                actions: [
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginForm()),
-                      );
-                    },
-                    child: Text(
-                      'logout',
-                      style: TextStyle(
-                        height: 1.08,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                        color: Color(0xffF05D48),
-                      ),
+                    CircleAvatar(
+                      backgroundImage: AssetImage('images/p1.png'),
+                      radius: 40,
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                height: size.height - 115,
-                padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        'Data Diri',
+                    Column(
+                      children: [
+                        _buildNpwp(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _buildNamaLengkap(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _buildKataSandi(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        _buildTelepon(),
+                      ],
+                    ),
+                    Container(
+                      width: size.width * 0.75,
+                      child: AutoSizeText.rich(
+                        TextSpan(
+                          style: text500Grey,
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Anda hanya diizinkan mengganti ',
+                            ),
+                            TextSpan(
+                              text: 'KATA SANDI ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: 'dan ',
+                            ),
+                            TextSpan(
+                              text: 'NOMOR HANDPHONE ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: 'saja. Klik ',
+                            ),
+                            TextSpan(
+                              text: 'SIMPAN ',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(
+                              text: 'jika sudah selesai.',
+                            ),
+                          ],
+                        ),
+                        maxLines: 3,
                         textAlign: TextAlign.center,
-                        style: title900Dark,
+                        presetFontSizes: [14, 10.5, 7],
                       ),
-                      CircleAvatar(
-                        backgroundImage: AssetImage('images/p1.png'),
-                        radius: 40,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        } else {
+                          _formKey.currentState.save();
+                          print(_namaLengkap);
+                          print(_kataSandi);
+                          print(_npwp);
+                          print(_telepon);
+                        }
+                      },
+                      height: 60,
+                      minWidth: size.width,
+                      color: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                      _buildNpwp(),
-                      _buildNamaLengkap(),
-                      _buildKataSandi(),
-                      _buildTelepon(),
-                      Container(
-                        width: size.width * 0.75,
-                        child: AutoSizeText.rich(
-                          TextSpan(
-                            style: text500Grey,
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: 'Anda hanya diizinkan mengganti ',
-                              ),
-                              TextSpan(
-                                text: 'KATA SANDI ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'dan ',
-                              ),
-                              TextSpan(
-                                text: 'NOMOR HANDPHONE ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'saja. Klik ',
-                              ),
-                              TextSpan(
-                                text: 'SIMPAN ',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: 'jika sudah selesai.',
-                              ),
-                            ],
-                          ),
-                          maxLines: 3,
-                          textAlign: TextAlign.center,
-                          presetFontSizes: [14, 10.5, 7],
-                        ),
+                      child: Text(
+                        'SIMPAN',
+                        style: buttonTextLight,
                       ),
-                      FlatButton(
-                        onPressed: () {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          } else {
-                            _formKey.currentState.save();
-                            print(_namaLengkap);
-                            print(_kataSandi);
-                            print(_npwp);
-                            print(_telepon);
-                          }
-                        },
-                        height: 60,
-                        minWidth: size.width,
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          'SIMPAN',
-                          style: buttonTextLight,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 70,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
