@@ -23,6 +23,8 @@ environment:
 dependencies:
   auto_size_text: ^2.1.0
   carousel_pro: ^1.0.0
+  cloud_firestore: ^0.16.0
+  firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
   firebase_ml_vision: ^0.10.0
   geolocator: ^4.0.3
