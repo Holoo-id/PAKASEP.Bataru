@@ -428,6 +428,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -539,11 +540,11 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
-                              _registeringUserData = {"namaLengkap" : _namaLengkap,
-                                                      "kataSandi" : _kataSandi,
-                                                      "ktp" : _ktp,
-                                                      "npwp" : _npwp,
-                                                      "telepon" : _telepon};
+                              _registeringUserData = {"Nama Lengkap" : _namaLengkap,
+                                                      "Kata Sandi" : _kataSandi,
+                                                      "KTP" : _ktp,
+                                                      "NPWP" : _npwp,
+                                                      "Telepon" : _telepon};
                               if (_ktp == '1234567890123456') {
                                 return Navigator.push(
                                   context,
