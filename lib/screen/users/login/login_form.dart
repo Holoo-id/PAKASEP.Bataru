@@ -106,21 +106,26 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              BackOnlyAppbar(
-                child: null,
-              ),
               Form(
                 key: _formKey,
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
-                  height: size.height - 125,
+                  height: size.height,
+                  alignment: Alignment.center,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
                         'Masuk Akun',

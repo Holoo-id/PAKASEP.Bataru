@@ -2,7 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/all_available_units.dart';
+import 'package:pakasep/screen/contents/filing_requirements.dart';
+import 'package:pakasep/screen/contents/filing_status.dart';
+import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/screen/users/profil.dart';
+import 'package:pakasep/screen/users/user_guide.dart';
 import 'package:pakasep/utility/style.dart';
 
 class Home extends StatefulWidget {
@@ -25,22 +29,22 @@ var menu = [
   {
     "name": "Persyaratan Pengajuan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": FilingRequirements(),
   },
   {
     "name": "Cek Status Pengajuan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": FilingStatus(),
   },
   {
     "name": "Kalkulator & Simulasi KPR",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": KprCalcSimulation(),
   },
   {
     "name": "Panduan Penggunaan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": UserGuide(),
   },
 ];
 
@@ -61,10 +65,11 @@ class _HomeState extends State<Home> {
                 floating: true,
                 pinned: true,
                 snap: false,
-                flexibleSpace: Container(
+                // leadingWidth: 0,
+                flexibleSpace: WaveBackground(
                   // margin: EdgeInsets.only(top: 50),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
@@ -77,8 +82,8 @@ class _HomeState extends State<Home> {
                         maxLines: 1,
                         presetFontSizes: [28, 21, 14],
                       ),
-                      FlatButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -92,6 +97,9 @@ class _HomeState extends State<Home> {
                             CircleAvatar(
                               backgroundImage: AssetImage('images/p1.png'),
                               radius: 40,
+                            ),
+                            SizedBox(
+                              width: 20,
                             ),
                             Container(
                               // width: size.width - 112,
@@ -145,13 +153,14 @@ class _HomeState extends State<Home> {
                                 shape: BoxShape.circle,
                               ),
                               child: IconButton(
-                                  icon: Icon(
-                                    Icons.search_rounded,
-                                    color: Colors.white,
-                                  ),
-                                  onPressed: () {
-                                    // showSearch(context: context, delegate: DataSearch());
-                                  }),
+                                icon: Icon(
+                                  Icons.search_rounded,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  // showSearch(context: context, delegate: DataSearch());
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -169,7 +178,7 @@ class _HomeState extends State<Home> {
                 Container(
                   child: GridView.count(
                     crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                    childAspectRatio: (1 / 1.25),
+                    childAspectRatio: (176.45 / 168),
                     controller: new ScrollController(keepScrollOffset: false),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,

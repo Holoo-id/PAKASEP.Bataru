@@ -52,12 +52,12 @@ final linkTextLight = GoogleFonts.poppins(
   letterSpacing: 0.05,
 );
 
-final menu700Dark = GoogleFonts.poppins(
+final formTitle700Dark = GoogleFonts.poppins(
   color: Color(0xff3F414E),
-  fontSize: 30,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.bold,
-  height: 1.35,
+  height: 4,
+  letterSpacing: 0.05,
 );
 
 final name500Dark = GoogleFonts.poppins(
@@ -74,6 +74,14 @@ final text600Dark = GoogleFonts.poppins(
   fontSize: 18,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w600,
+  height: 1.081,
+);
+
+final text800Dark = GoogleFonts.poppins(
+  color: Color(0xff3F414E),
+  fontSize: 18,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w800,
   height: 1.081,
 );
 
@@ -101,8 +109,6 @@ final text400Dark = GoogleFonts.poppins(
   letterSpacing: 0.05,
 );
 
-
-
 final title400Light = GoogleFonts.poppins(
   color: Colors.white,
   fontSize: 30.0,
@@ -121,9 +127,16 @@ final text500Grey = GoogleFonts.poppins(
 
 final title900Dark = GoogleFonts.poppins(
   color: Color(0xff3F414E),
-  fontSize: 28.0,
+  fontSize: 28,
   fontStyle: FontStyle.normal,
   fontWeight: FontWeight.w900,
+);
+
+final title700Red = GoogleFonts.poppins(
+  color: Colors.red,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 0.02,
 );
 
 final title700Light = GoogleFonts.poppins(

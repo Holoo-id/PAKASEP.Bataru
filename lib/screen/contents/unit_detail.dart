@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -32,27 +33,30 @@ class _UnitDetailState extends State<UnitDetail> {
               floating: true,
               pinned: true,
               snap: false,
-              leading: Container(
-                alignment: Alignment.topLeft,
-                color: Colors.transparent,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
+              leading: Platform.isIOS
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        width: 55,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(color: Color(0xffe5e5e5))),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Color(0xff3F414E),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               centerTitle: true,
               flexibleSpace: Stack(
                 children: [
@@ -62,8 +66,8 @@ class _UnitDetailState extends State<UnitDetail> {
                       autoplay: false,
                       boxFit: BoxFit.cover,
                       dotBgColor: Colors.transparent,
-                      dotColor: Colors.white,
-                      dotIncreasedColor: Colors.grey,
+                      dotColor: Color(0x88ffffff),
+                      dotIncreasedColor: Theme.of(context).indicatorColor,
                       dotSize: 7,
                       dotIncreaseSize: 1.1,
                       showIndicator: true,
@@ -85,9 +89,12 @@ class _UnitDetailState extends State<UnitDetail> {
                         return showDialog(
                           context: context,
                           builder: (context) {
-                            return Image(
-                              image: image[index],
-                              fit: BoxFit.fitWidth,
+                            return GestureDetector(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: Image(
+                                image: image[index],
+                                fit: BoxFit.fitWidth,
+                              ),
                             );
                           },
                         );
@@ -422,9 +429,6 @@ class _UnitDetailState extends State<UnitDetail> {
                       ),
                     ),
                   ],
-                ),
-                SizedBox(
-                  height: 40,
                 ),
               ],
             ),
