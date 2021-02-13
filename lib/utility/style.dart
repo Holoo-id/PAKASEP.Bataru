@@ -77,6 +77,14 @@ final text600Dark = GoogleFonts.poppins(
   height: 1.081,
 );
 
+final text800Dark = GoogleFonts.poppins(
+  color: Color(0xff3F414E),
+  fontSize: 18,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w800,
+  height: 1.081,
+);
+
 final text600Light = GoogleFonts.poppins(
   color: Color(0xffFEF9F3),
   fontSize: 18.0,
