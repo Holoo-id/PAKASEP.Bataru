@@ -56,13 +56,20 @@ class _PhoneFormState extends State<PhoneForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              BackOnlyAppbar(child: null),
               Container(
-                height: size.height - 115,
+                alignment: Alignment.center,
+                height: size.height,
                 padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
                 child: Form(
                   key: _formKey,

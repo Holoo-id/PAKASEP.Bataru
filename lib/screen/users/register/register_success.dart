@@ -21,7 +21,8 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
             children: [
               BackOnlyAppbar(child: null),
               Container(
-                height: size.height - 115,
+                height: size.height,
+                alignment: Alignment.center,
                 padding: EdgeInsets.all(20),
                 child: Center(
                   child: Column(

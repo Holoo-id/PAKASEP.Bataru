@@ -15,6 +15,7 @@ class _NewPasswordCompleteState extends State<NewPasswordComplete> {
     return Scaffold(
       body: WaveBackground(
         child: Container(
+          alignment: Alignment.center,
           padding: EdgeInsets.all(20),
           height: size.height,
           child: Column(
