@@ -17,7 +17,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
   String _namaLengkap;
   String _kataSandi;
   String _npwp;
-  String _telepon = "085213011011";
+  String _telepon = "89012345678";
 
   Icon namaIcon = new Icon(null);
   Icon passIcon = new Icon(null);
@@ -239,6 +239,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
         filled: true,
         fillColor: Color(0xffF2F3F7),
         suffixIcon: teleponIcon,
+        prefixText: '+62 ',
+        prefixStyle: text600Dark,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(

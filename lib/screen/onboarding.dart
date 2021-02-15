@@ -109,7 +109,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'images/bg1.png',
+                                  'images/one_line_art_rumah.png',
                                 ),
                                 fit: BoxFit.fitWidth,
                                 width: size.width,
@@ -127,12 +127,37 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               padding: EdgeInsets.only(top: 10.0),
                               child: Column(
                                 children: <Widget>[
-                                  AutoSizeText(
-                                    'Ingin punya rumah?\nBingung cari developer?\nSusah urus KPR?',
-                                    style: title700Light,
+                                  // AutoSizeText(
+                                  //   'Ingin punya rumah?\nBingung cari developer?\nSusah urus KPR?',
+                                  //   style: title700Light,
+                                  //   textAlign: TextAlign.center,
+                                  //   maxLines: 3,
+                                  //   presetFontSizes: [30, 22.5, 15],
+                                  // ),
+                                  AutoSizeText.rich(
+                                    TextSpan(
+                                      style: title400Light,
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: 'PAKASEP',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' merupakan aplikasi pendukung program ',
+                                        ),
+                                        TextSpan(
+                                          text: 'BAKTI PADAMU GURU (BATARU)',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    maxLines: 4,
                                     textAlign: TextAlign.center,
-                                    maxLines: 3,
-                                    presetFontSizes: [30, 22.5, 15],
+                                    presetFontSizes: [28, 21, 14],
                                   ),
                                 ],
                               ),
@@ -141,7 +166,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'images/bg1.png',
+                                  'images/one_line_art_3_polos.png',
                                 ),
                                 fit: BoxFit.fitWidth,
                                 width: size.width,
@@ -173,7 +198,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'images/bg1.png',
+                                  'images/one_line_guru_1.png',
                                 ),
                                 fit: BoxFit.fitWidth,
                                 width: size.width,
@@ -222,7 +247,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Center(
                               child: Image(
                                 image: AssetImage(
-                                  'images/bg1.png',
+                                  'images/one_line_art_rumah.png',
                                 ),
                                 fit: BoxFit.fitWidth,
                                 width: size.width,

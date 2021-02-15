@@ -31,11 +31,13 @@ class _PhoneFormState extends State<PhoneForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: 'Nomor Telepon',
+        hintText: '89012345678',
         labelText: 'Nomor Telepon',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
+        prefixText: '+62 ',
+        prefixStyle: text600Dark,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
