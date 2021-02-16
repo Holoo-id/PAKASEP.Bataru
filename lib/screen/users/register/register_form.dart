@@ -1,13 +1,9 @@
-import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/already_registered.dart';
-import 'package:pakasep/screen/users/register/image_approval.dart';
-import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/screen/users/register/otp_phone.dart';
 import 'package:pakasep/utility/style.dart';
 
@@ -23,7 +19,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String _ktp;
   String _npwp;
   String _telepon;
-  Map _registeringUserData;
+  Map<String, dynamic> _registeringUserData;
 
   Icon namaIcon = new Icon(null);
   Icon passIcon = new Icon(null);
@@ -525,11 +521,11 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
-                              _registeringUserData = {"Nama Lengkap" : _namaLengkap,
-                                                      "Kata Sandi" : _kataSandi,
-                                                      "KTP" : _ktp,
-                                                      "NPWP" : _npwp,
-                                                      "Telepon" : _telepon};
+                              _registeringUserData = {"Nama Lengkap" : _namaLengkap.trim(),
+                                                      "Kata Sandi" : _kataSandi.trim(),
+                                                      "KTP" : _ktp.trim(),
+                                                      "NPWP" : _npwp.trim(),
+                                                      "Telepon" : _telepon.trim()};
                               if (_ktp == '1234567890123456') {
                                 return Navigator.push(
                                   context,
