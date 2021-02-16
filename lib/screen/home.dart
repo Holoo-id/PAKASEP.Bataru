@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/all_available_units.dart';
@@ -49,6 +51,8 @@ var menu = [
 ];
 
 class _HomeState extends State<Home> {
+  String _userID, _userName, _userKTP;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -108,13 +112,13 @@ class _HomeState extends State<Home> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   AutoSizeText(
-                                    'Your Name Was Here',
+                                    _userName,
                                     style: name500Dark,
                                     maxLines: 1,
                                     presetFontSizes: [22, 16.5, 11],
                                   ),
                                   AutoSizeText(
-                                    '(1234567890123456)',
+                                    _userKTP,
                                     style: subName400Dark,
                                     minFontSize: 1,
                                     presetFontSizes: [14, 10.5, 7],
@@ -314,5 +318,17 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+  _getUserData()async{
+    _userID = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot docSnapToUser = await _firestore.collection("Pengguna").doc(_userID).get();
+    _userName = docSnapToUser.data()["Nama Lengkap"];
+    _userKTP = docSnapToUser.data()["KTP"];
+  }
+  @override
+  void initState() {
+
+    _getUserData();
+    super.initState();
   }
 }

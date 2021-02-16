@@ -1,32 +1,24 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/utility/style.dart';
 
-class OtpPhone extends StatefulWidget {
-  final Map<String, dynamic> userData;
-  const OtpPhone({Key key, this.userData}) : super(key: key);
+class LoginOtp extends StatefulWidget {
+  final String noTelepon;
+  const LoginOtp({Key key, this.noTelepon}) : super(key: key);
   @override
-  _OtpPhoneState createState() => _OtpPhoneState();
+  _LoginOtpState createState() => _LoginOtpState();
 }
 
-class _OtpPhoneState extends State<OtpPhone> {
+class _LoginOtpState extends State<LoginOtp> {
   String _verificationCode;
   String _InVerificationCode;
-  String _userID;
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Widget _buildKodeVerifikasi() {
     return TextFormField(
-      keyboardType: TextInputType.number,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
       validator: (String value) {
         if (value.isEmpty) {
           return 'Kode Verifikasi tidak boleh kosong';
@@ -106,32 +98,35 @@ class _OtpPhoneState extends State<OtpPhone> {
                             height: 25.0,
                           ),
                           FlatButton(
-                            onPressed: ()  async{
+                            onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
                               }
                               _formKey.currentState.save();
                               print(_InVerificationCode);
                               print("Trying to compare verification ID");
-                              try{
-                                await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode, smsCode: _InVerificationCode)).then((value) async {
-                                  if(value.user != null){
-                                    print('user berhasil terdaftar pada Auth');
-                                    _userID = FirebaseAuth.instance.currentUser.uid;
-                                    DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
-                                    docRefToNewUser.set(widget.userData);
-                                    print('user berhasil terdaftar pada Database');
+                              try {
+                                await FirebaseAuth.instance
+                                    .signInWithCredential(
+                                        PhoneAuthProvider.credential(
+                                            verificationId: _verificationCode,
+                                            smsCode: _InVerificationCode))
+                                    .then((value) async {
+                                  if (value.user != null) {
+                                    print('user berhasil login');
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => KtpPhotoPage()),
+                                          builder: (context) => Home()),
                                     );
                                   }
                                 });
-                              }catch(e){
+                              } catch (e) {
                                 FocusScope.of(context).unfocus();
                                 print(e);
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Kode verifikasi tidak cocok!")));
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                    content:
+                                        Text("Kode verifikasi tidak cocok!")));
                                 Navigator.of(context).pop();
                               }
                             },
@@ -162,51 +157,45 @@ class _OtpPhoneState extends State<OtpPhone> {
     );
   }
 
-  _verifyPhone() async{
+  _verifyPhone() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: "+62${widget.userData['Telepon']}",
-        verificationCompleted: (PhoneAuthCredential credential)async{
-          await FirebaseAuth.instance.signInWithCredential(credential)
+        phoneNumber: "+62${widget.noTelepon}",
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
               .then((value) async {
-                if(value.user != null){
-                  print('user terdaftar di Auth secara otomatis');
-                  _userID = FirebaseAuth.instance.currentUser.uid;
-                  DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
-                  docRefToNewUser.set(widget.userData);
-                  print('user berhasil terdaftar pada Database');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => KtpPhotoPage()),
-                  );
-                }
-              });
+            if (value.user != null) {
+              print('user Auth secara otomatis');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home()),
+              );
+            }
+          });
         },
-        verificationFailed: (FirebaseAuthException e){
-          print("user gagal terdaftar di Auth");
+        verificationFailed: (FirebaseAuthException e) {
+          print("user gagal Auth otomatis");
           print(e.message);
         },
-        codeSent: (String verificationID, int resendToken){
+        codeSent: (String verificationID, int resendToken) {
           print("Mencoba secara manual");
           setState(() {
             _verificationCode = verificationID;
           });
         },
-        codeAutoRetrievalTimeout: (String verificationID){
+        codeAutoRetrievalTimeout: (String verificationID) {
           print("Proses otomatis telah timeout");
           setState(() {
             _verificationCode = verificationID;
           });
         },
-        timeout: Duration(seconds: 5)
-        );
+        timeout: Duration(seconds: 5));
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _verifyPhone();
   }
 }
-
-
