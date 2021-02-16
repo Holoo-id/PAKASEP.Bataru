@@ -24,7 +24,7 @@ var menu = [
   {
     "name": "Telusuri Perumahan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": Home(),
   },
   {
     "name": "Persyaratan Pengajuan",

@@ -233,8 +233,8 @@ class _RegisterFormState extends State<RegisterForm> {
       style: form200Light,
       decoration: InputDecoration(
         hintText: 'Nomor KTP (16 Digit)',
-        labelText: 'Nomor KTP',
-        counterText: '',
+          labelText: 'Nomor KTP',
+          counterText: '',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),

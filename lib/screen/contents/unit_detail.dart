@@ -2,6 +2,8 @@ import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:pakasep/screen/contents/filing_status.dart';
+import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 
 import '../../utility/style.dart';
 
@@ -395,7 +397,13 @@ class _UnitDetailState extends State<UnitDetail> {
                   buttonMinWidth: size.width * 0.3,
                   children: [
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => KprCalcSimulation()),
+                        );
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide(
@@ -412,7 +420,13 @@ class _UnitDetailState extends State<UnitDetail> {
                       ),
                     ),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FilingStatus()),
+                        );
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide(

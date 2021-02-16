@@ -39,6 +39,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
+          counterText: '',
           hintText: 'Kata Sandi',
           labelText: 'Kata Sandi',
           labelStyle: form400Light,
@@ -81,6 +82,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Nomor KTP (16 Digit)',
         labelText: 'Nomor KTP',
         labelStyle: form400Light,
