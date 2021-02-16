@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
@@ -16,6 +17,7 @@ class OtpPhone extends StatefulWidget {
 class _OtpPhoneState extends State<OtpPhone> {
   String _kodeVerifikasi;
   String _kodeAslinya;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Widget _buildKodeVerifikasi() {
     return TextFormField(
@@ -96,23 +98,11 @@ class _OtpPhoneState extends State<OtpPhone> {
                             height: 25.0,
                           ),
                           FlatButton(
-                            onPressed: () async {
+                            onPressed: ()  {
                               if (!_formKey.currentState.validate()) {
                                 return;
                               }
                               _formKey.currentState.save();
-                              _verifyPhone();
-                              await FirebaseAuth.instance.signInWithCredential(
-                                  PhoneAuthProvider.credential(
-                                      verificationId: _kodeAslinya,
-                                      smsCode: _kodeVerifikasi.trim())).then((value) async{
-                                  if (value.user != null){
-                                    print('Successfully manually logged in');
-                                  }
-                                  else{
-                                    print("ERR MANUAL");
-                                  }
-                              });
                               print(_kodeVerifikasi);
                               Navigator.push(
                                 context,
@@ -145,35 +135,6 @@ class _OtpPhoneState extends State<OtpPhone> {
         ),
       ),
     );
-  }
-  _verifyPhone()async{
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+62${widget.userData['telepon']}',
-        verificationCompleted: (PhoneAuthCredential credential)async{
-          await FirebaseAuth.instance.signInWithCredential(credential).then((value) async{
-            if (value.user != null){
-              print("Successfully Logged in");
-            }
-            else{
-              print("ERR AUTO");
-            }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e){
-          print(e.message);
-        },
-        codeSent: (String verificationID, [int resendToken]){
-          setState(() {
-            _kodeAslinya = verificationID;
-            print("Goes Manual");
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID){
-          setState(() {
-            _kodeAslinya = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 120));
   }
 }
 
