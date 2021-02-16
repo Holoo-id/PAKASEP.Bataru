@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/model_sqlite/userLogged.dart';
+import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
@@ -15,6 +17,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+
   String _ktp = "1234567890123456";
   String _kataSandi = "qwertyuiop";
 
@@ -101,6 +104,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -146,6 +150,19 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
+
+                              UserLoggedDB userLoggedDB = UserLoggedDB();
+
+                              final user = UserLogged(
+                                  id: "1",
+                                  nik: _ktp,
+                                  nama: "Contoh 123",
+                                  status: "Logged"
+                              );
+
+                              userLoggedDB.insertDB(user);
+
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => Home()),

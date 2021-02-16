@@ -57,6 +57,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   if(_dpPercentController.text != '') {
                     var percent = double.parse(_dpPercentController.text) / 100;
                     var uangMuka = int.parse(hargaRumah) * percent;
+
                     _uangMukaController.text = uangMuka.toStringAsFixed(0);
                   }
                   if(_uangMukaController.text != ''){
@@ -114,7 +115,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                             controller: _uangMukaController,
                             onChanged: (String uangMuka){
                               _uangMuka = uangMuka;
-                              var harga = _hargaRumah;
+                              var harga = _hargaRumahController.text;
                               var dpPercent = (int.parse(uangMuka) / int.parse(harga)) * 100;
                               _dpPercentController.text = ( dpPercent < 1 && dpPercent > 0.01 ) ? dpPercent.toStringAsFixed(2) : dpPercent.toStringAsFixed(0);
                             },
@@ -175,7 +176,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                                     _dpPercent = dpPercent;
 
                                     var percent = double.parse(dpPercent);
-                                    var hargaRumah = int.parse(_hargaRumah);
+                                    var hargaRumah = int.parse(_hargaRumahController.text);
 
                                     var dp = ((percent / 100) * hargaRumah);
 
