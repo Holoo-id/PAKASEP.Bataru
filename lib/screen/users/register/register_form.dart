@@ -97,23 +97,23 @@ class _RegisterFormState extends State<RegisterForm> {
         if (kata_sandi.length < 5) {
           return 'Kata sandi terlalu pendek';
         }
-        // if (!RegExp(r"^(?=.*?[0-9])$").hasMatch(value)) {
-        //   return 'Setidaknya terdapat 1 digit angka';
-        // }
+        if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$').hasMatch(kata_sandi)) {
+          return 'Harus terdapat angka dan alfabet';
+        }
       },
       onChanged: (kata_sandi) {
-        if (kata_sandi.length > 5) {
+        if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$').hasMatch(kata_sandi)) {
           setState(() {
             passIcon = new Icon(
-              Icons.check,
-              color: Colors.green,
+              Icons.error,
+              color: Colors.red,
             );
           });
         } else {
           setState(() {
             passIcon = new Icon(
-              Icons.error,
-              color: Colors.red,
+              Icons.check,
+              color: Colors.green,
             );
           });
         }
@@ -233,8 +233,8 @@ class _RegisterFormState extends State<RegisterForm> {
       style: form200Light,
       decoration: InputDecoration(
         hintText: 'Nomor KTP (16 Digit)',
-          labelText: 'Nomor KTP',
-          counterText: '',
+        labelText: 'Nomor KTP',
+        counterText: '',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
@@ -527,11 +527,13 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
-                              _registeringUserData = {"Nama Lengkap" : _namaLengkap,
-                                                      "Kata Sandi" : _kataSandi,
-                                                      "KTP" : _ktp,
-                                                      "NPWP" : _npwp,
-                                                      "Telepon" : _telepon};
+                              _registeringUserData = {
+                                "Nama Lengkap": _namaLengkap,
+                                "Kata Sandi": _kataSandi,
+                                "KTP": _ktp,
+                                "NPWP": _npwp,
+                                "Telepon": _telepon
+                              };
                               if (_ktp == '1234567890123456') {
                                 return Navigator.push(
                                   context,
@@ -543,7 +545,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                 return Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => OtpPhone(userData: _registeringUserData)),
+                                      builder: (context) => OtpPhone(
+                                          userData: _registeringUserData)),
                                 );
                               }
                             }
