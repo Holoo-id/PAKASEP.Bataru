@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
@@ -26,7 +28,7 @@ var menu = [
   {
     "name": "Telusuri Perumahan",
     "image": "images/bg4.png",
-    "link": 6.99,
+    "link": Home(),
   },
   {
     "name": "Persyaratan Pengajuan",
@@ -67,6 +69,8 @@ class _HomeState extends State<Home> {
     _nik = users[0].nik;
   }
 
+  String _userID, _userName, _userKTP;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     futureGetUser();
@@ -127,13 +131,13 @@ class _HomeState extends State<Home> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   AutoSizeText(
-                                    '$_nama',
+                                    _userName,
                                     style: name500Dark,
                                     maxLines: 1,
                                     presetFontSizes: [22, 16.5, 11],
                                   ),
                                   AutoSizeText(
-                                    '( $_nik )',
+                                    _userKTP,
                                     style: subName400Dark,
                                     minFontSize: 1,
                                     presetFontSizes: [14, 10.5, 7],
@@ -333,5 +337,17 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+  _getUserData()async{
+    _userID = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot docSnapToUser = await _firestore.collection("Pengguna").doc(_userID).get();
+    _userName = docSnapToUser.data()["Nama Lengkap"];
+    _userKTP = docSnapToUser.data()["KTP"];
+  }
+  @override
+  void initState() {
+
+    _getUserData();
+    super.initState();
   }
 }

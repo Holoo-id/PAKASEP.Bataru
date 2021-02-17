@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -356,6 +357,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -367,27 +369,30 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
               floating: true,
               pinned: true,
               snap: false,
-              leading: Container(
-                alignment: Alignment.topLeft,
-                color: Colors.transparent,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
+              leading: Platform.isIOS
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        width: 55,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(color: Color(0xffe5e5e5))),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Color(0xff3F414E),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               flexibleSpace: Container(
                 width: size.width,
                 color: Colors.white,

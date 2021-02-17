@@ -1,19 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/users/password/new_password_form.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/utility/style.dart';
 
-class VerifyCodeForm extends StatefulWidget {
-  const VerifyCodeForm({Key key}) : super(key: key);
+class LoginOtp extends StatefulWidget {
+  final String noTelepon;
+  const LoginOtp({Key key, this.noTelepon}) : super(key: key);
   @override
-  _VerifyCodeFormState createState() => _VerifyCodeFormState();
+  _LoginOtpState createState() => _LoginOtpState();
 }
 
-class _VerifyCodeFormState extends State<VerifyCodeForm> {
-  String _kodeVerifikasi;
+class _LoginOtpState extends State<LoginOtp> {
+  String _verificationCode;
+  String _InVerificationCode;
 
   Widget _buildKodeVerifikasi() {
     return TextFormField(
@@ -23,7 +25,7 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
         }
       },
       onSaved: (String value) {
-        _kodeVerifikasi = value;
+        _InVerificationCode = value;
       },
       style: form200Light,
       decoration: InputDecoration(
@@ -48,25 +50,19 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size(size.width, 65),
-        child: BackOnlyAppbar(
-          child: null,
-        ),
-      ),
+      key: _scaffoldKey,
       body: Background(
         child: SingleChildScrollView(
           child: Column(
             children: [
               BackOnlyAppbar(child: null),
               Container(
-                alignment: Alignment.center,
-                height: size.height,
+                height: size.height - 115,
                 padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
                 child: Form(
                   key: _formKey,
@@ -75,7 +71,7 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       AutoSizeText(
-                        'Lupa Kata Sandi?',
+                        'Cek Ponsel Anda!',
                         textAlign: TextAlign.center,
                         style: title900Dark,
                         maxLines: 1,
@@ -89,7 +85,7 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                             maxLines: 1,
                           ),
                           AutoSizeText(
-                            'Kode verifikasi dikirim via SMS digunakan untuk mengubah password',
+                            'Kode verifikasi dikirim via SMS digunakan untuk menkonfirmasi akun anda',
                             textAlign: TextAlign.center,
                             style: subtitle600Light2,
                             maxLines: 2,
@@ -102,17 +98,37 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                             height: 25.0,
                           ),
                           FlatButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
                               }
                               _formKey.currentState.save();
-                              print(_kodeVerifikasi);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => NewPasswordForm()),
-                              );
+                              print(_InVerificationCode);
+                              print("Trying to compare verification ID");
+                              try {
+                                await FirebaseAuth.instance
+                                    .signInWithCredential(
+                                        PhoneAuthProvider.credential(
+                                            verificationId: _verificationCode,
+                                            smsCode: _InVerificationCode))
+                                    .then((value) async {
+                                  if (value.user != null) {
+                                    print('user berhasil login');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Home()),
+                                    );
+                                  }
+                                });
+                              } catch (e) {
+                                FocusScope.of(context).unfocus();
+                                print(e);
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                    content:
+                                        Text("Kode verifikasi tidak cocok!")));
+                                Navigator.of(context).pop();
+                              }
                             },
                             height: 60,
                             minWidth: size.width,
@@ -139,5 +155,47 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
         ),
       ),
     );
+  }
+
+  _verifyPhone() async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: "+62${widget.noTelepon}",
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
+            if (value.user != null) {
+              print('user Auth secara otomatis');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Home()),
+              );
+            }
+          });
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          print("user gagal Auth otomatis");
+          print(e.message);
+        },
+        codeSent: (String verificationID, int resendToken) {
+          print("Mencoba secara manual");
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {
+          print("Proses otomatis telah timeout");
+          setState(() {
+            _verificationCode = verificationID;
+          });
+        },
+        timeout: Duration(seconds: 5));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _verifyPhone();
   }
 }

@@ -133,6 +133,13 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
         child: SingleChildScrollView(
           child: Column(
@@ -141,7 +148,8 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
               Form(
                 key: _formKey,
                 child: Container(
-                  height: size.height - 125,
+                  height: size.height,
+                  alignment: Alignment.center,
                   padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

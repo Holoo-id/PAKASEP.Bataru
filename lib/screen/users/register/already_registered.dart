@@ -21,7 +21,8 @@ class _AlreadyRegisteredState extends State<AlreadyRegistered> {
             children: [
               BackOnlyAppbar(child: null),
               Container(
-                height: size.height - 115,
+                alignment: Alignment.center,
+                height: size.height,
                 padding: EdgeInsets.all(20),
                 child: Center(
                   child: Column(

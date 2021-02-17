@@ -23,11 +23,14 @@ environment:
 dependencies:
   auto_size_text: ^2.1.0
   carousel_pro: ^1.0.0
+  cloud_firestore: ^0.16.0
+  firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
   firebase_ml_vision: ^0.10.0
   geolocator: ^4.0.3
   google_fonts: ^1.1.1
   image_picker: ^0.6.7+21
+  shared_preferences: '>=0.5.12+4 <2.0.0'
   flutter:
     sdk: flutter
 
@@ -57,23 +60,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/b5.png
-    - images/b4.png
-    - images/b3.png
-    - images/b2.png
-    - images/b1.png
-    - images/bg6.png
-    - images/bg5.png
-    - images/bg4.png
-    - images/bg3.png
-    - images/bg2.png
-    - images/bg1.png
-    - images/l1.png
-    - images/p1.png
-    - images/pakasep_logo.png
-    - images/r3.png
-    - images/r2.jpg
-    - images/r1.jpg
+    - images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
@@ -8,44 +9,123 @@ class FilingStatus extends StatefulWidget {
   _FilingStatusState createState() => _FilingStatusState();
 }
 
+// dapat diedit sesuai db
+var _process = [
+  {
+    "process": "Kirim Data",
+    "status": "selesai",
+  },
+  {
+    "process": "Pengecekan SLIK (BI Checking)",
+    "status": "selesai",
+  },
+  {
+    "process": "Verifikasi Bank",
+    "status": "selesai",
+  },
+  {
+    "process": "Pencairan Dana FLPP",
+    "status": "diproses",
+  },
+  {
+    "process": "Tunggu Konfirmasi",
+    "status": "gagal",
+  },
+];
+
 class _FilingStatusState extends State<FilingStatus> {
   bool _hasChoose = true;
+
+  Widget _fillProcess() {
+    List<Widget> list = new List<Widget>();
+    Color _color;
+    for (var i = 0; i < _process.length; i++) {
+      print(i);
+      switch (_process[i]['status']) {
+        case 'selesai':
+          _color = Theme.of(context).accentColor;
+          break;
+        case 'gagal':
+          _color = Color(0xff851414);
+          break;
+        default:
+          _color = Theme.of(context).primaryColor;
+          break;
+      }
+      list.add(
+        Column(
+          children: [
+            Container(
+              height: 40,
+              width: 350,
+              padding: EdgeInsets.symmetric(vertical: 7.5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: _color,
+              ),
+              child: AutoSizeText(
+                _process[i]['process'].toString(),
+                textAlign: TextAlign.center,
+                style: title700Light,
+                presetFontSizes: [16, 12, 8],
+              ),
+            ),
+            i % 2 == 1
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(22 / 7),
+                    child: Image.asset('images/l1.png'),
+                  )
+                : Image.asset('images/l1.png'),
+          ],
+        ),
+      );
+    }
+    return Column(
+      children: list,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              toolbarHeight: 130,
+              toolbarHeight: 180,
               leadingWidth: 70,
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               floating: true,
               pinned: true,
               snap: false,
-              leading: Container(
-                alignment: Alignment.topLeft,
-                color: Colors.transparent,
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
+              leading: Platform.isIOS
+                  ? Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.transparent,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(15, 10, 0, 0),
+                        width: 55,
+                        height: 55,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            border: Border.all(color: Color(0xffe5e5e5))),
+                        child: IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Color(0xff3F414E),
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               flexibleSpace: Container(
                 width: size.width,
                 color: Colors.white,
@@ -66,6 +146,16 @@ class _FilingStatusState extends State<FilingStatus> {
                         SizedBox(
                           height: 25,
                         ),
+                        AutoSizeText(
+                          'Setelah memilih rumah dan mengajukan permohonan, data anda akan kami kirim ke bank untuk proses lanjutan.',
+                          style: text500Grey,
+                          maxLines: 3,
+                          textAlign: TextAlign.center,
+                          presetFontSizes: [16, 12, 8],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ),
                   ),
@@ -80,140 +170,7 @@ class _FilingStatusState extends State<FilingStatus> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    AutoSizeText(
-                      'Setelah memilih rumah dan mengajukan permohonan, data anda akan kami kirim ke bank untuk proses lanjutan.',
-                      style: text500Grey,
-                      maxLines: 3,
-                      textAlign: TextAlign.center,
-                      presetFontSizes: [16, 12, 8],
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).accentColor,
-                      ),
-                      child: AutoSizeText(
-                        'Data Anda Sudah Dikirim',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Image.asset('images/l1.png'),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).accentColor,
-                      ),
-                      child: AutoSizeText(
-                        'Proses Pengecekan SLIK (BI Checking)',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(22 / 7),
-                      child: Image.asset('images/l1.png'),
-                    ),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Colors.red,
-                      ),
-                      child: AutoSizeText(
-                        'Hasil SLIK (BI Checking)',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Image.asset('images/l1.png'),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: AutoSizeText(
-                        'Verifikasi Bank',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(22 / 7),
-                      child: Image.asset('images/l1.png'),
-                    ),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: AutoSizeText(
-                        'Lolos Verifikasi Bank',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Image.asset('images/l1.png'),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: AutoSizeText(
-                        'Proses Pencairan Dana FLPP',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(22 / 7),
-                      child: Image.asset('images/l1.png'),
-                    ),
-                    Container(
-                      height: 40,
-                      width: size.width,
-                      padding: EdgeInsets.symmetric(vertical: 7.5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      child: AutoSizeText(
-                        'Tunggu Konfirmasi',
-                        textAlign: TextAlign.center,
-                        style: title700Light,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                    ),
-                    Image.asset('images/l1.png'),
+                    _fillProcess(),
                     AutoSizeText(
                       'Selamat Anda Punya Rumah!',
                       style: title600Dark,
@@ -253,7 +210,7 @@ class _FilingStatusState extends State<FilingStatus> {
                             Container(
                               height: 25,
                               width: 25,
-                              color: Colors.red,
+                              color: Color(0xff851414),
                             ),
                             SizedBox(
                               width: 10,

@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/already_registered.dart';
-import 'package:pakasep/screen/users/register/image_approval.dart';
-import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
+import 'package:pakasep/screen/users/register/otp_phone.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -19,6 +19,7 @@ class _RegisterFormState extends State<RegisterForm> {
   String _ktp;
   String _npwp;
   String _telepon;
+  Map<String, dynamic> _registeringUserData;
 
   Icon namaIcon = new Icon(null);
   Icon passIcon = new Icon(null);
@@ -228,7 +229,8 @@ class _RegisterFormState extends State<RegisterForm> {
       style: form200Light,
       decoration: InputDecoration(
         hintText: 'Nomor KTP (16 Digit)',
-        labelText: 'Nomor KTP',
+          labelText: 'Nomor KTP',
+          counterText: '',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
@@ -283,6 +285,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Nomor KTP (16 Digit)',
         labelText: 'Konfirmasi Nomor KTP',
         labelStyle: form400Light,
@@ -347,6 +350,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Nomor NPWP (15 Digit)',
         labelText: 'Nomor NPWP',
         labelStyle: form400Light,
@@ -402,11 +406,13 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: 'Nomor Telepon',
+        hintText: '89012345678',
         labelText: 'Nomor Telepon',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
+        prefixText: '+62 ',
+        prefixStyle: text600Dark,
         suffixIcon: teleponIcon,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -425,43 +431,23 @@ class _RegisterFormState extends State<RegisterForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                leadingWidth: 75,
-                toolbarHeight: 65,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                floating: false,
-                pinned: true,
-                snap: false,
-                leading: Container(
-                  margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                  width: 55,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                      border: Border.all(color: Color(0xffe5e5e5))),
-                  child: IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Color(0xff3F414E),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ),
-            ];
-          },
-          body: SingleChildScrollView(
+        child: Container(
+          height: size.height,
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
             // height: size.height,
             padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
             child: Form(
@@ -521,6 +507,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       Checkbox(
                         value: _agreedToTOS,
                         onChanged: _setAgreedToTOS,
+                        activeColor: Theme.of(context).primaryColor,
                       ),
                     ],
                   ),
@@ -536,6 +523,11 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
+                              _registeringUserData = {"Nama Lengkap" : _namaLengkap.trim(),
+                                                      "Kata Sandi" : _kataSandi.trim(),
+                                                      "KTP" : _ktp.trim(),
+                                                      "NPWP" : _npwp.trim(),
+                                                      "Telepon" : _telepon.trim()};
                               if (_ktp == '1234567890123456') {
                                 return Navigator.push(
                                   context,
@@ -547,7 +539,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 return Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => KtpPhotoPage()),
+                                      builder: (context) => OtpPhone(userData: _registeringUserData)),
                                 );
                               }
                             }

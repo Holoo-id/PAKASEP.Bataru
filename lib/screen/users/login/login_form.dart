@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/model_sqlite/userLogged.dart';
 import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/home.dart';
+import 'package:pakasep/screen/users/login/login_otp.dart';
 import 'package:pakasep/screen/users/password/phone_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/style.dart';
@@ -17,9 +18,31 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  String _ktp;
+  String _kataSandi;
+  String _nomorTelepon;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  String _ktp = "1234567890123456";
-  String _kataSandi = "qwertyuiop";
+  Future<String> createAlertDialog(BuildContext context){
+    TextEditingController TEVerifikasiKode = TextEditingController();
+    return showDialog(context: context,builder: (context){
+      return AlertDialog(
+        title: Text("Masukkan kode verifikasi yang telah dikirim ke nomor anda:"),
+        content: TextField(
+          controller: TEVerifikasiKode,
+        ),
+        actions: <Widget>[
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('Submit'),
+            onPressed: () {
+                Navigator.of(context).pop(TEVerifikasiKode.text.toString());
+            },
+          )
+        ],
+      );
+    });
+  }
 
   Widget _buildKataSandi() {
     return TextFormField(
@@ -32,15 +55,13 @@ class _LoginFormState extends State<LoginForm> {
         if (value.length < 5) {
           return 'Kata sandi terlalu pendek';
         }
-        if (value != _kataSandi) {
-          return 'Kata sandi salah atau tidak sesuai';
-        }
       },
       onSaved: (String value) {
         _kataSandi = value;
       },
       style: form200Light,
       decoration: InputDecoration(
+          counterText: '',
           hintText: 'Kata Sandi',
           labelText: 'Kata Sandi',
           labelStyle: form400Light,
@@ -74,15 +95,13 @@ class _LoginFormState extends State<LoginForm> {
         if (value.length < 16) {
           return 'Harus diisi 16 digit Nomor KTP';
         }
-        if (value != _ktp) {
-          return 'Akun tidak ditemukan atau belum terdaftar';
-        }
       },
       onSaved: (String value) {
         _ktp = value;
       },
       style: form200Light,
       decoration: InputDecoration(
+        counterText: '',
         hintText: 'Nomor KTP (16 Digit)',
         labelText: 'Nomor KTP',
         labelStyle: form400Light,
@@ -104,26 +123,33 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: Background(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              BackOnlyAppbar(
-                child: null,
-              ),
               Form(
                 key: _formKey,
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0),
-                  height: size.height - 125,
+                  height: size.height,
+                  alignment: Alignment.center,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Text(
                         'Masuk Akun',
@@ -143,14 +169,13 @@ class _LoginFormState extends State<LoginForm> {
                             height: 55.0,
                           ),
                           FlatButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
                               }
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-
                               UserLoggedDB userLoggedDB = UserLoggedDB();
 
                               final user = UserLogged(
@@ -167,6 +192,23 @@ class _LoginFormState extends State<LoginForm> {
                                 context,
                                 MaterialPageRoute(builder: (context) => Home()),
                               );
+                              CollectionReference _searchUser = _firestore.collection("Pengguna");
+                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot){
+                                if(_snapshot.docs.length > 0){
+                                  _snapshot.docs.forEach((element) {
+                                    print(element.data()["Telepon"]);
+                                    _nomorTelepon = element.data()["Telepon"];
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => LoginOtp(noTelepon: _nomorTelepon,)),
+                                    );
+                                  });
+                                }
+                                else{
+                                  print("empty query");
+                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Password atau No KTP mu salah!")));
+                                }
+                              });
                             },
                             height: 60,
                             minWidth: size.width,
