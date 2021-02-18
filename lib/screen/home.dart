@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/all_available_units.dart';
 import 'package:pakasep/screen/contents/filing_requirements.dart';
@@ -12,6 +13,7 @@ import 'package:pakasep/screen/users/user_guide.dart';
 import 'package:pakasep/utility/style.dart';
 
 class Home extends StatefulWidget {
+
   @override
   Home({Key key}) : super(key: key);
   _HomeState createState() => _HomeState();
@@ -51,10 +53,27 @@ var menu = [
 ];
 
 class _HomeState extends State<Home> {
+
+  String _nik;
+  String _nama;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  futureGetUser() async {
+    UserLoggedDB userLoggedDB = UserLoggedDB();
+    var users = await userLoggedDB.fetchUser();
+    _nama = users[0].nama;
+    _nik = users[0].nik;
+  }
+
   String _userID, _userName, _userKTP;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
+    futureGetUser();
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(

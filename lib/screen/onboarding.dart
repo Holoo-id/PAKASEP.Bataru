@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/model_sqlite/userLoggedDB.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/location_permission.dart';
 import 'package:pakasep/utility/style.dart';
 // import 'package:permission_handler/permission_handler.dart';
@@ -13,9 +15,31 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  @override
+  void initState() {
+    futureUserCount();
+
+    super.initState();
+  }
+
+  futureUserCount<int>() async {
+
+    UserLoggedDB userLoggedDB = UserLoggedDB();
+    var count = await userLoggedDB.getLength();
+
+    if (count > 0) {
+      Navigator.push(context, MaterialPageRoute(
+          builder: (context) => Home()
+      ));
+    }
+  }
+
+
   final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
+
+
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
