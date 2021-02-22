@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
@@ -22,6 +23,10 @@ class _OtpPhoneState extends State<OtpPhone> {
 
   Widget _buildKodeVerifikasi() {
     return TextFormField(
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
       validator: (String value) {
         if (value.isEmpty) {
           return 'Kode Verifikasi tidak boleh kosong';

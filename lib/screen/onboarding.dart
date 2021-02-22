@@ -85,7 +85,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  height: size.height * 0.8125,
+                  height: size.height * 0.825,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
