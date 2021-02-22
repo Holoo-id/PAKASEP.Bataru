@@ -52,15 +52,6 @@ var menu = [
 ];
 
 class _HomeState extends State<Home> {
-  String _nik;
-  String _nama;
-
-  // futureGetUser() async {
-  //   UserLoggedDB userLoggedDB = UserLoggedDB();
-  //   var users = await userLoggedDB.fetchUser();
-  //   _nama = users[0].nama;
-  //   _nik = users[0].nik;
-  // }
 
   String _userID, _userName, _userKTP;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;

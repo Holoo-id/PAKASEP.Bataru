@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
@@ -11,51 +12,6 @@ class AllAvailableUnits extends StatefulWidget {
   AllAvailableUnits({Key key}) : super(key: key);
   _AllAvailableUnitsState createState() => _AllAvailableUnitsState();
 }
-
-var units = [
-  {
-    "image": "images/r1.jpg",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-  {
-    "image": "images/bg4.png",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-  {
-    "image": "images/bg4.png",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-  {
-    "image": "images/bg4.png",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-  {
-    "image": "images/bg4.png",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-  {
-    "image": "images/bg4.png",
-    "name": "Perumahan Griya Caraka Indah",
-    "location": "Cimalaka, Kab. Sumedang Jawa Barat",
-    "association": "PT TRI KARYA LINGGA (ASPRUMNAS)",
-    "link": UnitDetail(),
-  },
-];
 
 class _AllAvailableUnitsState extends State<AllAvailableUnits> {
   String associationsChoose;
@@ -318,7 +274,9 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                             _buildAssociations(),
                           ],
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           decoration: BoxDecoration(
                             color: Color(0xffF2F3F7),
@@ -361,86 +319,167 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
             ),
           ];
         },
-        body: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Container(
-                child: GridView.count(
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                  childAspectRatio: (1 / 1.64),
-                  controller: new ScrollController(keepScrollOffset: false),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  children: List<Widget>.generate(units.length, (index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => units[index]['link']),
-                        );
-                      },
-                      child: GridTile(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                height: size.width / 2,
-                                decoration: BoxDecoration(
-                                  color: Color(0xffc4c4c4),
-                                  borderRadius: BorderRadius.circular(8),
-                                  image: DecorationImage(
-                                    image: AssetImage(units[index]['image']),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10),
+        body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final List<DocumentSnapshot> documents = snapshot.data.docs;
+              return GridView(
+                children: documents
+                    .map((doc) => Card(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    // builder: (context) => units[index]['link'],
+                                    ),
+                              );
+                            },
+                            child: GridTile(
+                              child: Container(
                                 child: Column(
-                                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    AutoSizeText(
-                                      units[index]['name'],
-                                      style: title600Dark,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      presetFontSizes: [15, 10.75, 7.5],
+                                    Container(
+                                      // height: size.width / 2,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffc4c4c4),
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                            'images/r1.png',
+                                            // units[index]['image'],
+                                          ),
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
                                     ),
-                                    AutoSizeText(
-                                      units[index]['location'],
-                                      style: text400Grey,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      presetFontSizes: [12, 9, 6],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    AutoSizeText(
-                                      units[index]['association'],
-                                      style: text400Grey,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      presetFontSizes: [6, 4.5, 3],
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          AutoSizeText(
+                                            doc["nama_tempat"],
+                                            style: title600Dark,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            presetFontSizes: [15, 10.75, 7.5],
+                                          ),
+                                          AutoSizeText(
+                                            doc["alamat"],
+                                            style: text400Grey,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            presetFontSizes: [12, 9, 6],
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          AutoSizeText(
+                                            doc["asosiasi"],
+                                            style: text400Grey,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            presetFontSizes: [6, 4.5, 3],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ),
-          ),
+                          // child: ListTile(
+                          //   title: Text(doc["nama_tempat"]),
+                          //   subtitle: Text(doc["alamat"]),
+                          // ),
+                        ))
+                    .toList(),
+              );
+            } else {
+              print('Terjadi Kesalahan');
+              CircularProgressIndicator();
+            }
+          },
         ),
+        // body: SingleChildScrollView(
+        //   padding: EdgeInsets.symmetric(horizontal: 10),
+        //   child: Container(
+        //     child: GridView.count(
+        //       crossAxisSpacing: 10,
+        //       mainAxisSpacing: 10,
+        //       crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
+        //       childAspectRatio: (1 / 1.64),
+        //       controller: new ScrollController(keepScrollOffset: false),
+        //       shrinkWrap: true,
+        //       scrollDirection: Axis.vertical,
+        //       children: List<Widget>.generate(units.length, (index) {
+        //         return GestureDetector(
+        //           onTap: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (context) => units[index]['link']),
+        //             );
+        //           },
+        //           child: GridTile(
+        //             child: Container(
+        //               child: Column(
+        //                 children: [
+        //                   Container(
+        //                     height: size.width / 2,
+        //                     decoration: BoxDecoration(
+        //                       color: Color(0xffc4c4c4),
+        //                       borderRadius: BorderRadius.circular(8),
+        //                       image: DecorationImage(
+        //                         image: AssetImage(units[index]['image']),
+        //                         fit: BoxFit.cover,
+        //                       ),
+        //                     ),
+        //                   ),
+        //                   Padding(
+        //                     padding: EdgeInsets.all(10),
+        //                     child: Column(
+        //                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                       children: [
+        //                         AutoSizeText(
+        //                           units[index]['name'],
+        //                           style: title600Dark,
+        //                           textAlign: TextAlign.center,
+        //                           maxLines: 2,
+        //                           presetFontSizes: [15, 10.75, 7.5],
+        //                         ),
+        //                         AutoSizeText(
+        //                           units[index]['location'],
+        //                           style: text400Grey,
+        //                           textAlign: TextAlign.center,
+        //                           maxLines: 2,
+        //                           presetFontSizes: [12, 9, 6],
+        //                         ),
+        //                         SizedBox(
+        //                           height: 5,
+        //                         ),
+        //                         AutoSizeText(
+        //                           units[index]['association'],
+        //                           style: text400Grey,
+        //                           textAlign: TextAlign.center,
+        //                           maxLines: 1,
+        //                           presetFontSizes: [6, 4.5, 3],
+        //                         ),
+        //                       ],
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           ),
+        //         );
+        //       }),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
