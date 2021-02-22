@@ -25,31 +25,30 @@ class MyApp extends StatefulWidget {
 
 class _MyApp extends State<MyApp> {
 
-  @override
-  void initState() {
-    futureUserCount();
-    super.initState();
-  }
-  futureUserCount<int>() async {
+  // @override
+  // void initState() {
+  //   futureUserCount();
+  //   super.initState();
+  // }
+  // futureUserCount<int>() async {
 
-    UserLoggedDB userLoggedDB = UserLoggedDB();
-    var count = await userLoggedDB.getLength();
+  //   UserLoggedDB userLoggedDB = UserLoggedDB();
+  //   var count = await userLoggedDB.getLength();
 
-    if (count > 0) {
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => Home()
-      ));
-    }
-  }
+  //   if (count > 0) {
+  //     Navigator.push(context, MaterialPageRoute(
+  //         builder: (context) => Home()
+  //     ));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Onboarding UI',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: OnboardingScreen(),
       theme: mainTheme(),
-
     );
   }
 }
