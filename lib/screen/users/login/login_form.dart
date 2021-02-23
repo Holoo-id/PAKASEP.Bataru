@@ -6,6 +6,7 @@ import 'package:pakasep/model_sqlite/userLogged.dart';
 import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/login/login_otp.dart';
 import 'package:pakasep/screen/users/password/phone_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
@@ -176,22 +177,16 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-                              UserLoggedDB userLoggedDB = UserLoggedDB();
+                              // UserLoggedDB userLoggedDB = UserLoggedDB();
 
-                              final user = UserLogged(
-                                  id: "1",
-                                  nik: _ktp,
-                                  nama: "Contoh 123",
-                                  status: "Logged"
-                              );
+                              // final user = UserLogged(
+                              //     id: "1",
+                              //     nik: _ktp,
+                              //     nama: "Contoh 123",
+                              //     status: "Logged"
+                              // );
 
-                              userLoggedDB.insertDB(user);
-
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Home()),
-                              );
+                              // userLoggedDB.insertDB(user);
                               CollectionReference _searchUser = _firestore.collection("Pengguna");
                               await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot){
                                 if(_snapshot.docs.length > 0){
@@ -209,6 +204,10 @@ class _LoginFormState extends State<LoginForm> {
                                   _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Password atau No KTP mu salah!")));
                                 }
                               });
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Home()),
+                              );
                             },
                             height: 60,
                             minWidth: size.width,

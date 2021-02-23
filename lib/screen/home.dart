@@ -13,7 +13,6 @@ import 'package:pakasep/screen/users/user_guide.dart';
 import 'package:pakasep/utility/style.dart';
 
 class Home extends StatefulWidget {
-
   @override
   Home({Key key}) : super(key: key);
   _HomeState createState() => _HomeState();
@@ -54,26 +53,11 @@ var menu = [
 
 class _HomeState extends State<Home> {
 
-  String _nik;
-  String _nama;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  futureGetUser() async {
-    UserLoggedDB userLoggedDB = UserLoggedDB();
-    var users = await userLoggedDB.fetchUser();
-    _nama = users[0].nama;
-    _nik = users[0].nik;
-  }
-
   String _userID, _userName, _userKTP;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    futureGetUser();
+    // futureGetUser();
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
@@ -105,49 +89,49 @@ class _HomeState extends State<Home> {
                         maxLines: 1,
                         presetFontSizes: [28, 21, 14],
                       ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //           builder: (context) => EditProfilForm()),
-                      //     );
-                      //   },
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     children: <Widget>[
-                      //       CircleAvatar(
-                      //         backgroundImage: AssetImage('images/p1.png'),
-                      //         radius: 40,
-                      //       ),
-                      //       SizedBox(
-                      //         width: 20,
-                      //       ),
-                      //       Container(
-                      //         // width: size.width - 112,
-                      //         child: Column(
-                      //           // mainAxisAlignment: MainAxisAlignment.center,
-                      //           crossAxisAlignment: CrossAxisAlignment.start,
-                      //           children: <Widget>[
-                      //             AutoSizeText(
-                      //               _userName,
-                      //               style: name500Dark,
-                      //               maxLines: 1,
-                      //               presetFontSizes: [22, 16.5, 11],
-                      //             ),
-                      //             AutoSizeText(
-                      //               _userKTP,
-                      //               style: subName400Dark,
-                      //               minFontSize: 1,
-                      //               presetFontSizes: [14, 10.5, 7],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfilForm()),
+                          );
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundImage: AssetImage('images/p1.png'),
+                              radius: 40,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              // width: size.width - 112,
+                              child: Column(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  AutoSizeText(
+                                    _userName,
+                                    style: name500Dark,
+                                    maxLines: 1,
+                                    presetFontSizes: [22, 16.5, 11],
+                                  ),
+                                  AutoSizeText(
+                                    _userKTP,
+                                    style: subName400Dark,
+                                    minFontSize: 1,
+                                    presetFontSizes: [14, 10.5, 7],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: size.width * 0.1),
@@ -338,17 +322,18 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  _getUserData()async{
+
+  _getUserData() async {
     _userID = FirebaseAuth.instance.currentUser.uid;
-    DocumentSnapshot docSnapToUser = await _firestore.collection("Pengguna").doc(_userID).get();
+    DocumentSnapshot docSnapToUser =
+        await _firestore.collection("Pengguna").doc(_userID).get();
     _userName = docSnapToUser.data()["Nama Lengkap"];
     _userKTP = docSnapToUser.data()["KTP"];
   }
+
   @override
   void initState() {
-
     _getUserData();
-    // _getUserData();
     super.initState();
   }
 }
