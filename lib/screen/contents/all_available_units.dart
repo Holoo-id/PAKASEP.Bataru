@@ -325,77 +325,83 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
             if (snapshot.hasData) {
               final List<DocumentSnapshot> documents = snapshot.data.docs;
               return GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: (1 / 1.64),
+                ),
                 children: documents
-                    .map((doc) => Card(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    // builder: (context) => units[index]['link'],
-                                    ),
-                              );
-                            },
-                            child: GridTile(
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      // height: size.width / 2,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffc4c4c4),
-                                        borderRadius: BorderRadius.circular(8),
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                            'images/r1.png',
-                                            // units[index]['image'],
-                                          ),
-                                          fit: BoxFit.fitWidth,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Column(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          AutoSizeText(
-                                            doc["nama_tempat"],
-                                            style: title600Dark,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            presetFontSizes: [15, 10.75, 7.5],
-                                          ),
-                                          AutoSizeText(
-                                            doc["alamat"],
-                                            style: text400Grey,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 2,
-                                            presetFontSizes: [12, 9, 6],
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          AutoSizeText(
-                                            doc["asosiasi"],
-                                            style: text400Grey,
-                                            textAlign: TextAlign.center,
-                                            maxLines: 1,
-                                            presetFontSizes: [6, 4.5, 3],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
+                    .map(
+                      (doc) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                // builder: (context) => units[index]['link'],
                                 ),
-                              ),
+                          );
+                        },
+                        child: GridTile(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  // height: size.width / 2,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffc4c4c4),
+                                    borderRadius: BorderRadius.circular(8),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        'images/r1.png',
+                                        // units[index]['image'],
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      AutoSizeText(
+                                        doc["nama_tempat"],
+                                        style: title600Dark,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        presetFontSizes: [15, 10.75, 7.5],
+                                      ),
+                                      AutoSizeText(
+                                        doc["alamat"],
+                                        style: text400Grey,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        presetFontSizes: [12, 9, 6],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      AutoSizeText(
+                                        doc["asosiasi"],
+                                        style: text400Grey,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        presetFontSizes: [6, 4.5, 3],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          // child: ListTile(
-                          //   title: Text(doc["nama_tempat"]),
-                          //   subtitle: Text(doc["alamat"]),
-                          // ),
-                        ))
+                        ),
+                      ),
+                      // child: ListTile(
+                      //   title: Text(doc["nama_tempat"]),
+                      //   subtitle: Text(doc["alamat"]),
+                      // ),
+                    )
                     .toList(),
               );
             } else {
