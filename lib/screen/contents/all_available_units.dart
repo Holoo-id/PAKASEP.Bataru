@@ -319,32 +319,34 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
             ),
           ];
         },
-        body: Container(
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print('Terjadi Kesalahan');
-              }
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                  print('No Data');
-                  break;
-                case ConnectionState.waiting:
-                  print('Loading...');
-                  Center(
-                    child: CircularProgressIndicator(),
-                  );
-                  break;
-                default:
-                  if (snapshot.hasData) {
-                    final List<DocumentSnapshot> documents = snapshot.data.docs;
-                    return GridView(
+        body: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              print('Terjadi Kesalahan');
+            }
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+                print('No Data');
+                break;
+              case ConnectionState.waiting:
+                print('Loading...');
+                Center(
+                  child: CircularProgressIndicator(),
+                );
+                break;
+              default:
+                if (snapshot.hasData) {
+                  final List<DocumentSnapshot> documents = snapshot.data.docs;
+                  return Container(
+                    height: size.height,
+                    padding: EdgeInsets.all(15),
+                    child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 12,
                         mainAxisSpacing: 12,
-                        childAspectRatio: (1 / 1.64),
+                        childAspectRatio: (188 / 265),
                       ),
                       children: documents
                           .map(
@@ -364,17 +366,18 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                   child: Column(
                                     children: [
                                       Container(
-                                        // height: size.width / 2,
+                                        // child: Text(doc["gambar"].toString()),
+                                        height: 188,
                                         decoration: BoxDecoration(
                                           color: Color(0xffc4c4c4),
                                           borderRadius:
                                               BorderRadius.circular(8),
                                           image: DecorationImage(
-                                            image: AssetImage(
-                                              'images/r1.jpg',
-                                              // units[index]['image'],
+                                            image: NetworkImage(
+                                              // 'images/one_line_art_rumah.png',
+                                              doc["gambar"][0],
                                             ),
-                                            fit: BoxFit.fitWidth,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
@@ -415,18 +418,14 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                 ),
                               ),
                             ),
-                            // child: ListTile(
-                            //   title: Text(doc["nama_tempat"]),
-                            //   subtitle: Text(doc["alamat"]),
-                            // ),
                           )
                           .toList(),
-                    );
-                  }
-                  break;
-              }
-            },
-          ),
+                    ),
+                  );
+                }
+                break;
+            }
+          },
         ),
       ),
     );
