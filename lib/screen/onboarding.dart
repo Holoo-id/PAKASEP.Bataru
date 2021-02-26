@@ -144,13 +144,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               padding: EdgeInsets.only(top: 10.0),
                               child: Column(
                                 children: <Widget>[
-                                  // AutoSizeText(
-                                  //   'Ingin punya rumah?\nBingung cari developer?\nSusah urus KPR?',
-                                  //   style: title700Light,
-                                  //   textAlign: TextAlign.center,
-                                  //   maxLines: 3,
-                                  //   presetFontSizes: [30, 22.5, 15],
-                                  // ),
                                   AutoSizeText.rich(
                                     TextSpan(
                                       style: title400Light,

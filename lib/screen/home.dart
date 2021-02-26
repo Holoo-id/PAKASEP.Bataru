@@ -21,38 +21,37 @@ class Home extends StatefulWidget {
 var menu = [
   {
     "name": "Lihat Semua Perumahan",
-    "image": "images/bg4.png",
+    "image": "images/lihat semua perumahan.png",
     "link": AllAvailableUnits(),
   },
   {
     "name": "Telusuri Perumahan",
-    "image": "images/bg4.png",
+    "image": "images/telusuri rumah.png",
     "link": Home(),
   },
   {
     "name": "Persyaratan Pengajuan",
-    "image": "images/bg4.png",
+    "image": "images/pengajuan.png",
     "link": FilingRequirements(),
   },
   {
     "name": "Cek Status Pengajuan",
-    "image": "images/bg4.png",
+    "image": "images/cek status pengajuan.png",
     "link": FilingStatus(),
   },
   {
     "name": "Kalkulator & Simulasi KPR",
-    "image": "images/bg4.png",
+    "image": "images/kalkulator.png",
     "link": KprCalcSimulation(),
   },
   {
     "name": "Panduan Penggunaan",
-    "image": "images/bg4.png",
+    "image": "images/panduan pengguna.png",
     "link": UserGuide(),
   },
 ];
 
 class _HomeState extends State<Home> {
-
   String _userID, _userName, _userKTP;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override

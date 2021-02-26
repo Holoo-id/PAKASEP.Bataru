@@ -20,7 +20,7 @@ class IntroBackground extends StatelessWidget {
             left: 0,
             child: Image(
                 image: AssetImage(
-                  'images/bg2.png',
+                  'images/intro.png',
                 ),
                 fit: BoxFit.fitWidth,
                 width: size.width,
