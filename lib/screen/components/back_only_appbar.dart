@@ -37,7 +37,7 @@ class BackOnlyAppbar extends StatelessWidget {
         ),
       );
     } else {
-      return Container();
+      return Container(height: 0, width: 0);
     }
   }
 }

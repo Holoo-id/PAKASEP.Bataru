@@ -60,7 +60,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                       Expanded(
                         flex: 0,
                         child: imageFile == null
-                            ? Container()
+                            ? Container(height: 0, width: 0)
                             : Image.file(
                                 imageFile,
                                 fit: BoxFit.cover,

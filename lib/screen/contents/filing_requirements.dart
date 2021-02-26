@@ -53,7 +53,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Container(height: 0, width: 0),
               flexibleSpace: Container(
                 width: size.width,
                 color: Colors.white,

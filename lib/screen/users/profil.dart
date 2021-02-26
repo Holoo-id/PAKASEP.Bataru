@@ -286,7 +286,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
                   ),
                 ),
               )
-            : Container(),
+            : Container(height: 0, width: 0),
         actions: [
           FlatButton(
             onPressed: () {

@@ -235,7 +235,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Container(height: 0, width: 0),
               centerTitle: true,
               flexibleSpace: Container(
                 // margin: EdgeInsets.only(top: 50),
@@ -319,173 +319,115 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
             ),
           ];
         },
-        body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final List<DocumentSnapshot> documents = snapshot.data.docs;
-              return GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: (1 / 1.64),
-                ),
-                children: documents
-                    .map(
-                      (doc) => GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                // builder: (context) => units[index]['link'],
-                                ),
-                          );
-                        },
-                        child: GridTile(
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  // height: size.width / 2,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffc4c4c4),
-                                    borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        'images/r1.png',
-                                        // units[index]['image'],
-                                      ),
-                                      fit: BoxFit.fitWidth,
+        body: Container(
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print('Terjadi Kesalahan');
+              }
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                  print('No Data');
+                  break;
+                case ConnectionState.waiting:
+                  print('Loading...');
+                  Center(
+                    child: CircularProgressIndicator(),
+                  );
+                  break;
+                default:
+                  if (snapshot.hasData) {
+                    final List<DocumentSnapshot> documents = snapshot.data.docs;
+                    return GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: (1 / 1.64),
+                      ),
+                      children: documents
+                          .map(
+                            (doc) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UnitDetail(
+                                      idUnit: doc.id,
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(10),
+                                );
+                              },
+                              child: GridTile(
+                                child: Container(
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      AutoSizeText(
-                                        doc["nama_tempat"],
-                                        style: title600Dark,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        presetFontSizes: [15, 10.75, 7.5],
+                                      Container(
+                                        // height: size.width / 2,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xffc4c4c4),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                            image: AssetImage(
+                                              'images/r1.jpg',
+                                              // units[index]['image'],
+                                            ),
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        ),
                                       ),
-                                      AutoSizeText(
-                                        doc["alamat"],
-                                        style: text400Grey,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        presetFontSizes: [12, 9, 6],
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      AutoSizeText(
-                                        doc["asosiasi"],
-                                        style: text400Grey,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 1,
-                                        presetFontSizes: [6, 4.5, 3],
+                                      Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Column(
+                                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            AutoSizeText(
+                                              doc["nama_tempat"],
+                                              style: title600Dark,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                              presetFontSizes: [16, 12, 8],
+                                            ),
+                                            AutoSizeText(
+                                              doc["alamat"],
+                                              style: text400Grey,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 2,
+                                              presetFontSizes: [12, 9, 6],
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            AutoSizeText(
+                                              doc["asosiasi"],
+                                              style: text400Grey,
+                                              textAlign: TextAlign.center,
+                                              maxLines: 1,
+                                              presetFontSizes: [8, 6, 4],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      // child: ListTile(
-                      //   title: Text(doc["nama_tempat"]),
-                      //   subtitle: Text(doc["alamat"]),
-                      // ),
-                    )
-                    .toList(),
-              );
-            } else {
-              print('Terjadi Kesalahan');
-              CircularProgressIndicator();
-            }
-          },
+                            // child: ListTile(
+                            //   title: Text(doc["nama_tempat"]),
+                            //   subtitle: Text(doc["alamat"]),
+                            // ),
+                          )
+                          .toList(),
+                    );
+                  }
+                  break;
+              }
+            },
+          ),
         ),
-        // body: SingleChildScrollView(
-        //   padding: EdgeInsets.symmetric(horizontal: 10),
-        //   child: Container(
-        //     child: GridView.count(
-        //       crossAxisSpacing: 10,
-        //       mainAxisSpacing: 10,
-        //       crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-        //       childAspectRatio: (1 / 1.64),
-        //       controller: new ScrollController(keepScrollOffset: false),
-        //       shrinkWrap: true,
-        //       scrollDirection: Axis.vertical,
-        //       children: List<Widget>.generate(units.length, (index) {
-        //         return GestureDetector(
-        //           onTap: () {
-        //             Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (context) => units[index]['link']),
-        //             );
-        //           },
-        //           child: GridTile(
-        //             child: Container(
-        //               child: Column(
-        //                 children: [
-        //                   Container(
-        //                     height: size.width / 2,
-        //                     decoration: BoxDecoration(
-        //                       color: Color(0xffc4c4c4),
-        //                       borderRadius: BorderRadius.circular(8),
-        //                       image: DecorationImage(
-        //                         image: AssetImage(units[index]['image']),
-        //                         fit: BoxFit.cover,
-        //                       ),
-        //                     ),
-        //                   ),
-        //                   Padding(
-        //                     padding: EdgeInsets.all(10),
-        //                     child: Column(
-        //                       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //                       children: [
-        //                         AutoSizeText(
-        //                           units[index]['name'],
-        //                           style: title600Dark,
-        //                           textAlign: TextAlign.center,
-        //                           maxLines: 2,
-        //                           presetFontSizes: [15, 10.75, 7.5],
-        //                         ),
-        //                         AutoSizeText(
-        //                           units[index]['location'],
-        //                           style: text400Grey,
-        //                           textAlign: TextAlign.center,
-        //                           maxLines: 2,
-        //                           presetFontSizes: [12, 9, 6],
-        //                         ),
-        //                         SizedBox(
-        //                           height: 5,
-        //                         ),
-        //                         AutoSizeText(
-        //                           units[index]['association'],
-        //                           style: text400Grey,
-        //                           textAlign: TextAlign.center,
-        //                           maxLines: 1,
-        //                           presetFontSizes: [6, 4.5, 3],
-        //                         ),
-        //                       ],
-        //                     ),
-        //                   ),
-        //                 ],
-        //               ),
-        //             ),
-        //           ),
-        //         );
-        //       }),
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

@@ -48,7 +48,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Onboarding UI',
       debugShowCheckedModeBanner: false,
-      home: AllAvailableUnits(),
+      home: OnboardingScreen(),
       theme: mainTheme(),
     );
   }

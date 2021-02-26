@@ -177,16 +177,6 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-                              // UserLoggedDB userLoggedDB = UserLoggedDB();
-
-                              // final user = UserLogged(
-                              //     id: "1",
-                              //     nik: _ktp,
-                              //     nama: "Contoh 123",
-                              //     status: "Logged"
-                              // );
-
-                              // userLoggedDB.insertDB(user);
                               CollectionReference _searchUser = _firestore.collection("Pengguna");
                               await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot){
                                 if(_snapshot.docs.length > 0){
