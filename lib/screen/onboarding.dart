@@ -1,13 +1,12 @@
 import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/location_permission.dart';
 import 'package:pakasep/utility/style.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
 class OnboardingScreen extends StatefulWidget {
   @override
@@ -17,20 +16,13 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
-    futureUserCount();
-
     super.initState();
   }
 
-  futureUserCount<int>() async {
-
-    UserLoggedDB userLoggedDB = UserLoggedDB();
-    var count = await userLoggedDB.getLength();
-
-    if (count > 0) {
-      Navigator.push(context, MaterialPageRoute(
-          builder: (context) => Home()
-      ));
+  pindah(context) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    if(_auth.currentUser == null){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     }
   }
 
@@ -68,6 +60,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    pindah(context);
     Orientation orientation = MediaQuery.of(context).orientation;
     Size size = MediaQuery.of(context).size;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

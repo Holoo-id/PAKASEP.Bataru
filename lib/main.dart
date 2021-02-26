@@ -1,13 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:pakasep/screen/home.dart';
-import 'package:pakasep/screen/location_permission.dart';
 import 'package:pakasep/screen/onboarding.dart';
-import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/utility/theme.dart';
 
-import 'model_sqlite/userLoggedDB.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,14 +20,13 @@ class MyApp extends StatefulWidget {
 
 class _MyApp extends State<MyApp> {
 
-  // @override
-  // void initState() {
-  //   futureUserCount();
-  //   super.initState();
-  // }
-  // futureUserCount<int>() async {
+  @override
+  void initState() {
+  super.initState();
+  }
 
-  //   UserLoggedDB userLoggedDB = UserLoggedDB();
+  //futureUserCount<int>() async {
+    //   UserLoggedDB userLoggedDB = UserLoggedDB();
   //   var count = await userLoggedDB.getLength();
 
   //   if (count > 0) {
@@ -40,7 +34,7 @@ class _MyApp extends State<MyApp> {
   //         builder: (context) => Home()
   //     ));
   //   }
-  // }
+  //}
 
   @override
   Widget build(BuildContext context) {
