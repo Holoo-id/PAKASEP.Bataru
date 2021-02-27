@@ -24,6 +24,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
     "Tri Karya Lingga",
   ];
   List citiesItem = [
+    "Semua",
     "Bandung",
     "Bogor",
     "Ciamis",
@@ -198,6 +199,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
+    CollectionReference units = FirebaseFirestore.instance.collection("Rumah");
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: NestedScrollView(
@@ -320,11 +322,22 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
           ];
         },
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection("Rumah").snapshots(),
-          builder: (context, snapshot) {
+          stream: units
+              .where("asosiasi", isEqualTo: associationsChoose)
+              .where("kota", isEqualTo: citiesChoose)
+              .where("kecamatan", isEqualTo: districtsChoose)
+              .where("provinsi", isEqualTo: provincesChoose)
+              // .orderBy("tanggal_dibuat", descending: true)
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
               print('Terjadi Kesalahan');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
+            print(provincesChoose);
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 print('No Data');
@@ -336,95 +349,93 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                 );
                 break;
               default:
-                if (snapshot.hasData) {
-                  final List<DocumentSnapshot> documents = snapshot.data.docs;
-                  return Container(
-                    height: size.height,
-                    padding: EdgeInsets.all(15),
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: (188 / 265),
-                      ),
-                      children: documents
-                          .map(
-                            (doc) => GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => UnitDetail(
-                                      idUnit: doc.id,
+                if (snapshot.hasData) {}
+                break;
+            }
+            final List<DocumentSnapshot> documents = snapshot.data.docs;
+            return Container(
+              height: size.height,
+              padding: EdgeInsets.all(15),
+              child: GridView(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: (188 / 265),
+                ),
+                children: documents
+                    .map(
+                      (doc) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => UnitDetail(
+                                idUnit: doc.id,
+                              ),
+                            ),
+                          );
+                        },
+                        child: GridTile(
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  // child: Text(doc["gambar"].toString()),
+                                  height: 188,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xffc4c4c4),
+                                    borderRadius: BorderRadius.circular(8),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        // 'images/one_line_art_rumah.png',
+                                        doc["gambar"][0],
+                                      ),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                );
-                              },
-                              child: GridTile(
-                                child: Container(
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(10),
                                   child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Container(
-                                        // child: Text(doc["gambar"].toString()),
-                                        height: 188,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffc4c4c4),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              // 'images/one_line_art_rumah.png',
-                                              doc["gambar"][0],
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                      AutoSizeText(
+                                        doc["nama_tempat"],
+                                        style: title600Dark,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        presetFontSizes: [16, 12, 8],
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            AutoSizeText(
-                                              doc["nama_tempat"],
-                                              style: title600Dark,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              presetFontSizes: [16, 12, 8],
-                                            ),
-                                            AutoSizeText(
-                                              doc["alamat"],
-                                              style: text400Grey,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 2,
-                                              presetFontSizes: [12, 9, 6],
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            AutoSizeText(
-                                              doc["asosiasi"],
-                                              style: text400Grey,
-                                              textAlign: TextAlign.center,
-                                              maxLines: 1,
-                                              presetFontSizes: [8, 6, 4],
-                                            ),
-                                          ],
-                                        ),
+                                      AutoSizeText(
+                                        doc["alamat"],
+                                        style: text400Grey,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        presetFontSizes: [12, 9, 6],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      AutoSizeText(
+                                        doc["asosiasi"],
+                                        style: text400Grey,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        presetFontSizes: [8, 6, 4],
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                          )
-                          .toList(),
-                    ),
-                  );
-                }
-                break;
-            }
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            );
           },
         ),
       ),

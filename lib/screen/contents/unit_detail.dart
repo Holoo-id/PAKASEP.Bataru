@@ -17,7 +17,15 @@ class UnitDetail extends StatefulWidget {
 }
 
 class _UnitDetailState extends State<UnitDetail> {
-  String _alamat, _asosiasi, _deskripsi, _namaTempat, _perusahaan, _ukuran;
+  String _alamat,
+      _asosiasi,
+      _deskripsi,
+      _email,
+      _namaTempat,
+      _perusahaan,
+      _telepon,
+      _ukuran,
+      _web;
   double _bunga, _tenor;
   int _kamar, _kamarMandi, _unit;
   List _gambar = [];
@@ -32,14 +40,21 @@ class _UnitDetailState extends State<UnitDetail> {
           _asosiasi = documentSnapshot.data()["asosiasi"];
           _bunga = documentSnapshot.data()["bunga"];
           _deskripsi = documentSnapshot.data()["deskripsi"];
+          _email = documentSnapshot.data()["kontak.email"];
           _gambar = documentSnapshot.data()["gambar"];
           _kamar = documentSnapshot.data()["kamar"];
           _kamarMandi = documentSnapshot.data()["kamar_mandi"];
           _namaTempat = documentSnapshot.data()["nama_tempat"];
           _perusahaan = documentSnapshot.data()["perusahaan"];
+          _telepon = documentSnapshot.data()["kontak.telepon"];
           _tenor = documentSnapshot.data()["tenor"] / 12;
           _ukuran = documentSnapshot.data()["ukuran"];
           _unit = documentSnapshot.data()["unit"];
+          _web = documentSnapshot.data()["kontak.web"];
+          // print(documentSnapshot.data()["kontak.email"]);
+          // print(documentSnapshot.data()["kontak.telepon"]);
+          // print(documentSnapshot.data()["kontak.web"]);
+          print(documentSnapshot.data()["kontak"]);
         } else {
           print('Document does not exist on the database');
         }
@@ -402,7 +417,7 @@ class _UnitDetailState extends State<UnitDetail> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '$_perusahaan$_asosiasi',
+                        text: '$_perusahaan\n$_asosiasi',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -417,13 +432,13 @@ class _UnitDetailState extends State<UnitDetail> {
                         text: '\n$_alamat',
                       ),
                       TextSpan(
-                        text: '\n+62 857 2056 8967',
+                        text: '\n$_telepon',
                       ),
                       TextSpan(
-                        text: '\npakasep@gmail.com',
+                        text: '\n$_email',
                       ),
                       TextSpan(
-                        text: '\npakasep.co.id',
+                        text: '\n$_web',
                       ),
                     ],
                   ),
