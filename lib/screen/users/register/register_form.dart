@@ -14,14 +14,22 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  String _namaLengkap;
-  String _kataSandi;
-  String _ktp;
-  String _npwp;
-  String _telepon;
+  TextEditingController _dateController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  String _alamat,
+      _kataSandi,
+      _ktp,
+      _namaLengkap,
+      _npwp,
+      _tanggalLahir,
+      _telepon,
+      _tempatLahir;
   Map<String, dynamic> _registeringUserData;
 
   Icon namaIcon = new Icon(null);
+  Icon tempatLahirIcon = new Icon(null);
+  Icon tanggalLahirIcon = new Icon(null);
+  Icon alamatIcon = new Icon(null);
   Icon passIcon = new Icon(null);
   Icon passwordIcon = new Icon(null);
   Icon ktpIcon = new Icon(null);
@@ -62,6 +70,170 @@ class _RegisterFormState extends State<RegisterForm> {
       decoration: InputDecoration(
         hintText: 'Nama Lengkap (Sesuai KTP)',
         labelText: 'Nama Lengkap',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: namaIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTempatLahir() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String tempat_lahir) {
+        if (tempat_lahir.isEmpty) {
+          return 'Tempat Lahir harus diisi';
+        }
+      },
+      onChanged: (tempat_lahir) {
+        if (tempat_lahir.isEmpty) {
+          setState(() {
+            tempatLahirIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            tempatLahirIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String tempat_lahir) {
+        _tempatLahir = tempat_lahir;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kota Kelahiran',
+        labelText: 'Tempat',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: namaIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTanggalLahir() {
+    return GestureDetector(
+      onTap: () => _selectDate(context),
+      child: AbsorbPointer(
+        child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          keyboardType: TextInputType.datetime,
+          controller: _dateController,
+          validator: (String tanggal_lahir) {
+            if (tanggal_lahir.isEmpty) {
+              return 'Tanggal Lahir harus diisi';
+            }
+          },
+          onChanged: (tanggal_lahir) {
+            if (tanggal_lahir.isEmpty) {
+              setState(() {
+                tanggalLahirIcon = new Icon(
+                  Icons.error,
+                  color: Colors.red,
+                );
+              });
+            } else {
+              setState(() {
+                tanggalLahirIcon = new Icon(
+                  Icons.check,
+                  color: Colors.green,
+                );
+              });
+            }
+          },
+          onSaved: (String tanggal_lahir) {
+            _tanggalLahir = tanggal_lahir;
+          },
+          style: form200Light,
+          decoration: InputDecoration(
+            hintText: 'Tanggal Kelahiran',
+            labelText: 'Tanggal Lahir',
+            labelStyle: form400Light,
+            filled: true,
+            suffixIcon: namaIcon,
+            fillColor: Color(0xffF2F3F7),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                width: 1,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAlamat() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.multiline,
+      minLines: 2,
+      maxLines: 5,
+      validator: (String alamat) {
+        if (alamat.isEmpty) {
+          return 'Alamat harus diisi';
+        }
+      },
+      onChanged: (alamat) {
+        if (alamat.isEmpty) {
+          setState(() {
+            alamatIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            alamatIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String alamat) {
+        _alamat = alamat;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Alamat',
+        labelText: 'Alamat',
         labelStyle: form400Light,
         filled: true,
         suffixIcon: namaIcon,
@@ -470,6 +642,18 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
+                  _buildTempatLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTanggalLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildAlamat(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   _buildKataSandi(),
                   SizedBox(
                     height: 10,
@@ -578,5 +762,20 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _agreedToTOS = newValue;
     });
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2021, 1),
+        lastDate: DateTime(2200));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        var date =
+            "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}";
+        _dateController.text = date;
+      });
   }
 }
