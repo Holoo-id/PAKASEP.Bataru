@@ -22,25 +22,28 @@ class _LoginFormState extends State<LoginForm> {
   String _nomorTelepon;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> createAlertDialog(BuildContext context){
+  Future<String> createAlertDialog(BuildContext context) {
     TextEditingController TEVerifikasiKode = TextEditingController();
-    return showDialog(context: context,builder: (context){
-      return AlertDialog(
-        title: Text("Masukkan kode verifikasi yang telah dikirim ke nomor anda:"),
-        content: TextField(
-          controller: TEVerifikasiKode,
-        ),
-        actions: <Widget>[
-          MaterialButton(
-            elevation: 5.0,
-            child: Text('Submit'),
-            onPressed: () {
-                Navigator.of(context).pop(TEVerifikasiKode.text.toString());
-            },
-          )
-        ],
-      );
-    });
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+                "Masukkan kode verifikasi yang telah dikirim ke nomor anda:"),
+            content: TextField(
+              controller: TEVerifikasiKode,
+            ),
+            actions: <Widget>[
+              MaterialButton(
+                elevation: 5.0,
+                child: Text('Submit'),
+                onPressed: () {
+                  Navigator.of(context).pop(TEVerifikasiKode.text.toString());
+                },
+              )
+            ],
+          );
+        });
   }
 
   Widget _buildKataSandi() {
@@ -175,28 +178,36 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-                              CollectionReference _searchUser = _firestore.collection("Pengguna");
-                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot){
-                                if(_snapshot.docs.length > 0){
+                              CollectionReference _searchUser =
+                                  _firestore.collection("Pengguna");
+                              await _searchUser
+                                  .where("KTP", isEqualTo: _ktp)
+                                  .where("Kata Sandi", isEqualTo: _kataSandi)
+                                  .get()
+                                  .then((QuerySnapshot _snapshot) {
+                                if (_snapshot.docs.length > 0) {
                                   _snapshot.docs.forEach((element) {
                                     print(element.data()["Telepon"]);
                                     _nomorTelepon = element.data()["Telepon"];
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => LoginOtp(noTelepon: _nomorTelepon,)),
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginOtp(
+                                                noTelepon: _nomorTelepon,
+                                              )),
                                     );
                                   });
-                                }
-                                else{
+                                } else {
                                   print("empty query");
-                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Password atau No KTP mu salah!")));
+                                  _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Password atau No KTP mu salah!")));
                                 }
                               });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => Home()),
                               );
-                              
                             },
                             height: 60,
                             minWidth: size.width,
@@ -209,8 +220,8 @@ class _LoginFormState extends State<LoginForm> {
                               style: buttonTextLight,
                             ),
                           ),
-                          FlatButton(
-                            onPressed: () {
+                          GestureDetector(
+                            onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -218,6 +229,7 @@ class _LoginFormState extends State<LoginForm> {
                               );
                             },
                             child: Container(
+                              margin: EdgeInsets.all(16),
                               alignment: Alignment.center,
                               child: Text(
                                 'Lupa Password?',
@@ -227,8 +239,8 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                         ],
                       ),
-                      FlatButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(

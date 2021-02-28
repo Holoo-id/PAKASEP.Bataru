@@ -4,7 +4,6 @@ import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/onboarding.dart';
 import 'package:pakasep/utility/theme.dart';
 
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp();
@@ -12,7 +11,6 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _MyApp();
@@ -20,14 +18,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyApp extends State<MyApp> {
-
   @override
   void initState() {
-  super.initState();
+    super.initState();
   }
 
   //futureUserCount<int>() async {
-    //   UserLoggedDB userLoggedDB = UserLoggedDB();
+  //   UserLoggedDB userLoggedDB = UserLoggedDB();
   //   var count = await userLoggedDB.getLength();
 
   //   if (count > 0) {

@@ -21,17 +21,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   pindah(context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-    if(_auth.currentUser != null){
+    if (_auth.currentUser != null) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     }
   }
 
-
   final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
-
-
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
@@ -77,7 +74,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  height: size.height * 0.825,
+                  height: size.height - 99,
                   child: PageView(
                     physics: ClampingScrollPhysics(),
                     controller: _pageController,
@@ -154,7 +151,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                           ),
                                         ),
                                         TextSpan(
-                                          text: ' merupakan aplikasi pendukung program ',
+                                          text:
+                                              ' merupakan aplikasi pendukung program ',
                                         ),
                                         TextSpan(
                                           text: 'BAKTI PADAMU GURU (BATARU)',

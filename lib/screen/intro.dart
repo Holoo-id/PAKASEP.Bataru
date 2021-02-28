@@ -15,7 +15,7 @@ class _IntroState extends State<Intro> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: IntroBackground(
+        body: IntroBackground(
       child: Stack(
         children: <Widget>[
           Container(
@@ -59,14 +59,15 @@ class _IntroState extends State<Intro> {
                     style: buttonTextLight,
                   ),
                 ),
-                FlatButton(
-                  onPressed: () {
+                GestureDetector(
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginForm()),
                     );
                   },
                   child: Container(
+                    margin: EdgeInsets.all(20),
                     alignment: Alignment.center,
                     child: AutoSizeText(
                       'SUDAH PUNYA AKUN? KLIK DISINI',
@@ -76,7 +77,7 @@ class _IntroState extends State<Intro> {
                       presetFontSizes: [14, 12, 8],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )

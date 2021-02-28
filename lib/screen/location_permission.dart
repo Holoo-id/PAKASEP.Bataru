@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/intro.dart';
 import 'package:pakasep/utility/style.dart';
@@ -13,9 +12,7 @@ class LocationPermission extends StatefulWidget {
 }
 
 class _LocationPermissionState extends State<LocationPermission> {
-  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
-  Position _currentPosition;
+  // Position _currentPosition;
   String _currentAddress;
 
   @override
@@ -44,13 +41,13 @@ class _LocationPermissionState extends State<LocationPermission> {
                 SizedBox(
                   height: 20,
                 ),
-                if (_currentPosition != null) Text(_currentAddress),
+                // if (_currentPosition != null) Text(_currentAddress),
                 FlatButton(
                   height: 60,
                   minWidth: size.width,
                   onPressed: () {
                     // checkLocationPermission();
-                    _getCurrentLocation();
+                    // _getCurrentLocation();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Intro()),
@@ -72,42 +69,4 @@ class _LocationPermissionState extends State<LocationPermission> {
       ),
     );
   }
-
-  _getCurrentLocation() {
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
-
-      _getAddressFromLatLng();
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  _getAddressFromLatLng() async {
-    try {
-      List<Placemark> p = await geolocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
-
-      Placemark place = p[0];
-
-      setState(() {
-        _currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  // void checkLocationPermission() async {
-  //   var status = await Permission.location.status;
-  //   if (!status.isGranted) {
-  //     PermissionStatus permissionStatus = await Permission.location.request();
-  //     print('permission status : ${permissionStatus.isGranted}');
-  //   }
-  // }
 }
