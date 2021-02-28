@@ -2,11 +2,11 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/all_available_units.dart';
 import 'package:pakasep/screen/contents/filing_requirements.dart';
 import 'package:pakasep/screen/contents/filing_status.dart';
+import 'package:pakasep/screen/contents/find_units.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/screen/users/profil.dart';
 import 'package:pakasep/screen/users/user_guide.dart';
@@ -27,7 +27,7 @@ var menu = [
   {
     "name": "Telusuri Perumahan",
     "image": "images/telusuri rumah.png",
-    "link": Home(),
+    "link": FindUnits(),
   },
   {
     "name": "Persyaratan Pengajuan",
@@ -107,27 +107,27 @@ class _HomeState extends State<Home> {
                             SizedBox(
                               width: 20,
                             ),
-                            Container(
-                              // width: size.width - 112,
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  AutoSizeText(
-                                    _userName,
-                                    style: name500Dark,
-                                    maxLines: 1,
-                                    presetFontSizes: [22, 16.5, 11],
-                                  ),
-                                  AutoSizeText(
-                                    _userKTP,
-                                    style: subName400Dark,
-                                    minFontSize: 1,
-                                    presetFontSizes: [14, 10.5, 7],
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Container(
+                            //   // width: size.width - 112,
+                            //   child: Column(
+                            //     // mainAxisAlignment: MainAxisAlignment.center,
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: <Widget>[
+                            //       AutoSizeText(
+                            //         _userName,
+                            //         style: name500Dark,
+                            //         maxLines: 1,
+                            //         presetFontSizes: [22, 16.5, 11],
+                            //       ),
+                            //       AutoSizeText(
+                            //         _userKTP,
+                            //         style: subName400Dark,
+                            //         minFontSize: 1,
+                            //         presetFontSizes: [14, 10.5, 7],
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

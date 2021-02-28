@@ -61,7 +61,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     pindah(context);
-    Orientation orientation = MediaQuery.of(context).orientation;
     Size size = MediaQuery.of(context).size;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(

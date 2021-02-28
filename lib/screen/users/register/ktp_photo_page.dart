@@ -10,7 +10,6 @@ import 'package:pakasep/screen/users/register/image_approval.dart';
 
 import '../../../utility/style.dart';
 import '../../components/background.dart';
-import 'register_success.dart';
 
 class KtpPhotoPage extends StatefulWidget {
   @override

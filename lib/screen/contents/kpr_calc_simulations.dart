@@ -43,58 +43,59 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
       child: Column(
         children: [
           Container(
-              padding: EdgeInsets.all(0),
-              margin: EdgeInsets.symmetric(vertical: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Color(0xF2F3F7FF),
-              ),
-              child: TextFormField(
-                controller: _hargaRumahController,
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                onChanged: (String hargaRumah) {
-                  if (_dpPercentController.text != '') {
-                    var percent = double.parse(_dpPercentController.text) / 100;
-                    var uangMuka = int.parse(hargaRumah) * percent;
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Color(0xF2F3F7FF),
+            ),
+            child: TextFormField(
+              controller: _hargaRumahController,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              onChanged: (String hargaRumah) {
+                if (_dpPercentController.text != '') {
+                  var percent = double.parse(_dpPercentController.text) / 100;
+                  var uangMuka = int.parse(hargaRumah) * percent;
 
-                    _uangMukaController.text = uangMuka.toStringAsFixed(0);
-                  }
-                  if (_uangMukaController.text != '') {
-                    var uangMuka = double.parse(_uangMukaController.text);
-                    var percent = uangMuka / int.parse(hargaRumah) * 100;
-                    _dpPercentController.text = (percent < 1 && percent > 0.01)
-                        ? percent.toStringAsFixed(2)
-                        : percent.toStringAsFixed(0);
-                  }
-                },
-                onSaved: (String value) {
-                  _hargaRumah = value;
-                },
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Harga Rumah',
-                  border: InputBorder.none,
-                  contentPadding:
-                      EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 0),
-                  icon: Padding(
+                  _uangMukaController.text = uangMuka.toStringAsFixed(0);
+                }
+                if (_uangMukaController.text != '') {
+                  var uangMuka = double.parse(_uangMukaController.text);
+                  var percent = uangMuka / int.parse(hargaRumah) * 100;
+                  _dpPercentController.text = (percent < 1 && percent > 0.01)
+                      ? percent.toStringAsFixed(2)
+                      : percent.toStringAsFixed(0);
+                }
+              },
+              onSaved: (String value) {
+                _hargaRumah = value;
+              },
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: 'Harga Rumah',
+                border: InputBorder.none,
+                contentPadding:
+                    EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 0),
+                icon: Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Container(
+                    margin: EdgeInsets.all(0),
+                    alignment: Alignment.center,
+                    height: 45,
+                    width: 45,
                     padding: EdgeInsets.all(0),
-                    child: Container(
-                      margin: EdgeInsets.all(0),
-                      alignment: Alignment.center,
-                      height: 45,
-                      width: 45,
-                      padding: EdgeInsets.all(0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Color(0xECECECFF),
-                      ),
-                      child: Text("RP", style: text800Dark),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color(0xECECECFF),
                     ),
+                    child: Text("RP", style: text800Dark),
                   ),
                 ),
-              )),
+              ),
+            ),
+          ),
           Table(
             columnWidths: {0: FlexColumnWidth(2)},
             children: [

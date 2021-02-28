@@ -2,7 +2,6 @@ import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/unit_detail.dart';
 import 'package:pakasep/utility/style.dart';
