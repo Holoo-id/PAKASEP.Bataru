@@ -126,7 +126,7 @@ class _RegisterFormState extends State<RegisterForm> {
         labelText: 'Tempat',
         labelStyle: form400Light,
         filled: true,
-        suffixIcon: namaIcon,
+        suffixIcon: tempatLahirIcon,
         fillColor: Color(0xffF2F3F7),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -182,7 +182,7 @@ class _RegisterFormState extends State<RegisterForm> {
             labelText: 'Tanggal Lahir',
             labelStyle: form400Light,
             filled: true,
-            suffixIcon: namaIcon,
+            suffixIcon: tanggalLahirIcon,
             fillColor: Color(0xffF2F3F7),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -238,7 +238,7 @@ class _RegisterFormState extends State<RegisterForm> {
         labelText: 'Alamat',
         labelStyle: form400Light,
         filled: true,
-        suffixIcon: namaIcon,
+        suffixIcon: alamatIcon,
         fillColor: Color(0xffF2F3F7),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -551,13 +551,19 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget _buildTelepon() {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      keyboardType: TextInputType.phone,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
+      keyboardType: TextInputType.emailAddress,
+      // inputFormatters: [
+      //   FilteringTextInputFormatter.digitsOnly,
+      // ],
       validator: (String telepon) {
         if (telepon.isEmpty) {
           return 'Nomor telepon tidak boleh kosong';
+        }
+        // VALIDATOR EMAIL
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(telepon)) {
+          return 'Email Tidak Valid';
         }
       },
       onChanged: (telepon) {
@@ -714,8 +720,12 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_alamat);
                               print(_tanggalLahir);
                               print(_tempatLahir);
-                              CollectionReference _searchUser = _firestore.collection("Pengguna");
-                              await _searchUser.where("KTP", isEqualTo: _ktp).get().then((QuerySnapshot _snapshot) {
+                              CollectionReference _searchUser =
+                                  _firestore.collection("Pengguna");
+                              await _searchUser
+                                  .where("KTP", isEqualTo: _ktp)
+                                  .get()
+                                  .then((QuerySnapshot _snapshot) {
                                 print(_snapshot.docs.length);
                                 if (_snapshot.docs.length > 0) {
                                   return Navigator.push(
