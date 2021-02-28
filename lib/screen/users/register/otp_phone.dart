@@ -162,7 +162,8 @@ class _OtpPhoneState extends State<OtpPhone> {
     );
   }
 
-  _verifyPhone() async{
+  _verifyPhone() async
+  {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "+62${widget.userData['Telepon']}",
         verificationCompleted: (PhoneAuthCredential credential)async{

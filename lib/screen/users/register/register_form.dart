@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/already_registered.dart';
-import 'package:pakasep/screen/users/register/otp_phone.dart';
+import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -25,6 +26,7 @@ class _RegisterFormState extends State<RegisterForm> {
       _telepon,
       _tempatLahir;
   Map<String, dynamic> _registeringUserData;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Icon namaIcon = new Icon(null);
   Icon tempatLahirIcon = new Icon(null);
@@ -699,7 +701,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   FlatButton(
                     onPressed: _submitable()
-                        ? () {
+                        ? () async {
                             if (!_formKey.currentState.validate()) {
                               return this;
                             } else {
@@ -709,28 +711,38 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
-                              _registeringUserData = {
-                                "Nama Lengkap": _namaLengkap.trim(),
-                                "Kata Sandi": _kataSandi.trim(),
-                                "KTP": _ktp.trim(),
-                                "NPWP": _npwp.trim(),
-                                "Telepon": _telepon.trim()
-                              };
-                              if (_ktp == '1234567890123456') {
-                                return Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AlreadyRegistered()),
-                                );
-                              } else {
-                                return Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => OtpPhone(
-                                          userData: _registeringUserData)),
-                                );
-                              }
+                              print(_alamat);
+                              print(_tanggalLahir);
+                              print(_tempatLahir);
+                              CollectionReference _searchUser = _firestore.collection("Pengguna");
+                              await _searchUser.where("KTP", isEqualTo: _ktp).get().then((QuerySnapshot _snapshot) {
+                                print(_snapshot.docs.length);
+                                if (_snapshot.docs.length > 0) {
+                                  return Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AlreadyRegistered()),
+                                  );
+                                } else {
+                                  _registeringUserData = {
+                                    "Nama Lengkap": _namaLengkap.trim(),
+                                    "Kata Sandi": _kataSandi.trim(),
+                                    "KTP": _ktp.trim(),
+                                    "NPWP": _npwp.trim(),
+                                    "Telepon": _telepon.trim(),
+                                    "Alamat": _alamat.trim(),
+                                    "Tempat Lahir": _tempatLahir.trim(),
+                                    "Tanggal Lahir": _tanggalLahir.trim()
+                                  };
+                                  return Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => KtpPhotoPage(
+                                            userData: _registeringUserData)),
+                                  );
+                                }
+                              });
                             }
                           }
                         : null,
@@ -768,8 +780,8 @@ class _RegisterFormState extends State<RegisterForm> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2021, 1),
-        lastDate: DateTime(2200));
+        firstDate: DateTime(1900, 1),
+        lastDate: DateTime(2050));
     if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;

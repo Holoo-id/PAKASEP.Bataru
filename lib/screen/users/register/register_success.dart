@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/users/login/login_form.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterSuccess extends StatefulWidget {
@@ -55,7 +55,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginForm()),
+                                builder: (context) => Home()),
                           );
                         },
                         height: 60,
