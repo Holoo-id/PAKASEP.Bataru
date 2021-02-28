@@ -1,6 +1,8 @@
 import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
@@ -9,21 +11,59 @@ import '../../utility/style.dart';
 
 class UnitDetail extends StatefulWidget {
   @override
-  UnitDetail({Key key}) : super(key: key);
+  String idUnit;
+  UnitDetail({Key key, this.idUnit}) : super(key: key);
   _UnitDetailState createState() => _UnitDetailState();
 }
 
 class _UnitDetailState extends State<UnitDetail> {
+  String _alamat,
+      _asosiasi,
+      _deskripsi,
+      _email,
+      _namaTempat,
+      _perusahaan,
+      _telepon,
+      _ukuran,
+      _web;
+  double _bunga, _tenor;
+  int _kamar, _kamarMandi, _unit;
+  List _gambar = [];
   // CarouselController buttonCarouselController = CarouselController();
-  List<AssetImage> image = [
-    AssetImage('images/r1.jpg'),
-    AssetImage('images/r2.jpg'),
-  ];
   @override
   Widget build(BuildContext context) {
+    dynamic id = widget.idUnit;
+    FirebaseFirestore.instance.collection("Rumah").doc(id).get().then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          _alamat = documentSnapshot.data()["alamat"];
+          _asosiasi = documentSnapshot.data()["asosiasi"];
+          _bunga = documentSnapshot.data()["bunga"];
+          _deskripsi = documentSnapshot.data()["deskripsi"];
+          _email = documentSnapshot.data()["kontak.email"];
+          _gambar = documentSnapshot.data()["gambar"];
+          _kamar = documentSnapshot.data()["kamar"];
+          _kamarMandi = documentSnapshot.data()["kamar_mandi"];
+          _namaTempat = documentSnapshot.data()["nama_tempat"];
+          _perusahaan = documentSnapshot.data()["perusahaan"];
+          _telepon = documentSnapshot.data()["kontak.telepon"];
+          _tenor = documentSnapshot.data()["tenor"] / 12;
+          _ukuran = documentSnapshot.data()["ukuran"];
+          _unit = documentSnapshot.data()["unit"];
+          _web = documentSnapshot.data()["kontak.web"];
+          // print(documentSnapshot.data()["kontak.email"]);
+          // print(documentSnapshot.data()["kontak.telepon"]);
+          // print(documentSnapshot.data()["kontak.web"]);
+          print(documentSnapshot.data()["kontak"]);
+        } else {
+          print('Document does not exist on the database');
+        }
+      },
+    );
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -58,7 +98,7 @@ class _UnitDetailState extends State<UnitDetail> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Container(height: 0, width: 0),
               centerTitle: true,
               flexibleSpace: Stack(
                 children: [
@@ -73,29 +113,43 @@ class _UnitDetailState extends State<UnitDetail> {
                       dotSize: 7,
                       dotIncreaseSize: 1.1,
                       showIndicator: true,
-                      // dotHorizontalPadding: 10,
                       dotVerticalPadding: 20,
-                      // images: [
-                      //   AssetImage('images/r1.jpg'),
-                      //   AssetImage('images/r2.jpg'),
-                      // ],
-                      images: image,
+                      images: _gambar.map((gambar) {
+                        print(gambar);
+                        return CachedNetworkImage(
+                          imageUrl: '$gambar',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.error,
+                            color: Colors.red,
+                          ),
+                        );
+                      }).toList(),
                       onImageTap: (index) {
-                        // return Drawer(
-                        //   child: Image(
-                        //     image: AssetImage('images/r1.jpg'),
-                        //     fit: BoxFit.fitWidth,
-                        //   ),
-                        // );
                         var image_id = index + 1;
                         return showDialog(
                           context: context,
                           builder: (context) {
                             return GestureDetector(
                               onTap: () => Navigator.of(context).pop(),
-                              child: Image(
-                                image: image[index],
-                                fit: BoxFit.fitWidth,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                child: CachedNetworkImage(
+                                  imageUrl: _gambar[index],
+                                  fit: BoxFit.fitWidth,
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(
+                                    Icons.error,
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
                             );
                           },
@@ -151,7 +205,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                           style: iconText400Dark,
                                         ),
                                         TextSpan(
-                                          text: '10 Tahun',
+                                          text: '$_tenor Tahun',
                                           style: iconText600Dark,
                                         ),
                                       ],
@@ -184,7 +238,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                         style: iconText400Dark,
                                       ),
                                       AutoSizeText(
-                                        '3% per Tahun',
+                                        '$_bunga% per Tahun',
                                         maxLines: 1,
                                         presetFontSizes: [12, 9, 6],
                                         style: iconText600Dark,
@@ -216,7 +270,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                         style: iconText400Dark,
                                       ),
                                       AutoSizeText(
-                                        '38 Tersedia',
+                                        '$_unit Tersedia',
                                         maxLines: 1,
                                         presetFontSizes: [12, 9, 6],
                                         style: iconText600Dark,
@@ -254,7 +308,8 @@ class _UnitDetailState extends State<UnitDetail> {
                                     color: Theme.of(context).accentColor,
                                   ),
                                   AutoSizeText(
-                                    '1',
+                                    // '1',
+                                    _kamarMandi.toString(),
                                     maxLines: 1,
                                     style: iconText600Dark,
                                   ),
@@ -269,7 +324,8 @@ class _UnitDetailState extends State<UnitDetail> {
                                     color: Theme.of(context).accentColor,
                                   ),
                                   AutoSizeText(
-                                    '2',
+                                    // '1',
+                                    _kamar.toString(),
                                     maxLines: 1,
                                     style: iconText600Dark,
                                   ),
@@ -302,7 +358,8 @@ class _UnitDetailState extends State<UnitDetail> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: AutoSizeText(
-                      'Perumahan Griya Caraka Indah',
+                      _namaTempat,
+                      // 'Perumahan Griya Caraka Indah',
                       style: title700Light2,
                       maxLines: 1,
                       textAlign: TextAlign.center,
@@ -320,32 +377,33 @@ class _UnitDetailState extends State<UnitDetail> {
               children: [
                 AutoSizeText.rich(
                   TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            'Podomoro River View adalah perumahan dengan konsep garden house yang dikembangkan PT. Agung Podomoro Land Tbk. Terletak di Gunung Putri, Bogor, perumahan ini menawarkan desain yang cantik dan minimalis sehingga ideal dijadikan rumah keluarga.\n',
-                      ),
-                      TextSpan(
-                        text:
-                            '\nPodomoro River View memiliki sejumlah fasilitas memadai seperti:\n',
-                      ),
-                      TextSpan(
-                        text:
-                            '• Club House\n• Gym\n• Jogging Track\n• Kolam Renang\n• Keamanan\n• One Gate System\n• Masjid\n• Ruang Komunitas\n',
-                      ),
-                      TextSpan(
-                        text:
-                            '\nTak hanya fasilitas yang mumpuni, Podomoro River View terletak di lokasi strategis. Perumahan di Bogor ini dikelilingi area dan akses penting dengan jarak temuh yang dekat seperti:\n',
-                      ),
-                      TextSpan(
-                        text:
-                            '• 12 menit ke Exit Tol Cimanggis 3\n• 20 menit ke Stasiun LRT\n• 25 menit ke Bandara Halim Perdanakusuma\n• 25 menit ke Universitas Guadarma\n• 30 menit ke Tol Jagorawi\n',
-                      ),
-                      TextSpan(
-                        text:
-                            '\nPodomoro River View pun memiliki sejumlah unit yang tersedia dengan spesifikasi berbeda dengan harga mulai dari Rp 1,5 miliar. Podomoro River Vew dengan konsep hunian hijau yang asri dapat menjadi pilihan menarik hanya untuk Anda\n',
-                      ),
-                    ],
+                    text: _deskripsi,
+                    // children: <TextSpan>[
+                    //   TextSpan(
+                    //     text:
+                    //         'Podomoro River View adalah perumahan dengan konsep garden house yang dikembangkan PT. Agung Podomoro Land Tbk. Terletak di Gunung Putri, Bogor, perumahan ini menawarkan desain yang cantik dan minimalis sehingga ideal dijadikan rumah keluarga.\n',
+                    //   ),
+                    //   TextSpan(
+                    //     text:
+                    //         '\nPodomoro River View memiliki sejumlah fasilitas memadai seperti:\n',
+                    //   ),
+                    //   TextSpan(
+                    //     text:
+                    //         '• Club House\n• Gym\n• Jogging Track\n• Kolam Renang\n• Keamanan\n• One Gate System\n• Masjid\n• Ruang Komunitas\n',
+                    //   ),
+                    //   TextSpan(
+                    //     text:
+                    //         '\nTak hanya fasilitas yang mumpuni, Podomoro River View terletak di lokasi strategis. Perumahan di Bogor ini dikelilingi area dan akses penting dengan jarak temuh yang dekat seperti:\n',
+                    //   ),
+                    //   TextSpan(
+                    //     text:
+                    //         '• 12 menit ke Exit Tol Cimanggis 3\n• 20 menit ke Stasiun LRT\n• 25 menit ke Bandara Halim Perdanakusuma\n• 25 menit ke Universitas Guadarma\n• 30 menit ke Tol Jagorawi\n',
+                    //   ),
+                    //   TextSpan(
+                    //     text:
+                    //         '\nPodomoro River View pun memiliki sejumlah unit yang tersedia dengan spesifikasi berbeda dengan harga mulai dari Rp 1,5 miliar. Podomoro River Vew dengan konsep hunian hijau yang asri dapat menjadi pilihan menarik hanya untuk Anda\n',
+                    //   ),
+                    // ],
                   ),
                 ),
                 Padding(
@@ -359,7 +417,7 @@ class _UnitDetailState extends State<UnitDetail> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'PT. Digital Muda Kreatif PERWIRANUSA',
+                        text: '$_perusahaan\n$_asosiasi',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -371,16 +429,16 @@ class _UnitDetailState extends State<UnitDetail> {
                         ),
                       ),
                       TextSpan(
-                        text: '\nJln. Gegerkalong Tonggoh Raya No.6 Bandung',
+                        text: '\n$_alamat',
                       ),
                       TextSpan(
-                        text: '\n+62 857 2056 8967',
+                        text: '\n$_telepon',
                       ),
                       TextSpan(
-                        text: '\npakasep@gmail.com',
+                        text: '\n$_email',
                       ),
                       TextSpan(
-                        text: '\npakasep.co.id',
+                        text: '\n$_web',
                       ),
                     ],
                   ),

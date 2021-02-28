@@ -49,7 +49,7 @@ class _UserGuideState extends State<UserGuide> {
                           ),
                         ),
                       )
-                    : Container(),
+                    : Container(height: 0, width: 0),
                 flexibleSpace: Container(
                   width: size.width,
                   color: Colors.white,
@@ -78,7 +78,7 @@ class _UserGuideState extends State<UserGuide> {
               ),
             ];
           },
-          body: Container()),
+          body: Container(height: 0, width: 0)),
     );
   }
 }

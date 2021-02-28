@@ -125,7 +125,7 @@ class _FilingStatusState extends State<FilingStatus> {
                         ),
                       ),
                     )
-                  : Container(),
+                  : Container(height: 0, width: 0),
               flexibleSpace: Container(
                 width: size.width,
                 color: Colors.white,

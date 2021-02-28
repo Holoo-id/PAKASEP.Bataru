@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/already_registered.dart';
-import 'package:pakasep/screen/users/register/otp_phone.dart';
+import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -14,14 +15,23 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
-  String _namaLengkap;
-  String _kataSandi;
-  String _ktp;
-  String _npwp;
-  String _telepon;
+  TextEditingController _dateController = TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  String _alamat,
+      _kataSandi,
+      _ktp,
+      _namaLengkap,
+      _npwp,
+      _tanggalLahir,
+      _telepon,
+      _tempatLahir;
   Map<String, dynamic> _registeringUserData;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Icon namaIcon = new Icon(null);
+  Icon tempatLahirIcon = new Icon(null);
+  Icon tanggalLahirIcon = new Icon(null);
+  Icon alamatIcon = new Icon(null);
   Icon passIcon = new Icon(null);
   Icon passwordIcon = new Icon(null);
   Icon ktpIcon = new Icon(null);
@@ -62,6 +72,170 @@ class _RegisterFormState extends State<RegisterForm> {
       decoration: InputDecoration(
         hintText: 'Nama Lengkap (Sesuai KTP)',
         labelText: 'Nama Lengkap',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: namaIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTempatLahir() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String tempat_lahir) {
+        if (tempat_lahir.isEmpty) {
+          return 'Tempat Lahir harus diisi';
+        }
+      },
+      onChanged: (tempat_lahir) {
+        if (tempat_lahir.isEmpty) {
+          setState(() {
+            tempatLahirIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            tempatLahirIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String tempat_lahir) {
+        _tempatLahir = tempat_lahir;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kota Kelahiran',
+        labelText: 'Tempat',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: namaIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTanggalLahir() {
+    return GestureDetector(
+      onTap: () => _selectDate(context),
+      child: AbsorbPointer(
+        child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          keyboardType: TextInputType.datetime,
+          controller: _dateController,
+          validator: (String tanggal_lahir) {
+            if (tanggal_lahir.isEmpty) {
+              return 'Tanggal Lahir harus diisi';
+            }
+          },
+          onChanged: (tanggal_lahir) {
+            if (tanggal_lahir.isEmpty) {
+              setState(() {
+                tanggalLahirIcon = new Icon(
+                  Icons.error,
+                  color: Colors.red,
+                );
+              });
+            } else {
+              setState(() {
+                tanggalLahirIcon = new Icon(
+                  Icons.check,
+                  color: Colors.green,
+                );
+              });
+            }
+          },
+          onSaved: (String tanggal_lahir) {
+            _tanggalLahir = tanggal_lahir;
+          },
+          style: form200Light,
+          decoration: InputDecoration(
+            hintText: 'Tanggal Kelahiran',
+            labelText: 'Tanggal Lahir',
+            labelStyle: form400Light,
+            filled: true,
+            suffixIcon: namaIcon,
+            fillColor: Color(0xffF2F3F7),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(
+                width: 1,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              borderSide: BorderSide(width: 0, style: BorderStyle.none),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAlamat() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.multiline,
+      minLines: 2,
+      maxLines: 5,
+      validator: (String alamat) {
+        if (alamat.isEmpty) {
+          return 'Alamat harus diisi';
+        }
+      },
+      onChanged: (alamat) {
+        if (alamat.isEmpty) {
+          setState(() {
+            alamatIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            alamatIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String alamat) {
+        _alamat = alamat;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Alamat',
+        labelText: 'Alamat',
         labelStyle: form400Light,
         filled: true,
         suffixIcon: namaIcon,
@@ -470,6 +644,18 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
+                  _buildTempatLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTanggalLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildAlamat(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   _buildKataSandi(),
                   SizedBox(
                     height: 10,
@@ -515,7 +701,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
                   FlatButton(
                     onPressed: _submitable()
-                        ? () {
+                        ? () async {
                             if (!_formKey.currentState.validate()) {
                               return this;
                             } else {
@@ -525,28 +711,38 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
-                              _registeringUserData = {
-                                "Nama Lengkap": _namaLengkap.trim(),
-                                "Kata Sandi": _kataSandi.trim(),
-                                "KTP": _ktp.trim(),
-                                "NPWP": _npwp.trim(),
-                                "Telepon": _telepon.trim()
-                              };
-                              if (_ktp == '1234567890123456') {
-                                return Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AlreadyRegistered()),
-                                );
-                              } else {
-                                return Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => OtpPhone(
-                                          userData: _registeringUserData)),
-                                );
-                              }
+                              print(_alamat);
+                              print(_tanggalLahir);
+                              print(_tempatLahir);
+                              CollectionReference _searchUser = _firestore.collection("Pengguna");
+                              await _searchUser.where("KTP", isEqualTo: _ktp).get().then((QuerySnapshot _snapshot) {
+                                print(_snapshot.docs.length);
+                                if (_snapshot.docs.length > 0) {
+                                  return Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AlreadyRegistered()),
+                                  );
+                                } else {
+                                  _registeringUserData = {
+                                    "Nama Lengkap": _namaLengkap.trim(),
+                                    "Kata Sandi": _kataSandi.trim(),
+                                    "KTP": _ktp.trim(),
+                                    "NPWP": _npwp.trim(),
+                                    "Telepon": _telepon.trim(),
+                                    "Alamat": _alamat.trim(),
+                                    "Tempat Lahir": _tempatLahir.trim(),
+                                    "Tanggal Lahir": _tanggalLahir.trim()
+                                  };
+                                  return Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => KtpPhotoPage(
+                                            userData: _registeringUserData)),
+                                  );
+                                }
+                              });
                             }
                           }
                         : null,
@@ -578,5 +774,20 @@ class _RegisterFormState extends State<RegisterForm> {
     setState(() {
       _agreedToTOS = newValue;
     });
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1900, 1),
+        lastDate: DateTime(2050));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        var date =
+            "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}";
+        _dateController.text = date;
+      });
   }
 }

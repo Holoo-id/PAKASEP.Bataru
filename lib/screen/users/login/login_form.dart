@@ -2,8 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pakasep/model_sqlite/userLogged.dart';
-import 'package:pakasep/model_sqlite/userLoggedDB.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
@@ -177,16 +175,6 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-                              // UserLoggedDB userLoggedDB = UserLoggedDB();
-
-                              // final user = UserLogged(
-                              //     id: "1",
-                              //     nik: _ktp,
-                              //     nama: "Contoh 123",
-                              //     status: "Logged"
-                              // );
-
-                              // userLoggedDB.insertDB(user);
                               CollectionReference _searchUser = _firestore.collection("Pengguna");
                               await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot){
                                 if(_snapshot.docs.length > 0){
@@ -208,6 +196,7 @@ class _LoginFormState extends State<LoginForm> {
                                 context,
                                 MaterialPageRoute(builder: (context) => Home()),
                               );
+                              
                             },
                             height: 60,
                             minWidth: size.width,

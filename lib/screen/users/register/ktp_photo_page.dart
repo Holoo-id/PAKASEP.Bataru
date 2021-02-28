@@ -6,21 +6,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
-import 'package:pakasep/screen/users/register/image_approval.dart';
+import 'package:pakasep/screen/users/register/otp_phone.dart';
 
 import '../../../utility/style.dart';
 import '../../components/background.dart';
-import 'register_success.dart';
 
 class KtpPhotoPage extends StatefulWidget {
+  final Map<String, dynamic> userData;
   @override
+  KtpPhotoPage({Key key, this.userData}) : super(key: key);
   _KtpPhotoPageState createState() => _KtpPhotoPageState();
 }
 
 class _KtpPhotoPageState extends State<KtpPhotoPage> {
-  File imageFile;
+  PickedFile _imageFile;
   var isLoading = false;
-  var result = 'Result In Here';
+  String result = 'Result In Here\n';
 
   @override
   Widget build(BuildContext context) {
@@ -59,19 +60,12 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                       ),
                       Expanded(
                         flex: 0,
-                        child: imageFile == null
-                            ? Container()
+                        child: _imageFile == null
+                            ? Container(height: 0, width: 0)
                             : Image.file(
-                                imageFile,
-                                fit: BoxFit.cover,
+                                File(_imageFile.path),
+                                fit: BoxFit.fitWidth,
                               ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          // child: Text(result),
-                          child:
-                              isLoading ? _buildWidgetLoading() : Text(result),
-                        ),
                       ),
                       AutoSizeText.rich(
                         TextSpan(
@@ -88,7 +82,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                             ),
                             TextSpan(
                               text:
-                                  'untuk proses selanjutnya atau kembali untuk foto ulang',
+                                  'untuk proses selanjutnya',
                             ),
                           ],
                         ),
@@ -100,36 +94,45 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         height: 15,
                       ),
                       FlatButton(
-                        onPressed: () async {
-                          var pickedFile = await ImagePicker()
-                              .getImage(source: ImageSource.camera);
-                          if (pickedFile == null) {
-                          } else {
-                            setState(
-                              () {
-                                isLoading = true;
-                              },
-                            );
-                            imageFile = File(pickedFile.path);
-                            setState(
-                              () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ImageApproval(),
-                                  ),
-                                );
-                              },
-                            );
-                            var firebaseVisionImage =
-                                FirebaseVisionImage.fromFile(imageFile);
-                            var textRecognizer =
-                                FirebaseVision.instance.textRecognizer();
-                            var visionText = await textRecognizer
-                                .processImage(firebaseVisionImage);
-                            result = 'Result: ${visionText.text}';
-                            debugPrint('result: $result');
-                            textRecognizer.close();
+                        onPressed: () async{
+                          final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+                          setState(() {
+                            if(pickedFile != null){
+                              _imageFile = pickedFile;
+                            }
+                            else{
+                              print("no image");
+                            }
+                          });
+                          final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(File(_imageFile.path));
+                          final TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+                          final VisionText visionText = await textRecognizer.processImage(visionImage);
+                          bool isKtpNotValid = true;
+                          for(TextBlock block in visionText.blocks){
+                            for(TextLine line in block.lines){
+                              result += line.text + '\n';
+                              if(line.text == widget.userData["KTP"]){
+                                print("KTP valid");
+                                isKtpNotValid = false;
+                              }
+                            }
+                          }
+                          print(result);
+                          if(isKtpNotValid){
+                            print("ktp gagal : ");
+                            print(isKtpNotValid);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => new KtpPhotoPage(userData: widget.userData)
+                                ));
+                          }
+                          else{
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OtpPhone(userData: widget.userData)
+                                ));
                           }
                         },
                         height: 60,
@@ -159,4 +162,5 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
         ? CupertinoActivityIndicator()
         : CircularProgressIndicator();
   }
+
 }
