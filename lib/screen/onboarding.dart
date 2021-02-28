@@ -21,7 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   pindah(context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
-    if(_auth.currentUser == null){
+    if(_auth.currentUser != null){
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     }
   }

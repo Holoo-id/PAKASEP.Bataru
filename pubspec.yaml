@@ -21,14 +21,16 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  auto_size_text: ^2.1.0
+  auto_size_text: ^2.0.0
   cached_network_image: ^2.5.0
   carousel_pro: ^1.0.0
   cloud_firestore: ^0.16.0
   firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
   firebase_ml_vision: ^0.10.0
-  geolocator: ^4.0.3
+  flutter_launcher_icons: ^0.8.1
+  # geoflutterfire: ^2.2.0
+  # geolocator: ^6.2.1
   google_fonts: ^1.1.1
   google_maps_flutter: ^1.2.0
   image_picker: ^0.6.7+21
@@ -48,6 +50,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "images/pakasep_logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

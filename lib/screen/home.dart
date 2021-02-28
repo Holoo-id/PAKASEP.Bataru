@@ -2,14 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pakasep/screen/components/menu.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/contents/all_available_units.dart';
-import 'package:pakasep/screen/contents/filing_requirements.dart';
-import 'package:pakasep/screen/contents/filing_status.dart';
-import 'package:pakasep/screen/contents/find_units.dart';
-import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/screen/users/profil.dart';
-import 'package:pakasep/screen/users/user_guide.dart';
 import 'package:pakasep/utility/style.dart';
 
 class Home extends StatefulWidget {
@@ -17,39 +12,6 @@ class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
   _HomeState createState() => _HomeState();
 }
-
-var menu = [
-  {
-    "name": "Lihat Semua Perumahan",
-    "image": "images/lihat semua perumahan.png",
-    "link": AllAvailableUnits(),
-  },
-  {
-    "name": "Telusuri Perumahan",
-    "image": "images/telusuri rumah.png",
-    "link": FindUnits(),
-  },
-  {
-    "name": "Persyaratan Pengajuan",
-    "image": "images/pengajuan.png",
-    "link": FilingRequirements(),
-  },
-  {
-    "name": "Cek Status Pengajuan",
-    "image": "images/cek status pengajuan.png",
-    "link": FilingStatus(),
-  },
-  {
-    "name": "Kalkulator & Simulasi KPR",
-    "image": "images/kalkulator.png",
-    "link": KprCalcSimulation(),
-  },
-  {
-    "name": "Panduan Penggunaan",
-    "image": "images/panduan pengguna.png",
-    "link": UserGuide(),
-  },
-];
 
 class _HomeState extends State<Home> {
   String _userID, _userName, _userKTP;
@@ -137,9 +99,7 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.symmetric(vertical: 15),
                         child: TextField(
                           onChanged: (value) {
-                            // searchResults(value);
                           },
-                          // controller: searchControl,
                           textInputAction: TextInputAction.search,
                           decoration: InputDecoration(
                             filled: true,
@@ -181,59 +141,7 @@ class _HomeState extends State<Home> {
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: <Widget>[
-                Container(
-                  child: GridView.count(
-                    crossAxisCount: orientation == Orientation.portrait ? 2 : 3,
-                    childAspectRatio: (176.45 / 168),
-                    controller: new ScrollController(keepScrollOffset: false),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    children: List<Widget>.generate(6, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => menu[index]['link']),
-                          );
-                        },
-                        child: GridTile(
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.all(11.5),
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).accentColor,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Center(
-                                  child: Image(
-                                    image: AssetImage(
-                                      menu[index]['image'],
-                                    ),
-                                    height: 85.0,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AutoSizeText(
-                                  menu[index]['name'],
-                                  style: text600Light,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  presetFontSizes: [18, 13.5, 9],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
+                MenuHome(),
                 Container(
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.symmetric(horizontal: 14.5),
