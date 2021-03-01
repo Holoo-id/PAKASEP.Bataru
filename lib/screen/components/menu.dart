@@ -39,7 +39,7 @@ class _MenuHomeState extends State<MenuHome> {
                   style: text400Grey,
                   children: [
                     TextSpan(
-                      text: 'Untuk informasi bisa di cek di Int',
+                      text: 'Untuk informasi bisa di cek di ',
                     ),
                     TextSpan(
                         style: text500Grey,
