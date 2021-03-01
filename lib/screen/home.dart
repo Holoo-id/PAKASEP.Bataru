@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    // futureGetUser();
     Size size = MediaQuery.of(context).size;
     Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
@@ -250,11 +249,12 @@ class _HomeState extends State<Home> {
         await _firestore.collection("Pengguna").doc(_userID).get();
     _userName = docSnapToUser.data()["Nama Lengkap"];
     _userKTP = docSnapToUser.data()["KTP"];
+    print(_userName);
   }
 
   @override
   void initState() {
-    _getUserData();
     super.initState();
+    _getUserData();
   }
 }

@@ -720,14 +720,10 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_alamat);
                               print(_tanggalLahir);
                               print(_tempatLahir);
-                              CollectionReference _searchUser =
-                                  _firestore.collection("Pengguna");
-                              await _searchUser
-                                  .where("KTP", isEqualTo: _ktp)
-                                  .get()
-                                  .then((QuerySnapshot _snapshot) {
-                                print(_snapshot.docs.length);
-                                if (_snapshot.docs.length > 0) {
+                              CollectionReference _searchUser = _firestore.collection("Pengguna");
+                              QuerySnapshot _searchExistingKTP = await _searchUser.where("KTP", isEqualTo: _ktp).get();
+                              QuerySnapshot _searchExistingTelepon = await _searchUser.where("Telepon", isEqualTo: _telepon).get();
+                                if (_searchExistingKTP.docs.length > 0 || _searchExistingTelepon.docs.length > 0 ) {
                                   return Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -752,7 +748,6 @@ class _RegisterFormState extends State<RegisterForm> {
                                             userData: _registeringUserData)),
                                   );
                                 }
-                              });
                             }
                           }
                         : null,

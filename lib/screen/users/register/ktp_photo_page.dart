@@ -121,14 +121,15 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                           if(isKtpNotValid){
                             print("ktp gagal : ");
                             print(isKtpNotValid);
-                            Navigator.push(
+
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => KtpPhotoPage(userData: widget.userData)
                                 ));
                           }
                           else{
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => OtpPhone(userData: widget.userData)

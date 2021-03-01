@@ -111,27 +111,19 @@ class _LoginOtpState extends State<LoginOtp> {
                               print(_InVerificationCode);
                               print("Trying to compare verification ID");
                               try {
-                                await FirebaseAuth.instance
-                                    .signInWithCredential(
-                                        PhoneAuthProvider.credential(
-                                            verificationId: _verificationCode,
-                                            smsCode: _InVerificationCode))
+                                await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode,smsCode: _InVerificationCode))
                                     .then((value) async {
-                                  if (value.user != null) {
-                                    print('user berhasil login');
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Home()),
-                                    );
+                                      if (value.user != null) {
+                                        print('user berhasil login');
+                                        Navigator.pop(context);
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Home()));
                                   }
                                 });
                               } catch (e) {
-                                FocusScope.of(context).unfocus();
                                 print(e);
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                    content:
-                                        Text("Kode verifikasi tidak cocok!")));
+                                _scaffoldKey.currentState.showSnackBar(SnackBar( content:Text("Kode verifikasi tidak cocok!")));
                                 Navigator.of(context).pop();
                               }
                             },
@@ -171,7 +163,7 @@ class _LoginOtpState extends State<LoginOtp> {
               .then((value) async {
             if (value.user != null) {
               print('user Auth secara otomatis');
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) => Home()),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/style.dart';
@@ -115,37 +116,28 @@ class _OtpPhoneState extends State<OtpPhone> {
                               print(_InVerificationCode);
                               print("Trying to compare verification ID");
                               try {
-                                await FirebaseAuth.instance
-                                    .signInWithCredential(
-                                        PhoneAuthProvider.credential(
-                                            verificationId: _verificationCode,
-                                            smsCode: _InVerificationCode))
-                                    .then((value) async {
+                                await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(
+                                    verificationId: _verificationCode,
+                                    smsCode: _InVerificationCode
+                                )).then((value) async {
                                   if (value.user != null) {
                                     print('user berhasil terdaftar pada Auth');
-                                    _userID =
-                                        FirebaseAuth.instance.currentUser.uid;
-                                    DocumentReference docRefToNewUser =
-                                        _firestore
-                                            .collection("Pengguna")
-                                            .doc(_userID);
+                                    _userID = FirebaseAuth.instance.currentUser.uid;
+                                    DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
                                     docRefToNewUser.set(widget.userData);
-                                    print(
-                                        'user berhasil terdaftar pada Database');
-                                    Navigator.push(
+                                    print('user berhasil terdaftar pada Database');
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => KtpPhotoPage()),
+                                          builder: (context) => Home()),
                                     );
                                   }
                                 });
                               } catch (e) {
                                 FocusScope.of(context).unfocus();
                                 print(e);
-                                _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                    content:
-                                        Text("Kode verifikasi tidak cocok!")));
-                                Navigator.of(context).pop();
+                                _showMyDialog();
                               }
                             },
                             height: 60,
@@ -179,19 +171,17 @@ class _OtpPhoneState extends State<OtpPhone> {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "+62${widget.userData['Telepon']}",
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance
-              .signInWithCredential(credential)
-              .then((value) async {
+          await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
             if (value.user != null) {
               print('user terdaftar di Auth secara otomatis');
               _userID = FirebaseAuth.instance.currentUser.uid;
-              DocumentReference docRefToNewUser =
-                  _firestore.collection("Pengguna").doc(_userID);
+              DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
               docRefToNewUser.set(widget.userData);
               print('user berhasil terdaftar pada Database');
-              Navigator.push(
+              Navigator.pop(context);
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => KtpPhotoPage()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             }
           });
@@ -199,7 +189,6 @@ class _OtpPhoneState extends State<OtpPhone> {
         verificationFailed: (FirebaseAuthException e) {
           print("user gagal terdaftar di Auth");
           print(e.message);
-          return _showMyDialog();
         },
         codeSent: (String verificationID, int resendToken) {
           print("Mencoba secara manual");
@@ -241,7 +230,7 @@ class _OtpPhoneState extends State<OtpPhone> {
             TextButton(
               child: Text('Oke'),
               onPressed: () {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => RegisterForm()),
                 );

@@ -23,7 +23,7 @@ class _LoginFormState extends State<LoginForm> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<String> createAlertDialog(BuildContext context) {
-    TextEditingController TEVerifikasiKode = TextEditingController();
+    TextEditingController TE_VerifikasiKode = TextEditingController();
     return showDialog(
         context: context,
         builder: (context) {
@@ -31,14 +31,14 @@ class _LoginFormState extends State<LoginForm> {
             title: Text(
                 "Masukkan kode verifikasi yang telah dikirim ke nomor anda:"),
             content: TextField(
-              controller: TEVerifikasiKode,
+              controller: TE_VerifikasiKode,
             ),
             actions: <Widget>[
               MaterialButton(
                 elevation: 5.0,
                 child: Text('Submit'),
                 onPressed: () {
-                  Navigator.of(context).pop(TEVerifikasiKode.text.toString());
+                  Navigator.of(context).pop(TE_VerifikasiKode.text.toString());
                 },
               )
             ],
@@ -178,13 +178,8 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
-                              CollectionReference _searchUser =
-                                  _firestore.collection("Pengguna");
-                              await _searchUser
-                                  .where("KTP", isEqualTo: _ktp)
-                                  .where("Kata Sandi", isEqualTo: _kataSandi)
-                                  .get()
-                                  .then((QuerySnapshot _snapshot) {
+                              CollectionReference _searchUser = _firestore.collection("Pengguna");
+                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot) {
                                 if (_snapshot.docs.length > 0) {
                                   _snapshot.docs.forEach((element) {
                                     print(element.data()["Telepon"]);
@@ -192,22 +187,14 @@ class _LoginFormState extends State<LoginForm> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => LoginOtp(
-                                                noTelepon: _nomorTelepon,
-                                              )),
+                                          builder: (context) => LoginOtp(noTelepon: _nomorTelepon)),
                                     );
                                   });
                                 } else {
                                   print("empty query");
-                                  _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                      content: Text(
-                                          "Password atau No KTP mu salah!")));
+                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Password atau No KTP mu salah!")));
                                 }
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Home()),
-                              );
                             },
                             height: 60,
                             minWidth: size.width,

@@ -1,8 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/intro.dart';
 import 'package:pakasep/screen/users/login/login_form.dart';
 import 'package:pakasep/utility/style.dart';
 
@@ -13,9 +16,10 @@ class EditProfilForm extends StatefulWidget {
 }
 
 class _EditProfilFormState extends State<EditProfilForm> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
-  String _namaLengkap, _kataSandi, _npwp, _tempatLahir, _tanggalLahir, _alamat;
+  String _userId, _namaLengkap, _kataSandi, _npwp, _tempatLahir, _tanggalLahir, _alamat;
   String _telepon = "89012345678";
 
   Icon namaIcon = new Icon(null);
@@ -456,9 +460,11 @@ class _EditProfilFormState extends State<EditProfilForm> {
         actions: [
           FlatButton(
             onPressed: () {
-              Navigator.push(
+              FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => LoginForm()),
+                MaterialPageRoute(builder: (context) => Intro()),
               );
             },
             child: Text(
@@ -575,6 +581,10 @@ class _EditProfilFormState extends State<EditProfilForm> {
                           print(_kataSandi);
                           print(_npwp);
                           print(_telepon);
+                          print(_tempatLahir);
+                          print(_tanggalLahir);
+                          print(_alamat);
+                          DocumentReference docRefToCurUser = FirebaseFirestore.instance.collection("Pengguna").doc(_userId);
                         }
                       },
                       height: 60,
@@ -611,5 +621,22 @@ class _EditProfilFormState extends State<EditProfilForm> {
             "${picked.toLocal().day}/${picked.toLocal().month}/${picked.toLocal().year}";
         _dateController.text = date;
       });
+  }
+  _getUserData() async {
+    _userId = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot docSnapToUser =
+    await _firestore.collection("Pengguna").doc(_userId).get();
+    _namaLengkap = docSnapToUser.data()["Nama Lengkap"];
+    _tanggalLahir = docSnapToUser.data()["Tanggal Lahir"];
+    _npwp = docSnapToUser.data()["NPWP"];
+    _alamat = docSnapToUser.data()["Alamat"];
+    _tempatLahir = docSnapToUser.data()["Tempat Lahir"];
+    _telepon = docSnapToUser.data()["Telepon"];
+  }
+
+  @override
+  void initState() {
+    _getUserData();
+    super.initState();
   }
 }
