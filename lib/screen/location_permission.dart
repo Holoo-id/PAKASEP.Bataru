@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/intro.dart';
 import 'package:pakasep/utility/style.dart';
-// import 'package:permission_handler/permission_handler.dart';
 
 class LocationPermission extends StatefulWidget {
   @override
@@ -12,8 +12,13 @@ class LocationPermission extends StatefulWidget {
 }
 
 class _LocationPermissionState extends State<LocationPermission> {
-  // Position _currentPosition;
-  String _currentAddress;
+  void _getUserLocation() async {
+    Geolocator geolocator = Geolocator()..forceAndroidLocationManager = true;
+    GeolocationStatus geolocationStatus =
+        await geolocator.checkGeolocationPermissionStatus();
+    Position currentPosition = await geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +46,11 @@ class _LocationPermissionState extends State<LocationPermission> {
                 SizedBox(
                   height: 20,
                 ),
-                // if (_currentPosition != null) Text(_currentAddress),
                 FlatButton(
                   height: 60,
                   minWidth: size.width,
                   onPressed: () {
-                    // checkLocationPermission();
-                    // _getCurrentLocation();
+                    _getUserLocation();
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Intro()),
