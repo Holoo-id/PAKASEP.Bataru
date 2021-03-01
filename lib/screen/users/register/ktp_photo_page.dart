@@ -111,7 +111,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                           for(TextBlock block in visionText.blocks){
                             for(TextLine line in block.lines){
                               result += line.text + '\n';
-                              if(line.text == widget.userData["KTP"]){
+                              if(line.text == widget.userData["KTP"] || line.text == ":${widget.userData['KTP']}" || line.text == ": ${widget.userData['KTP']}"){
                                 print("KTP valid");
                                 isKtpNotValid = false;
                               }
@@ -124,7 +124,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => new KtpPhotoPage(userData: widget.userData)
+                                    builder: (context) => KtpPhotoPage(userData: widget.userData)
                                 ));
                           }
                           else{
