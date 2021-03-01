@@ -46,7 +46,7 @@ class _FindUnitsState extends State<FindUnits> {
       position:
           LatLng(specify['geolokasi'].latitude, specify['geolokasi'].longitude),
       infoWindow: InfoWindow(
-        title: specify['nama_tempat'],
+        title: specify["nama_tempat"],
         snippet: 'Ini Jaraknya',
       ),
     );
@@ -80,7 +80,6 @@ class _FindUnitsState extends State<FindUnits> {
 
   @override
   Widget build(BuildContext context) {
-
     _buildGoogleMap() {
       return Container(
         height: MediaQuery.of(context).size.height,
