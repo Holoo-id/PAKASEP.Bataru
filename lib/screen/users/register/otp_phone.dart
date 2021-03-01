@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/style.dart';
@@ -135,7 +136,7 @@ class _OtpPhoneState extends State<OtpPhone> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => KtpPhotoPage()),
+                                          builder: (context) => Home()),
                                     );
                                   }
                                 });
@@ -191,7 +192,7 @@ class _OtpPhoneState extends State<OtpPhone> {
               print('user berhasil terdaftar pada Database');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => KtpPhotoPage()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             }
           });

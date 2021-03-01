@@ -204,10 +204,6 @@ class _LoginFormState extends State<LoginForm> {
                                           "Password atau No KTP mu salah!")));
                                 }
                               });
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Home()),
-                              );
                             },
                             height: 60,
                             minWidth: size.width,

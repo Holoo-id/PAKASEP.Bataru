@@ -246,10 +246,10 @@ class _HomeState extends State<Home> {
 
   _getUserData() async {
     _userID = FirebaseAuth.instance.currentUser.uid;
-    DocumentSnapshot docSnapToUser =
-        await _firestore.collection("Pengguna").doc(_userID).get();
-    _userName = docSnapToUser.data()["Nama Lengkap"];
-    _userKTP = docSnapToUser.data()["KTP"];
+     await _firestore.collection("Pengguna").doc(_userID).get().then((value){
+      _userName = value.data()["Nama Lengkap"];
+      _userKTP = value.data()["KTP"];
+    });
   }
 
   @override
