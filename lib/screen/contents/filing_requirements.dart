@@ -15,13 +15,17 @@ class _FilingRequirementsState extends State<FilingRequirements> {
   Widget _buildContructionAlert(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
+      elevation: 0,
+      insetPadding: EdgeInsets.symmetric(
+      vertical: (MediaQuery.of(context).size.height / 4) * 1.5,
+      horizontal: 25,
+    ),
       child: Center(
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.white,
           ),
-          height: MediaQuery.of(context).size.height / 4,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(10.0),
           child: Column(
