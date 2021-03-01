@@ -1,10 +1,10 @@
 import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/contents/all_available_units.dart';
-import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/utility/style.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FilingRequirements extends StatefulWidget {
   @override
@@ -12,7 +12,61 @@ class FilingRequirements extends StatefulWidget {
 }
 
 class _FilingRequirementsState extends State<FilingRequirements> {
-  bool filHouse = true;
+  Widget _buildContructionAlert(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+          ),
+          height: MediaQuery.of(context).size.height / 4,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AutoSizeText(
+                'aplikasi masih dalam tahap pra-registrasi. silahkan input data anda terlebih dahulu\n'
+                    .toUpperCase(),
+                textAlign: TextAlign.center,
+                presetFontSizes: [20, 18],
+                style: text600Dark,
+              ),
+              AutoSizeText.rich(
+                TextSpan(
+                  style: text400Grey,
+                  children: [
+                    TextSpan(
+                      text: 'Untuk informasi bisa di cek di Int',
+                    ),
+                    TextSpan(
+                        style: text500Grey,
+                        text: ' https://www.instagram.com/bataru.pakasep/',
+                        recognizer: new TapGestureRecognizer()
+                          ..onTap = () async {
+                            const _url =
+                                'https://www.instagram.com/bataru.pakasep/';
+                            if (await canLaunch(_url)) {
+                              await launch(_url);
+                            } else {
+                              throw 'Tidak dapat membuka $_url';
+                            }
+                          }),
+                  ],
+                ),
+                presetFontSizes: [16, 15],
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  bool filHouse = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -195,14 +249,12 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 buttonMinWidth: size.width * 0.3,
                 children: [
                   RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AllAvailableUnits(),
-                        ),
-                      );
-                    },
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _buildContructionAlert(context);
+                      },
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(
@@ -219,14 +271,12 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                     ),
                   ),
                   RaisedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FilingStatus(),
-                        ),
-                      );
-                    },
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return _buildContructionAlert(context);
+                      },
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                       side: BorderSide(

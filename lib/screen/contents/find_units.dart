@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/utility/style.dart';
@@ -17,16 +18,33 @@ class _FindUnitsState extends State<FindUnits> {
   BitmapDescriptor _markerIcon;
   GoogleMapController _mapControl;
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  Position currentPosition;
+  double _lat, _lng;
 
-  void myMarker(specify, specifyId) {
-    final MarkerId _markId = MarkerId(specifyId);
+  void _getUserLocation() async {
+    Geolocator geolocator = Geolocator()..forceAndroidLocationManager = true;
+    GeolocationStatus geolocationStatus =
+        await geolocator.checkGeolocationPermissionStatus();
+    currentPosition = await geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.medium);
+    print(currentPosition.latitude);
+    print(currentPosition.longitude);
+    setState(() {
+      _lat = currentPosition.latitude;
+      _lng = currentPosition.longitude;
+    });
+  }
+
+  void myMarker(specify, specifyId) async {
+    var _markValue = specifyId;
+    final MarkerId _markId = MarkerId(_markValue);
     final Marker marker = Marker(
       markerId: _markId,
       icon: BitmapDescriptor.defaultMarkerWithHue(
         BitmapDescriptor.hueRed,
       ),
       position:
-          LatLng(specify["geolokasi"].latitude, specify["geolokasi"].longitude),
+          LatLng(specify['geolokasi'].latitude, specify['geolokasi'].longitude),
       infoWindow: InfoWindow(
         title: specify['nama_tempat'],
         snippet: 'Ini Jaraknya',
@@ -38,7 +56,7 @@ class _FindUnitsState extends State<FindUnits> {
   }
 
   getMarkerData() async {
-    FirebaseFirestore.instance.collection("Rumah").get().then((dataRumah) {
+    FirebaseFirestore.instance.collection('Rumah').get().then((dataRumah) {
       if (dataRumah.docs.isNotEmpty) {
         for (var i = 0; i < dataRumah.docs.length; i++) {
           myMarker(dataRumah.docs[i].data, dataRumah.docs[i].id);
@@ -54,6 +72,7 @@ class _FindUnitsState extends State<FindUnits> {
 
   @override
   void initState() {
+    _getUserLocation();
     getMarkerData();
     _setMarkerIcon();
     super.initState();
@@ -61,9 +80,6 @@ class _FindUnitsState extends State<FindUnits> {
 
   @override
   Widget build(BuildContext context) {
-    Set<Marker> getMarker() {
-      return <Marker>[].toSet();
-    }
 
     _buildGoogleMap() {
       return Container(
@@ -78,10 +94,9 @@ class _FindUnitsState extends State<FindUnits> {
           },
           initialCameraPosition: CameraPosition(
             zoom: 25,
-            target: LatLng(-6.8644, 107.5797),
-            // target: LatLng(_current.latitude, _current.longitude),
+            target: LatLng(_lat, _lng),
           ),
-          markers: getMarker(),
+          markers: Set<Marker>.of(markers.values),
         ),
       );
     }

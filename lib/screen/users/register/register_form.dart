@@ -551,20 +551,20 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget _buildTelepon() {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      keyboardType: TextInputType.emailAddress,
-      // inputFormatters: [
-      //   FilteringTextInputFormatter.digitsOnly,
-      // ],
+      keyboardType: TextInputType.phone,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
       validator: (String telepon) {
         if (telepon.isEmpty) {
           return 'Nomor telepon tidak boleh kosong';
         }
         // VALIDATOR EMAIL
-        if (!RegExp(
-                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-            .hasMatch(telepon)) {
-          return 'Email Tidak Valid';
-        }
+        // if (!RegExp(
+        //         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        //     .hasMatch(telepon)) {
+        //   return 'Email Tidak Valid';
+        // }
       },
       onChanged: (telepon) {
         if (telepon.isEmpty) {
