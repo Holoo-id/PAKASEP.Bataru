@@ -720,34 +720,42 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_alamat);
                               print(_tanggalLahir);
                               print(_tempatLahir);
-                              CollectionReference _searchUser = _firestore.collection("Pengguna");
-                              QuerySnapshot _searchExistingKTP = await _searchUser.where("KTP", isEqualTo: _ktp).get();
-                              QuerySnapshot _searchExistingTelepon = await _searchUser.where("Telepon", isEqualTo: _telepon).get();
-                                if (_searchExistingKTP.docs.length > 0 || _searchExistingTelepon.docs.length > 0 ) {
-                                  return Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AlreadyRegistered()),
-                                  );
-                                } else {
-                                  _registeringUserData = {
-                                    "Nama Lengkap": _namaLengkap.trim(),
-                                    "Kata Sandi": _kataSandi.trim(),
-                                    "KTP": _ktp.trim(),
-                                    "NPWP": _npwp.trim(),
-                                    "Telepon": _telepon.trim(),
-                                    "Alamat": _alamat.trim(),
-                                    "Tempat Lahir": _tempatLahir.trim(),
-                                    "Tanggal Lahir": _tanggalLahir.trim()
-                                  };
-                                  return Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => KtpPhotoPage(
-                                            userData: _registeringUserData)),
-                                  );
-                                }
+                              CollectionReference _searchUser =
+                                  _firestore.collection("Pengguna");
+                              QuerySnapshot _userHavingSameKTP =
+                                  await _searchUser
+                                      .where("KTP", isEqualTo: _ktp)
+                                      .get();
+                              QuerySnapshot _userHavingSameTelepon =
+                                  await _searchUser
+                                      .where("Telepon", isEqualTo: _telepon)
+                                      .get();
+                              if (_userHavingSameTelepon.docs.length > 0 ||
+                                  _userHavingSameKTP.docs.length > 0) {
+                                return Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AlreadyRegistered()),
+                                );
+                              } else {
+                                _registeringUserData = {
+                                  "Nama Lengkap": _namaLengkap.trim(),
+                                  "Kata Sandi": _kataSandi.trim(),
+                                  "KTP": _ktp.trim(),
+                                  "NPWP": _npwp.trim(),
+                                  "Telepon": _telepon.trim(),
+                                  "Alamat": _alamat.trim(),
+                                  "Tempat Lahir": _tempatLahir.trim(),
+                                  "Tanggal Lahir": _tanggalLahir.trim()
+                                };
+                                return Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => KtpPhotoPage(
+                                          userData: _registeringUserData)),
+                                );
+                              }
                             }
                           }
                         : null,

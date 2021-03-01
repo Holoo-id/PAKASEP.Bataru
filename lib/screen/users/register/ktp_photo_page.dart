@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
+import 'package:pakasep/screen/components/popup_with_button.dart';
 import 'package:pakasep/screen/users/register/otp_phone.dart';
 
 import '../../../utility/style.dart';
@@ -81,8 +82,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                               ),
                             ),
                             TextSpan(
-                              text:
-                                  'untuk proses selanjutnya',
+                              text: 'untuk proses selanjutnya',
                             ),
                           ],
                         ),
@@ -94,46 +94,53 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         height: 15,
                       ),
                       FlatButton(
-                        onPressed: () async{
-                          final pickedFile = await ImagePicker().getImage(source: ImageSource.camera);
+                        onPressed: () async {
+                          final pickedFile = await ImagePicker()
+                              .getImage(source: ImageSource.camera);
                           setState(() {
-                            if(pickedFile != null){
+                            if (pickedFile != null) {
                               _imageFile = pickedFile;
-                            }
-                            else{
+                            } else {
                               print("no image");
                             }
                           });
-                          final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(File(_imageFile.path));
-                          final TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
-                          final VisionText visionText = await textRecognizer.processImage(visionImage);
+                          final FirebaseVisionImage visionImage =
+                              FirebaseVisionImage.fromFile(
+                                  File(_imageFile.path));
+                          final TextRecognizer textRecognizer =
+                              FirebaseVision.instance.textRecognizer();
+                          final VisionText visionText =
+                              await textRecognizer.processImage(visionImage);
                           bool isKtpNotValid = true;
-                          for(TextBlock block in visionText.blocks){
-                            for(TextLine line in block.lines){
+                          for (TextBlock block in visionText.blocks) {
+                            for (TextLine line in block.lines) {
                               result += line.text + '\n';
-                              if(line.text == widget.userData["KTP"] || line.text == ":${widget.userData['KTP']}" || line.text == ": ${widget.userData['KTP']}"){
+                              if (line.text == widget.userData["KTP"] ||
+                                  line.text == ":${widget.userData['KTP']}" ||
+                                  line.text == ": ${widget.userData['KTP']}") {
                                 print("KTP valid");
                                 isKtpNotValid = false;
                               }
                             }
                           }
                           print(result);
-                          if(isKtpNotValid){
+                          if (isKtpNotValid) {
                             print("ktp gagal : ");
                             print(isKtpNotValid);
-
-                            Navigator.pushReplacement(
+                            popupWithButton(
+                              context,
+                              'KTP Gagal',
+                              'Ambil gambar lagi untuk re-scan KTP',
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      KtpPhotoPage(userData: widget.userData)),
+                            );
+                          } else {
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => KtpPhotoPage(userData: widget.userData)
-                                ));
-                          }
-                          else{
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OtpPhone(userData: widget.userData)
-                                ));
+                                    builder: (context) =>
+                                        OtpPhone(userData: widget.userData)));
                           }
                         },
                         height: 60,
