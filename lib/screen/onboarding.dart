@@ -59,7 +59,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     pindah(context);
     Size size = MediaQuery.of(context).size;
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -71,200 +70,200 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             padding: EdgeInsets.all(0.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                Container(
-                  height: size.height - 99,
-                  child: PageView(
-                    physics: ClampingScrollPhysics(),
-                    controller: _pageController,
-                    onPageChanged: (int page) {
-                      setState(() {
-                        _currentPage = page;
-                      });
-                    },
-                    children: <Widget>[
-                      Padding(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: 15.0),
-                              child: Column(
-                                children: <Widget>[
-                                  AutoSizeText(
-                                    'Selamat Datang di',
-                                    style: title400Light,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    presetFontSizes: [30, 22.5, 15],
-                                  ),
-                                  // SizedBox(height: 5),
-                                  AutoSizeText(
-                                    'PAKASEP',
-                                    style: title900Light,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    presetFontSizes: [64, 48, 32],
-                                  ),
-                                  // SizedBox(height: 5),
-                                  AutoSizeText(
-                                    'PERKUMPULAN AHLI KEPEMILIKAN PERUMAHAN',
-                                    style: subtitle600Light,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    presetFontSizes: [16, 12, 8],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 12.5),
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'images/one_line_art_rumah.png',
-                                ),
-                                fit: BoxFit.fitWidth,
-                                width: size.width,
-                              ),
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                      Padding(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: Column(
-                                children: <Widget>[
-                                  AutoSizeText.rich(
-                                    TextSpan(
+                Flexible(
+                  child: FractionallySizedBox(
+                    heightFactor: 0.925,
+                    child: PageView(
+                      physics: ClampingScrollPhysics(),
+                      controller: _pageController,
+                      onPageChanged: (int page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      children: <Widget>[
+                        Padding(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 15.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    AutoSizeText(
+                                      'Selamat Datang di',
                                       style: title400Light,
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'PAKASEP',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text:
-                                              ' merupakan aplikasi pendukung program ',
-                                        ),
-                                        TextSpan(
-                                          text: 'BAKTI PADAMU GURU (BATARU)',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                          ),
-                                        ),
-                                      ],
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      presetFontSizes: [30, 22.5, 15],
                                     ),
-                                    maxLines: 4,
-                                    textAlign: TextAlign.center,
-                                    presetFontSizes: [28, 21, 14],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 50.0),
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'images/one_line_art_3_polos.png',
+                                    // SizedBox(height: 5),
+                                    AutoSizeText(
+                                      'PAKASEP',
+                                      style: title900Light,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      presetFontSizes: [64, 48, 32],
+                                    ),
+                                    // SizedBox(height: 5),
+                                    AutoSizeText(
+                                      'PERKUMPULAN AHLI KEPEMILIKAN PERUMAHAN',
+                                      style: subtitle600Light,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      presetFontSizes: [16, 12, 8],
+                                    ),
+                                  ],
                                 ),
-                                fit: BoxFit.fitWidth,
-                                width: size.width,
                               ),
-                            ),
-                          ],
-                        ),
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                      Padding(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: Column(
-                                children: <Widget>[
-                                  AutoSizeText(
-                                    'List rumah subsidi?\nDeveloper Perumahan?\nPengurusan KPR?',
-                                    style: title700Light,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 3,
-                                    presetFontSizes: [30, 22.5, 15],
+                              SizedBox(height: 12.5),
+                              Center(
+                                child: Image(
+                                  image: AssetImage(
+                                    'images/one_line_art_rumah.png',
                                   ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 50.0),
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'images/one_line_guru_1.png',
+                                  fit: BoxFit.fitWidth,
+                                  width: size.width,
                                 ),
-                                fit: BoxFit.fitWidth,
-                                width: size.width,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          padding: EdgeInsets.all(0.0),
                         ),
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                      Padding(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(top: 10.0),
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(height: 5.0),
-                                  Image(
+                        Padding(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 10.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    AutoSizeText.rich(
+                                      TextSpan(
+                                        style: title400Light,
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'PAKASEP',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text:
+                                                ' merupakan aplikasi pendukung program ',
+                                          ),
+                                          TextSpan(
+                                            text: 'BAKTI PADAMU GURU (BATARU)',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      maxLines: 4,
+                                      textAlign: TextAlign.center,
+                                      presetFontSizes: [28, 21, 14],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: 50.0),
+                              Center(
+                                child: Image(
+                                  image: AssetImage(
+                                    'images/one_line_art_3_polos.png',
+                                  ),
+                                  fit: BoxFit.fitWidth,
+                                  width: size.width,
+                                ),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(0.0),
+                        ),
+                        Padding(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.only(top: 10.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    AutoSizeText(
+                                      'List rumah subsidi?\nDeveloper Perumahan?\nPengurusan KPR?',
+                                      style: title700Light,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 3,
+                                      presetFontSizes: [30, 22.5, 15],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Center(
+                                child: Image(
+                                  image: AssetImage(
+                                    'images/one_line_guru_1.png',
+                                  ),
+                                  fit: BoxFit.fitWidth,
+                                  width: size.width,
+                                ),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(0.0),
+                        ),
+                        Padding(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Flexible(
+                                child: FractionallySizedBox(
+                                  heightFactor: 1,
+                                  child: Column(
+                                    children: <Widget>[
+                                      Image(
+                                        image: AssetImage(
+                                          'images/pakasep_logo.png',
+                                        ),
+                                      ),
+                                      AutoSizeText(
+                                        'PAKASEP',
+                                        style: title900Light,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        presetFontSizes: [64, 48, 32],
+                                      ),
+                                      AutoSizeText(
+                                        'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
+                                        textAlign: TextAlign.center,
+                                        style: subtitle600Light,
+                                        maxLines: 1,
+                                        presetFontSizes: [16, 12, 8],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                child: FractionallySizedBox(
+                                  heightFactor: 1.5,
+                                  child: Image(
                                     image: AssetImage(
-                                      'images/pakasep_logo.png',
+                                      'images/one_line_art_rumah.png',
                                     ),
-                                    width: 150,
-                                    // fit: BoxFit.fitWidth,
-                                    // width: size.width,
+                                    fit: BoxFit.fitWidth,
+                                    width: size.width,
                                   ),
-                                  AutoSizeText(
-                                    'PAKASEP',
-                                    style: title900Light,
-                                    textAlign: TextAlign.center,
-                                    maxLines: 1,
-                                    presetFontSizes: [64, 48, 32],
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  AutoSizeText(
-                                    'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
-                                    textAlign: TextAlign.center,
-                                    style: subtitle600Light,
-                                    maxLines: 1,
-                                    presetFontSizes: [16, 12, 8],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 25.0),
-                            Center(
-                              child: Image(
-                                image: AssetImage(
-                                  'images/one_line_art_rumah.png',
                                 ),
-                                fit: BoxFit.fitWidth,
-                                width: size.width,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          padding: EdgeInsets.all(0.0),
                         ),
-                        padding: EdgeInsets.all(0.0),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 _currentPage == _numPages - 1
@@ -294,9 +293,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: _buildPageIndicator()),
-                SizedBox(
-                  height: 10,
-                ),
                 AutoSizeText.rich(
                   TextSpan(
                     style: watermark400Light,
@@ -321,9 +317,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   presetFontSizes: [12, 8, 6],
                   // minFontSize: 6,
                   textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 10,
                 ),
               ],
             ),

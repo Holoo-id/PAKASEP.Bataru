@@ -45,7 +45,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
                   height: size.height - 115,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,9 +63,12 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         flex: 0,
                         child: _imageFile == null
                             ? Container(height: 0, width: 0)
-                            : Image.file(
-                                File(_imageFile.path),
-                                fit: BoxFit.fitWidth,
+                            : FractionallySizedBox(
+                                heightFactor: 1,
+                                child: Image.file(
+                                  File(_imageFile.path),
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                       ),
                       AutoSizeText.rich(
@@ -93,65 +96,68 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                       SizedBox(
                         height: 15,
                       ),
-                      FlatButton(
-                        onPressed: () async {
-                          final pickedFile = await ImagePicker()
-                              .getImage(source: ImageSource.camera);
-                          setState(() {
-                            if (pickedFile != null) {
-                              _imageFile = pickedFile;
-                            } else {
-                              print("no image");
-                            }
-                          });
-                          final FirebaseVisionImage visionImage =
-                              FirebaseVisionImage.fromFile(
-                                  File(_imageFile.path));
-                          final TextRecognizer textRecognizer =
-                              FirebaseVision.instance.textRecognizer();
-                          final VisionText visionText =
-                              await textRecognizer.processImage(visionImage);
-                          bool isKtpNotValid = true;
-                          for (TextBlock block in visionText.blocks) {
-                            for (TextLine line in block.lines) {
-                              result += line.text + '\n';
-                              if (line.text == widget.userData["KTP"] ||
-                                  line.text == ":${widget.userData['KTP']}" ||
-                                  line.text == ": ${widget.userData['KTP']}") {
-                                print("KTP valid");
-                                isKtpNotValid = false;
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: FlatButton(
+                          onPressed: () async {
+                            final pickedFile = await ImagePicker()
+                                .getImage(source: ImageSource.camera);
+                            setState(() {
+                              if (pickedFile != null) {
+                                _imageFile = pickedFile;
+                              } else {
+                                print("no image");
+                              }
+                            });
+                            final FirebaseVisionImage visionImage =
+                                FirebaseVisionImage.fromFile(
+                                    File(_imageFile.path));
+                            final TextRecognizer textRecognizer =
+                                FirebaseVision.instance.textRecognizer();
+                            final VisionText visionText =
+                                await textRecognizer.processImage(visionImage);
+                            bool isKtpNotValid = true;
+                            for (TextBlock block in visionText.blocks) {
+                              for (TextLine line in block.lines) {
+                                result += line.text + '\n';
+                                if (line.text == widget.userData["KTP"] ||
+                                    line.text == ":${widget.userData['KTP']}" ||
+                                    line.text == ": ${widget.userData['KTP']}") {
+                                  print("KTP valid");
+                                  isKtpNotValid = false;
+                                }
                               }
                             }
-                          }
-                          print(result);
-                          if (isKtpNotValid) {
-                            print("ktp gagal : ");
-                            print(isKtpNotValid);
-                            popupWithButton(
-                              context,
-                              'KTP Gagal',
-                              'Ambil gambar lagi untuk re-scan KTP',
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      KtpPhotoPage(userData: widget.userData)),
-                            );
-                          } else {
-                            Navigator.push(
+                            print(result);
+                            if (isKtpNotValid) {
+                              print("ktp gagal : ");
+                              print(isKtpNotValid);
+                              popupWithButton(
                                 context,
+                                'KTP Gagal',
+                                'Ambil gambar lagi untuk re-scan KTP',
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        OtpPhone(userData: widget.userData)));
-                          }
-                        },
-                        height: 60,
-                        minWidth: size.width,
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          'LANJUTKAN',
-                          style: buttonTextLight,
+                                        KtpPhotoPage(userData: widget.userData)),
+                              );
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          OtpPhone(userData: widget.userData)));
+                            }
+                          },
+                          height: 60,
+                          minWidth: size.width,
+                          color: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Text(
+                            'LANJUTKAN',
+                            style: buttonTextLight,
+                          ),
                         ),
                       ),
                     ],
@@ -164,11 +170,4 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
       ),
     );
   }
-
-  Widget _buildWidgetLoading() {
-    return Platform.isIOS
-        ? CupertinoActivityIndicator()
-        : CircularProgressIndicator();
-  }
-
 }

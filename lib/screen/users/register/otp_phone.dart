@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
-import 'package:pakasep/screen/users/register/ktp_photo_page.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/style.dart';
 

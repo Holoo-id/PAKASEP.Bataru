@@ -16,11 +16,8 @@ class _MenuHomeState extends State<MenuHome> {
     return Dialog(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      insetPadding: EdgeInsets.symmetric(
-        vertical: (MediaQuery.of(context).size.height / 4) * 1.5,
-        horizontal: 25,
-      ),
-      child: Center(
+      child: FractionallySizedBox(
+        heightFactor: 0.3,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),

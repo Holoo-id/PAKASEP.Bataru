@@ -164,7 +164,6 @@ final title600Dark = GoogleFonts.poppins(
 final title900Light = GoogleFonts.montserrat(
   color: Colors.white,
   fontWeight: FontWeight.w900,
-  fontSize: 64.0,
   letterSpacing: 0.01,
 );
 

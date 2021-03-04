@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/login/login_otp.dart';
 import 'package:pakasep/screen/users/password/phone_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';

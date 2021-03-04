@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/utility/style.dart';
 
@@ -21,6 +22,8 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
   String _angsuranPerbulan;
   String _totalBunga;
   String _totalPinjaman;
+
+  var _numberFormat = NumberFormat(",###.##", "id");
 
   var _dpPercentController = TextEditingController();
   var _uangMukaController = TextEditingController();
@@ -327,20 +330,22 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   intr /
                   (1 - (pow(1 / (1 + intr), totalJangkaWaktu)));
 
-              _detailPokokPinjamanController.text = "RP " +
-                  (int.parse(_hargaRumahController.text) -
-                          int.parse(_uangMukaController.text))
-                      .toStringAsFixed(0);
+              _detailPokokPinjamanController.text = "Rp" +
+                  _numberFormat.format(int.parse(_hargaRumahController.text) -
+                      int.parse(_uangMukaController.text));
+              // .toStringAsFixed(0);
               _detailAngsuranPerbulanController.text =
-                  "RP " + cicilan.round().toString();
-              _detailUangMukaController.text = "RP " + _uangMukaController.text;
-              _detailHargaRumahController.text =
-                  "RP " + _hargaRumahController.text;
-              _detailTotalBungaController.text = "RP " +
-                  ((cicilan.round() * totalJangkaWaktu) - pokokPinjaman)
-                      .toStringAsFixed(0);
-              _detailTotalPinjamanController.text = "RP " +
-                  (cicilan.round() * totalJangkaWaktu).toStringAsFixed(0);
+                  "Rp" + _numberFormat.format(cicilan.round());
+              _detailUangMukaController.text = "Rp" +
+                  _numberFormat.format(int.parse(_uangMukaController.text));
+              _detailHargaRumahController.text = "Rp" +
+                  _numberFormat.format(int.parse(_hargaRumahController.text));
+              _detailTotalBungaController.text = "Rp" +
+                  _numberFormat.format(
+                      (cicilan.round() * totalJangkaWaktu) - pokokPinjaman);
+              // .toStringAsFixed(0);
+              _detailTotalPinjamanController.text = "Rp" +
+                  _numberFormat.format(cicilan.round() * totalJangkaWaktu);
               _formKey.currentState.save();
             },
             shape: RoundedRectangleBorder(

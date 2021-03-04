@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/intro.dart';
-import 'package:pakasep/screen/users/login/login_form.dart';
 import 'package:pakasep/utility/style.dart';
 
 class EditProfilForm extends StatefulWidget {
