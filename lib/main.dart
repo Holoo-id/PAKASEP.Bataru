@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pakasep/screen/phase1/welcome.dart';
 import 'package:pakasep/utility/theme.dart';
-
-import 'screen/home.dart';
-import 'screen/onboarding.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +30,7 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       title: 'Pakasep',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: WelcomeScreen(),
       theme: mainTheme(),
     );
   }

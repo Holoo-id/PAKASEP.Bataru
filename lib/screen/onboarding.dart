@@ -315,7 +315,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   maxLines: 1,
                   presetFontSizes: [12, 8, 6],
-                  // minFontSize: 6,
                   textAlign: TextAlign.center,
                 ),
               ],

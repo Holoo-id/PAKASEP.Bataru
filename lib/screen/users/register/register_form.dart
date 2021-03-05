@@ -18,6 +18,7 @@ class _RegisterFormState extends State<RegisterForm> {
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   String _alamat,
+      _email,
       _kataSandi,
       _ktp,
       _namaLengkap,
@@ -29,15 +30,16 @@ class _RegisterFormState extends State<RegisterForm> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Icon namaIcon = new Icon(null);
-  Icon tempatLahirIcon = new Icon(null);
-  Icon tanggalLahirIcon = new Icon(null);
-  Icon alamatIcon = new Icon(null);
   Icon passIcon = new Icon(null);
   Icon passwordIcon = new Icon(null);
   Icon ktpIcon = new Icon(null);
   Icon konKtpIcon = new Icon(null);
   Icon npwpIcon = new Icon(null);
   Icon teleponIcon = new Icon(null);
+  Icon alamatIcon = new Icon(null);
+  Icon tempatLahirIcon = new Icon(null);
+  Icon tanggalLahirIcon = new Icon(null);
+  Icon emailIcon = new Icon(null);
 
   Widget _buildNamaLengkap() {
     return TextFormField(
@@ -122,8 +124,8 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: 'Kota Kelahiran',
-        labelText: 'Tempat',
+        hintText: 'Tempat Lahir',
+        labelText: 'Tempat Lahir',
         labelStyle: form400Light,
         filled: true,
         suffixIcon: tempatLahirIcon,
@@ -178,7 +180,7 @@ class _RegisterFormState extends State<RegisterForm> {
           },
           style: form200Light,
           decoration: InputDecoration(
-            hintText: 'Tanggal Kelahiran',
+            hintText: 'Tanggal Lahir',
             labelText: 'Tanggal Lahir',
             labelStyle: form400Light,
             filled: true,
@@ -611,6 +613,75 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
+  Widget _buildEmail() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.emailAddress,
+      validator: (String email) {
+        if (email.isEmpty) {
+          return 'Email tidak boleh kosong';
+        }
+        // VALIDATOR EMAIL
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(email)) {
+          return 'Email Tidak Valid';
+        }
+      },
+      onChanged: (email) {
+        if (email.isNotEmpty) {
+          if (!RegExp(
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+              .hasMatch(email)) {
+            setState(() {
+              emailIcon = new Icon(
+                Icons.check,
+                color: Colors.green,
+              );
+            });
+          } else {
+            setState(() {
+              emailIcon = new Icon(
+                Icons.error,
+                color: Colors.red,
+              );
+            });
+          }
+        } else {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        }
+      },
+      onSaved: (String email) {
+        _email = email;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'emailanda@contoh.com',
+        labelText: 'E-Mail',
+        labelStyle: form400Light,
+        filled: true,
+        fillColor: Color(0xffF2F3F7),
+        suffixIcon: emailIcon,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = false;
 
@@ -650,18 +721,6 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  _buildTempatLahir(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildTanggalLahir(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildAlamat(),
-                  SizedBox(
-                    height: 10,
-                  ),
                   _buildKataSandi(),
                   SizedBox(
                     height: 10,
@@ -683,9 +742,22 @@ class _RegisterFormState extends State<RegisterForm> {
                     height: 10,
                   ),
                   _buildTelepon(),
-                  // SizedBox(
-                  //   height: 20.0,
-                  // ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildAlamat(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTempatLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTanggalLahir(),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  _buildEmail(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -7,6 +7,7 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
+import 'package:pakasep/screen/users/register/register_success.dart';
 import 'package:pakasep/utility/style.dart';
 
 class OtpPhone extends StatefulWidget {
@@ -129,7 +130,7 @@ class _OtpPhoneState extends State<OtpPhone> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Home()),
+                                          builder: (context) => RegisterSuccess()),
                                     );
                                   }
                                 });
