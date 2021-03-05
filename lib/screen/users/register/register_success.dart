@@ -21,7 +21,6 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
             children: [
               BackOnlyAppbar(child: null),
               Container(
-                height: size.height,
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(20),
                 child: Center(
@@ -54,8 +53,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => Home()),
+                            MaterialPageRoute(builder: (context) => Home()),
                           );
                         },
                         height: 60,

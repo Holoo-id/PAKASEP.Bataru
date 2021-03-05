@@ -14,48 +14,70 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
+        height: size.height,
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              children: <Widget>[
-                Image(
+            Flexible(
+              child: FractionallySizedBox(
+                heightFactor: 0.38,
+                child: Image(
                   image: AssetImage(
                     'images/pakasep_logo.png',
                   ),
                 ),
-                AutoSizeText(
-                  'PAKASEP',
-                  style: title900Light,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  presetFontSizes: [64, 48, 32],
+              ),
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FractionallySizedBox(
+                  widthFactor: 0.8,
+                  child: AutoSizeText(
+                    'PAKASEP',
+                    style: title900Light,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    presetFontSizes: [64, 56, 48],
+                  ),
                 ),
-                AutoSizeText(
-                  'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
-                  textAlign: TextAlign.center,
-                  style: subtitle600Light,
-                  maxLines: 1,
-                  presetFontSizes: [16, 12, 8],
+                FractionallySizedBox(
+                  widthFactor: 0.9,
+                  child: AutoSizeText(
+                    'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
+                    textAlign: TextAlign.center,
+                    style: subtitle600Light,
+                    maxLines: 1,
+                    presetFontSizes: [16, 12, 8],
+                  ),
                 ),
               ],
             ),
             Flexible(
+              fit: FlexFit.tight,
               child: FractionallySizedBox(
-                child: Image(
-                  image: AssetImage(
-                    'images/one_line_art_rumah.png',
+                heightFactor: 1,
+                widthFactor: 1,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Image(
+                    image: AssetImage(
+                      'images/one_line_art_rumah.png',
+                    ),
+                    fit: BoxFit.fitWidth,
+                    width: size.width,
                   ),
-                  fit: BoxFit.fitWidth,
-                  width: size.width,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+              padding: EdgeInsets.symmetric(
+                  vertical: size.height * 0.01, horizontal: 20),
               child: FlatButton(
                 onPressed: () {
                   Navigator.push(
@@ -63,8 +85,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     MaterialPageRoute(builder: (context) => PraRegistration1()),
                   );
                 },
-                height: 60,
-                minWidth: size.width,
+                height: size.height * 0.07,
+                minWidth: size.width * 0.75,
                 color: Color(0xffEBEAEC),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
