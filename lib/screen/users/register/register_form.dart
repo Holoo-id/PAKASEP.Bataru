@@ -689,7 +689,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: PreferredSize(
         preferredSize: Size(size.width, 65),
         child: BackOnlyAppbar(
@@ -709,13 +709,13 @@ class _RegisterFormState extends State<RegisterForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    'Isi Data Diri',
-                    textAlign: TextAlign.center,
-                    style: title900Dark,
-                  ),
-                  SizedBox(
-                    height: 20.0,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Text(
+                      'Isi Data Diri',
+                      textAlign: TextAlign.center,
+                      style: title900Dark,
+                    ),
                   ),
                   _buildNamaLengkap(),
                   SizedBox(
