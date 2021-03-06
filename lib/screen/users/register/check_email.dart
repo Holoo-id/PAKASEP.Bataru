@@ -20,12 +20,17 @@ class _CheckEmailState extends State<CheckEmail> {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  _registerAndSendEmail()async{
-    await auth.createUserWithEmailAndPassword(email: widget.userData["Email"], password: widget.userData["Kata Sandi"]).then((value)async {
+  _registerAndSendEmail() async {
+    await auth
+        .createUserWithEmailAndPassword(
+            email: widget.userData["Email"],
+            password: widget.userData["Kata Sandi"])
+        .then((value) async {
       print(widget.userData["Kata Sandi"]);
       print("mencoba mengirim email verifikasi");
       String _userID = auth.currentUser.uid;
-      DocumentReference docRefToNewUser = firestore.collection("Pengguna").doc(_userID);
+      DocumentReference docRefToNewUser =
+          firestore.collection("Pengguna").doc(_userID);
       widget.userData.update("Kata Sandi", (value) {
         var bytes = utf8.encode(value);
         var digest = sha1.convert(bytes);
@@ -34,18 +39,17 @@ class _CheckEmailState extends State<CheckEmail> {
       await docRefToNewUser.set(widget.userData);
       print('user berhasil terdaftar pada Database');
     });
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterSuccess()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => RegisterSuccess()));
   }
-
 
   @override
   void initState() {
-    if(auth.currentUser == null){
+    if (auth.currentUser == null) {
       print("belum ada user yang login");
       _registerAndSendEmail();
     }
     super.initState();
-
   }
 
   @override
@@ -89,8 +93,8 @@ class _CheckEmailState extends State<CheckEmail> {
                     presetFontSizes: [16, 15, 10],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
