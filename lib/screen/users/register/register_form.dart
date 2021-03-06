@@ -713,7 +713,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
                     child: Text(
                       'Isi Data Diri',
                       textAlign: TextAlign.center,
