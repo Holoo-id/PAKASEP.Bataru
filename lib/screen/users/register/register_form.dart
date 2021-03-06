@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -792,6 +794,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_alamat);
                               print(_tanggalLahir);
                               print(_tempatLahir);
+                              print(_email);
                               CollectionReference _searchUser =
                                   _firestore.collection("Pengguna");
                               QuerySnapshot _userHavingSameKTP =
@@ -802,8 +805,13 @@ class _RegisterFormState extends State<RegisterForm> {
                                   await _searchUser
                                       .where("Telepon", isEqualTo: _telepon)
                                       .get();
+                              QuerySnapshot _userHavingSameEmail =
+                              await _searchUser
+                                  .where("Email", isEqualTo: _email)
+                                  .get();
                               if (_userHavingSameTelepon.docs.length > 0 ||
-                                  _userHavingSameKTP.docs.length > 0) {
+                                  _userHavingSameKTP.docs.length > 0 ||
+                                  _userHavingSameEmail.docs.length > 0) {
                                 return Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -816,6 +824,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                   "Kata Sandi": _kataSandi.trim(),
                                   "KTP": _ktp.trim(),
                                   "NPWP": _npwp.trim(),
+                                  "Email": _email.trim(),
                                   "Telepon": _telepon.trim(),
                                   "Alamat": _alamat.trim(),
                                   "Tempat Lahir": _tempatLahir.trim(),

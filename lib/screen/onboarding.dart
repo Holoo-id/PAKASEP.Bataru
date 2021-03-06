@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/location_permission.dart';
+import 'package:pakasep/screen/users/register/check_email.dart';
 import 'package:pakasep/utility/style.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -22,7 +23,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   pindah(context) async {
     FirebaseAuth _auth = FirebaseAuth.instance;
     if (_auth.currentUser != null) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      if(_auth.currentUser.emailVerified){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+      }
+      else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckEmail()));
+      }
     }
   }
 
