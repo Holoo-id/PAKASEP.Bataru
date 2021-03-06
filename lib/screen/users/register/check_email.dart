@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/users/register/register_success.dart';
 import 'package:pakasep/utility/style.dart';
 
 class CheckEmail extends StatefulWidget {
@@ -31,16 +30,12 @@ class _CheckEmailState extends State<CheckEmail> {
       String _userID = auth.currentUser.uid;
       DocumentReference docRefToNewUser =
           firestore.collection("Pengguna").doc(_userID);
-      widget.userData.update("Kata Sandi", (value) {
-        var bytes = utf8.encode(value);
-        var digest = sha1.convert(bytes);
-        return digest;
-      });
+      var bytes = utf8.encode(widget.userData["Kata Sandi"]);
+      var digest = sha1.convert(bytes);
+      widget.userData["Kata Sandi"] = digest.toString().trim();
       await docRefToNewUser.set(widget.userData);
       print('user berhasil terdaftar pada Database');
     });
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => RegisterSuccess()));
   }
 
   @override

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/popup_with_button.dart';
 import 'package:pakasep/screen/users/register/check_email.dart';
-import 'package:pakasep/screen/users/register/otp_phone.dart';
 
 import '../../../utility/style.dart';
 import '../../components/background.dart';
@@ -64,13 +63,10 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         flex: 0,
                         child: _imageFile == null
                             ? Container(height: 0, width: 0)
-                            : FractionallySizedBox(
-                                heightFactor: 1,
-                                child: Image.file(
-                                  File(_imageFile.path),
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
+                            : Image.file(
+                          File(_imageFile.path),
+                          fit: BoxFit.fitWidth,
+                        ),
                       ),
                       AutoSizeText.rich(
                         TextSpan(
@@ -146,7 +142,8 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CheckEmail(userData: widget.userData)));
+                                          CheckEmail(userData: widget.userData)),
+                              );
                             }
                           },
                           height: 60,
