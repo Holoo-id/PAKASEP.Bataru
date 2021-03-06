@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
-import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/users/register/already_registered.dart';
+import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterSuccess extends StatefulWidget {
@@ -14,58 +12,71 @@ class RegisterSuccess extends StatefulWidget {
 class _RegisterSuccessState extends State<RegisterSuccess> {
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.signOut();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: WaveBackground(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BackOnlyAppbar(child: null),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(20),
-                height: size.height,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      AutoSizeText(
-                        'Pendaftaran Berhasil!',
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
+      body: Background(
+        child: Container(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * 0.075, horizontal: size.width * 0.1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: AutoSizeText(
+                        'Anda Sudah Terdaftar!',
                         textAlign: TextAlign.center,
                         style: title600Dark,
-                        maxLines: 1,
+                        maxLines: 2,
+                        presetFontSizes: [25, 20, 15],
                       ),
-                      AutoSizeText(
-                        // phase1
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: AutoSizeText(
                         'Anda telah menyelesaikan proses Pra-Registrasi. Selamat data anda akan kami prioritaskan setelah tahap pra-registrasi selesai. Silahkan tunggu pemberitahuan lebih lanjut.',
-                        // 'Klik tombol dibawah ini untuk masuk ke aplikasi',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
-                        maxLines: 2,
+                        presetFontSizes: [16, 15, 10],
                       ),
-                      FlatButton(
-                        onPressed: () {
-                          Navigator.popUntil(
-                              context, ModalRoute.withName('/intro'));
-                        },
-                        height: 60,
-                        minWidth: size.width,
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Text(
-                          'MENGERTI',
-                          style: buttonTextLight,
-                        ),
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10, top: 25),
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/intro');
+                    },
+                    height: 60,
+                    minWidth: size.width,
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      'MENGERTI',
+                      style: buttonTextLight,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
