@@ -53,7 +53,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        'Foto KTP',
+                        'Verifikasi Foto KTP',
                         style: title900Dark,
                         textAlign: TextAlign.center,
                       ),
@@ -86,7 +86,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                               ),
                             ),
                             TextSpan(
-                              text: 'untuk proses selanjutnya',
+                              text: 'untuk pengambilan foto KTP.',
                             ),
                           ],
                         ),
@@ -135,8 +135,8 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                               print(isKtpNotValid);
                               popupWithButton(
                                 context,
-                                'KTP Gagal',
-                                'Ambil gambar lagi untuk re-scan KTP',
+                                'Verifikasi KTP Gagal',
+                                'Mohon ulangi prosesnya kembali',
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         KtpPhotoPage(userData: widget.userData)),

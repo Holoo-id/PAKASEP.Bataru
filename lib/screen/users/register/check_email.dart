@@ -33,7 +33,7 @@ class _CheckEmailState extends State<CheckEmail> {
         return digest;
       });
       docRefToNewUser.set(widget.userData);
-      print('user berhasil terdaftar pada Database');
+      print('User berhasil terdaftar pada Database');
     });
   }
 
@@ -81,7 +81,7 @@ class _CheckEmailState extends State<CheckEmail> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: AutoSizeText(
-                    'Cek E-mail',
+                    'Cek E-mail Anda',
                     style: title900Dark,
                     textAlign: TextAlign.center,
                     presetFontSizes: [28, 25, 20],
@@ -91,7 +91,7 @@ class _CheckEmailState extends State<CheckEmail> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: AutoSizeText(
-                    'Periksa e-mail Anda dari PAKASEP untuk melakukan verifikasi e-mail',
+                    'Periksa E-mail anda untuk melakukan verifikasi data dari PAKASEP agar data anda terverifikasi.',
                     textAlign: TextAlign.center,
                     style: subtitle600Light2,
                     presetFontSizes: [16, 15, 10],

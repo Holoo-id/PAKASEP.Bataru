@@ -20,15 +20,12 @@ class IntroBackground extends StatelessWidget {
           Positioned(
             top: 0,
             left: 0,
-            child: ImageFiltered(
-              imageFilter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-              child: Image(
-                image: AssetImage(
-                  'images/intro.png',
-                ),
-                fit: BoxFit.fitWidth,
-                width: size.width,
+            child: Image(
+              image: AssetImage(
+                'images/intro.png',
               ),
+              fit: BoxFit.fitWidth,
+              width: size.width,
             ),
           ),
           child,
