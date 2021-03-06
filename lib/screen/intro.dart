@@ -20,7 +20,8 @@ class _IntroState extends State<Intro> {
         children: <Widget>[
           Container(
             height: size.height,
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * 0.01, horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
