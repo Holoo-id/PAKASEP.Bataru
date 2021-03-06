@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/home.dart';
+import 'package:pakasep/screen/users/register/already_registered.dart';
 import 'package:pakasep/utility/style.dart';
 
 class RegisterSuccess extends StatefulWidget {
@@ -29,7 +29,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           AutoSizeText(
@@ -39,7 +39,9 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                             maxLines: 1,
                           ),
                           AutoSizeText(
-                            'Klik tombol dibawah ini untuk masuk ke aplikasi',
+                            // phase1
+                            'Anda telah menyelesaikan proses Pra-Registrasi. Selamat data anda akan kami prioritaskan setelah tahap pra-registrasi selesai. Silahkan tunggu pemberitahuan lebih lanjut.',
+                            // 'Klik tombol dibawah ini untuk masuk ke aplikasi',
                             textAlign: TextAlign.center,
                             style: subtitle600Light2,
                             maxLines: 2,
@@ -53,7 +55,8 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Home()),
+                            MaterialPageRoute(
+                                builder: (context) => AlreadyRegistered()),
                           );
                         },
                         height: 60,

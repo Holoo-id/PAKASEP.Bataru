@@ -21,7 +21,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     // futureGetUser();
     Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       body: WaveBackground(
         child: NestedScrollView(

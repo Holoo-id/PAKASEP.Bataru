@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/popup_with_button.dart';
+import 'package:pakasep/screen/users/register/check_email.dart';
 import 'package:pakasep/screen/users/register/otp_phone.dart';
 
 import '../../../utility/style.dart';
@@ -145,7 +146,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OtpPhone(userData: widget.userData)));
+                                          CheckEmail(userData: widget.userData)));
                             }
                           },
                           height: 60,

@@ -197,7 +197,6 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
     CollectionReference units = FirebaseFirestore.instance.collection("Rumah");
     return Scaffold(
       extendBodyBehindAppBar: true,
