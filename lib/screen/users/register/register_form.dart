@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
@@ -787,11 +786,8 @@ class _RegisterFormState extends State<RegisterForm> {
                               return this;
                             } else {
                               _formKey.currentState.save();
-                              var bytes = utf8.encode(_kataSandi);
-                              var digest = sha1.convert(bytes);
                               print(_namaLengkap);
                               print(_kataSandi);
-                              print("Encoded kata sandi : "+ digest.toString());
                               print(_ktp);
                               print(_npwp);
                               print(_telepon);
@@ -825,7 +821,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               } else {
                                 _registeringUserData = {
                                   "Nama Lengkap": _namaLengkap.trim(),
-                                  "Kata Sandi": digest.toString().trim(),
+                                  "Kata Sandi": _kataSandi.trim(),
                                   "KTP": _ktp.trim(),
                                   "NPWP": _npwp.trim(),
                                   "Email": _email.trim(),
