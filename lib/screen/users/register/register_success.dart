@@ -31,25 +31,19 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            'Pendaftaran Berhasil!',
-                            textAlign: TextAlign.center,
-                            style: title600Dark,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            // phase1
-                            'Anda telah menyelesaikan proses Pra-Registrasi. Selamat data anda akan kami prioritaskan setelah tahap pra-registrasi selesai. Silahkan tunggu pemberitahuan lebih lanjut.',
-                            // 'Klik tombol dibawah ini untuk masuk ke aplikasi',
-                            textAlign: TextAlign.center,
-                            style: subtitle600Light2,
-                            maxLines: 2,
-                          ),
-                        ],
+                      AutoSizeText(
+                        'Pendaftaran Berhasil!',
+                        textAlign: TextAlign.center,
+                        style: title600Dark,
+                        maxLines: 1,
+                      ),
+                      AutoSizeText(
+                        // phase1
+                        'Anda telah menyelesaikan proses Pra-Registrasi. Selamat data anda akan kami prioritaskan setelah tahap pra-registrasi selesai. Silahkan tunggu pemberitahuan lebih lanjut.',
+                        // 'Klik tombol dibawah ini untuk masuk ke aplikasi',
+                        textAlign: TextAlign.center,
+                        style: subtitle600Light2,
+                        maxLines: 2,
                       ),
                       FlatButton(
                         onPressed: () {

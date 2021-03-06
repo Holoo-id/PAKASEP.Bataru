@@ -26,29 +26,21 @@ class _AlreadyRegisteredState extends State<AlreadyRegistered> {
                 padding: EdgeInsets.all(20),
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            'Anda Sudah Terdaftar!',
-                            textAlign: TextAlign.center,
-                            style: title600Dark,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            'Tidak perlu mendaftar lagi Silahkan masuk ke aplikasi',
-                            textAlign: TextAlign.center,
-                            style: subtitle600Light2,
-                            maxLines: 2,
-                          ),
-                        ],
+                      AutoSizeText(
+                        'Anda Sudah Terdaftar!',
+                        textAlign: TextAlign.center,
+                        style: title600Dark,
+                        maxLines: 1,
                       ),
-                      SizedBox(
-                        height: 20,
+                      AutoSizeText(
+                        'Anda sudah terdaftar di aplikasi PAKASEP. Silahkan tunggu pemberitahuan lebih lanjut.',
+                        // 'Tidak perlu mendaftar lagi Silahkan masuk ke aplikasi',
+                        textAlign: TextAlign.center,
+                        style: subtitle600Light2,
+                        maxLines: 2,
                       ),
                       FlatButton(
                         onPressed: () {

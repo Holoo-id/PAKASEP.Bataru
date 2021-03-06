@@ -7,10 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/users/password/phone_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
-import 'package:pakasep/screen/users/register/register_success.dart';
 import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/screen/users/register/already_registered.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key key}) : super(key: key);
@@ -102,12 +101,12 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
-  _loginProcess({String email, String password})async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+  _loginProcess({String email, String password}) async {
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => RegisterSuccess()),
+      MaterialPageRoute(builder: (context) => AlreadyRegistered()),
     );
   }
 
@@ -167,17 +166,26 @@ class _LoginFormState extends State<LoginForm> {
                               print(_ktp);
                               var bytes = utf8.encode(_kataSandi);
                               var digest = sha1.convert(bytes);
-                              CollectionReference _searchUser = _firestore.collection("Pengguna");
-                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: digest.toString().trim()).get().then((QuerySnapshot _snapshot) {
+                              CollectionReference _searchUser =
+                                  _firestore.collection("Pengguna");
+                              await _searchUser
+                                  .where("KTP", isEqualTo: _ktp)
+                                  .where("Kata Sandi",
+                                      isEqualTo: digest.toString().trim())
+                                  .get()
+                                  .then((QuerySnapshot _snapshot) {
                                 if (_snapshot.docs.length > 0) {
                                   _snapshot.docs.forEach((element) {
                                     print(element.data()["Email"]);
                                     _email = element.data()["Email"];
-                                    _loginProcess(email: _email, password: _kataSandi);
+                                    _loginProcess(
+                                        email: _email, password: _kataSandi);
                                   });
                                 } else {
                                   print("empty query");
-                                  _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text("Password atau No KTP mu salah!")));
+                                  _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                      content: Text(
+                                          "Password atau No KTP mu salah!")));
                                 }
                               });
                             },
@@ -192,23 +200,23 @@ class _LoginFormState extends State<LoginForm> {
                               style: buttonTextLight,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PhoneForm()),
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(16),
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Lupa Password?',
-                                style: linkTextLight,
-                              ),
-                            ),
-                          ),
+                          //     GestureDetector(
+                          //       onTap: () {
+                          //         Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (context) => PhoneForm()),
+                          //         );
+                          //       },
+                          //       child: Container(
+                          //         margin: EdgeInsets.all(16),
+                          //         alignment: Alignment.center,
+                          //         child: Text(
+                          //           'Lupa Password?',
+                          //           style: linkTextLight,
+                          //         ),
+                          //       ),
+                          //     ),
                         ],
                       ),
                       GestureDetector(
