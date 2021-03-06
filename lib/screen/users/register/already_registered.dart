@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/screen/users/login/login_form.dart';
 import 'package:pakasep/utility/style.dart';
 
 class AlreadyRegistered extends StatefulWidget {
@@ -26,7 +25,7 @@ class _AlreadyRegisteredState extends State<AlreadyRegistered> {
                 padding: EdgeInsets.all(20),
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       AutoSizeText(
@@ -34,21 +33,18 @@ class _AlreadyRegisteredState extends State<AlreadyRegistered> {
                         textAlign: TextAlign.center,
                         style: title600Dark,
                         maxLines: 1,
+                        presetFontSizes: [25, 20, 15],
                       ),
                       AutoSizeText(
                         'Anda sudah terdaftar di aplikasi PAKASEP. Silahkan tunggu pemberitahuan lebih lanjut.',
                         // 'Tidak perlu mendaftar lagi Silahkan masuk ke aplikasi',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
-                        maxLines: 2,
+                        presetFontSizes: [16, 15, 10],
                       ),
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginForm()),
-                          );
+                          Navigator.of(context).pushNamed('/intro');
                         },
                         height: 60,
                         minWidth: size.width,
@@ -57,7 +53,7 @@ class _AlreadyRegisteredState extends State<AlreadyRegistered> {
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: Text(
-                          'MASUK',
+                          'MENGERTI',
                           style: buttonTextLight,
                         ),
                       ),
