@@ -133,7 +133,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         popupWithButton(
                           context,
                           'Verifikasi KTP Gagal'.toUpperCase(),
-                          'Mohon ulangi kembali',
+                          'Mohon ulangi kembali. Pastikan KTP terlihat jelas dan pencahayaan yang cukup.',
                           MaterialPageRoute(
                               builder: (context) =>
                                   KtpPhotoPage(userData: widget.userData)),
