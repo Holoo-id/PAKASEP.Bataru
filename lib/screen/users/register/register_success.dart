@@ -25,6 +25,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
               Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.all(20),
+                height: size.height,
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
