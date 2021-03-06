@@ -67,7 +67,7 @@ class _CheckEmailState extends State<CheckEmail> {
             padding: EdgeInsets.symmetric(
                 vertical: size.height * 0.075, horizontal: size.width * 0.1),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -85,30 +85,33 @@ class _CheckEmailState extends State<CheckEmail> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: AutoSizeText(
-                    'Harap menunggu konfirmasi dari Admin PAKASEP setelah tahap pra-registrasi selesai. Data Anda sudah kami terima dan terdaftar di database kami',
+                    'Harap menunggu konfirmasi dari Admin PAKASEP setelah tahap pra-registrasi selesai. Data Anda sudah kami terima dan terdaftar di database kami.',
                     // 'Periksa E-mail anda untuk melakukan verifikasi data dari PAKASEP agar data anda terverifikasi.',
                     textAlign: TextAlign.center,
                     style: subtitle600Light2,
                     presetFontSizes: [16, 15, 10],
                   ),
                 ),
-                FlatButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginForm()),
-                    );
-                  },
-                  height: 60,
-                  minWidth: size.width,
-                  color: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Text(
-                    'SELESAI',
-                    style: buttonTextLight,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginForm()),
+                      );
+                    },
+                    height: 60,
+                    minWidth: size.width,
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      'SELESAI',
+                      style: buttonTextLight,
+                    ),
                   ),
                 ),
               ],
