@@ -47,10 +47,13 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               // mainAxisSize:,
               children: <Widget>[
-                Text(
-                  'Verifikasi Foto KTP',
-                  style: title900Dark,
-                  textAlign: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Text(
+                    'Verifikasi Foto KTP',
+                    style: title900Dark,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 Flexible(
                   flex: 0,
@@ -67,27 +70,30 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                           ),
                         ),
                 ),
-                AutoSizeText.rich(
-                  TextSpan(
-                    style: text500Grey,
-                    children: [
-                      TextSpan(
-                        text: 'Klik ',
-                      ),
-                      TextSpan(
-                        text: 'LANJUTKAN ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: AutoSizeText.rich(
+                    TextSpan(
+                      style: text500Grey,
+                      children: [
+                        TextSpan(
+                          text: 'Klik ',
                         ),
-                      ),
-                      TextSpan(
-                        text: 'untuk pengambilan foto KTP.',
-                      ),
-                    ],
+                        TextSpan(
+                          text: 'LANJUTKAN ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'untuk pengambilan foto KTP.',
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    presetFontSizes: [16, 12, 8],
                   ),
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  presetFontSizes: [16, 12, 8],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -126,8 +132,8 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         print(isKtpNotValid);
                         popupWithButton(
                           context,
-                          'Verifikasi KTP Gagal',
-                          'Mohon ulangi prosesnya kembali',
+                          'Verifikasi KTP Gagal'.toUpperCase(),
+                          'Mohon ulangi kembali',
                           MaterialPageRoute(
                               builder: (context) =>
                                   KtpPhotoPage(userData: widget.userData)),

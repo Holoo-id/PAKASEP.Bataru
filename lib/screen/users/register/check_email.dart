@@ -94,6 +94,7 @@ class _CheckEmailState extends State<CheckEmail> {
                 ),
                 FlatButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LoginForm()),
@@ -106,7 +107,7 @@ class _CheckEmailState extends State<CheckEmail> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Text(
-                    'MASUK',
+                    'SELESAI',
                     style: buttonTextLight,
                   ),
                 ),

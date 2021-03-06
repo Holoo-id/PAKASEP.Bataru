@@ -28,7 +28,7 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                 height: size.height,
                 child: Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Column(
@@ -50,9 +50,6 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                             maxLines: 2,
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 20,
                       ),
                       FlatButton(
                         onPressed: () {
