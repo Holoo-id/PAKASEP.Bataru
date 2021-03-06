@@ -50,36 +50,43 @@ class _CheckEmailState extends State<CheckEmail> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size(size.width, 65),
+        child: BackOnlyAppbar(
+          child: null,
+        ),
+      ),
       body: WaveBackground(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BackOnlyAppbar(child: null),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(20),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      AutoSizeText(
-                        'Cek E-mail Anda',
-                        textAlign: TextAlign.center,
-                        style: title600Dark,
-                        maxLines: 1,
-                      ),
-                      AutoSizeText(
-                        // phase1
-                        'Cek e-mail untuk memverifikasi akun e-mail Anda di Pakasep',
-                        // default
-                        // 'Klik tombol dibawah ini untuk masuk ke aplikasi',
-                        textAlign: TextAlign.center,
-                        style: subtitle600Light2,
-                        maxLines: 2,
-                      ),
-                    ],
+        child: Container(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+                vertical: size.height * 0.075, horizontal: size.width * 0.1),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: AutoSizeText(
+                    'Cek E-mail Anda',
+                    style: title900Dark,
+                    textAlign: TextAlign.center,
+                    presetFontSizes: [28, 25, 20],
+                    maxLines: 2,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: AutoSizeText(
+                    'Periksa E-mail anda untuk melakukan verifikasi data dari PAKASEP agar data anda terverifikasi.',
+                    textAlign: TextAlign.center,
+                    style: subtitle600Light2,
+                    presetFontSizes: [16, 15, 10],
                   ),
                 ),
               ),

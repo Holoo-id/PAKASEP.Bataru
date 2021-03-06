@@ -53,6 +53,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
         child: Container(
+          padding: EdgeInsets.symmetric(vertical: size.height * 0.01),
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
           ),
@@ -82,40 +83,54 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 padding: EdgeInsets.only(top: 15.0),
                                 child: Column(
                                   children: <Widget>[
-                                    AutoSizeText(
-                                      'Selamat Datang di',
-                                      style: title400Light,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      presetFontSizes: [30, 22.5, 15],
+                                    FractionallySizedBox(
+                                      widthFactor: 0.69,
+                                      child: AutoSizeText(
+                                        'Selamat Datang di',
+                                        style: title400Light,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        presetFontSizes: [30, 22.5, 15],
+                                      ),
                                     ),
-                                    // SizedBox(height: 5),
-                                    AutoSizeText(
-                                      'PAKASEP',
-                                      style: title900Light,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      presetFontSizes: [64, 48, 32],
+                                    FractionallySizedBox(
+                                      widthFactor: 0.8,
+                                      child: AutoSizeText(
+                                        'PAKASEP',
+                                        style: title900Light,
+                                        textAlign: TextAlign.center,
+                                        maxLines: 1,
+                                        presetFontSizes: [64, 56, 48],
+                                      ),
                                     ),
-                                    // SizedBox(height: 5),
-                                    AutoSizeText(
-                                      'PERKUMPULAN AHLI KEPEMILIKAN PERUMAHAN',
-                                      style: subtitle600Light,
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      presetFontSizes: [16, 12, 8],
+                                    FractionallySizedBox(
+                                      widthFactor: 0.9,
+                                      child: AutoSizeText(
+                                        'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
+                                        textAlign: TextAlign.center,
+                                        style: subtitle600Light,
+                                        maxLines: 1,
+                                        presetFontSizes: [16, 12, 8],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 12.5),
-                              Center(
-                                child: Image(
-                                  image: AssetImage(
-                                    'images/one_line_art_rumah.png',
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: FractionallySizedBox(
+                                  heightFactor: 1,
+                                  widthFactor: 1,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Image(
+                                      image: AssetImage(
+                                        'images/one_line_art_rumah.png',
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                      width: size.width,
+                                    ),
                                   ),
-                                  fit: BoxFit.fitWidth,
-                                  width: size.width,
                                 ),
                               ),
                             ],
@@ -130,43 +145,55 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 padding: EdgeInsets.only(top: 10.0),
                                 child: Column(
                                   children: <Widget>[
-                                    AutoSizeText.rich(
-                                      TextSpan(
-                                        style: title400Light,
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'PAKASEP',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w900,
+                                    FractionallySizedBox(
+                                      widthFactor: 0.92,
+                                      // heightFactor: 0.37,
+                                      child: AutoSizeText.rich(
+                                        TextSpan(
+                                          style: title400Light,
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: 'PAKASEP',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w900,
+                                              ),
                                             ),
-                                          ),
-                                          TextSpan(
-                                            text:
-                                                ' merupakan aplikasi pendukung program ',
-                                          ),
-                                          TextSpan(
-                                            text: 'BAKTI PADAMU GURU (BATARU)',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w900,
+                                            TextSpan(
+                                              text:
+                                                  ' merupakan aplikasi pendukung program ',
                                             ),
-                                          ),
-                                        ],
+                                            TextSpan(
+                                              text:
+                                                  'BAKTI PADAMU GURU (BATARU)',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        maxLines: 4,
+                                        textAlign: TextAlign.center,
+                                        presetFontSizes: [25, 20, 15, 10, 5],
                                       ),
-                                      maxLines: 4,
-                                      textAlign: TextAlign.center,
-                                      presetFontSizes: [28, 21, 14],
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 50.0),
-                              Center(
-                                child: Image(
-                                  image: AssetImage(
-                                    'images/one_line_art_3_polos.png',
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: FractionallySizedBox(
+                                  heightFactor: 1,
+                                  widthFactor: 1,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Image(
+                                      image: AssetImage(
+                                        'images/one_line_art_3_polos.png',
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                      width: size.width,
+                                    ),
                                   ),
-                                  fit: BoxFit.fitWidth,
-                                  width: size.width,
                                 ),
                               ),
                             ],
@@ -191,13 +218,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   ],
                                 ),
                               ),
-                              Center(
-                                child: Image(
-                                  image: AssetImage(
-                                    'images/one_line_guru_1.png',
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: FractionallySizedBox(
+                                  heightFactor: 1,
+                                  widthFactor: 1,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Image(
+                                      image: AssetImage(
+                                        'images/one_line_guru_1.png',
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                      width: size.width,
+                                    ),
                                   ),
-                                  fit: BoxFit.fitWidth,
-                                  width: size.width,
                                 ),
                               ),
                             ],
@@ -206,45 +241,58 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         Padding(
                           child: Column(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
+                            children: [
                               Flexible(
                                 child: FractionallySizedBox(
-                                  heightFactor: 1,
-                                  child: Column(
-                                    children: <Widget>[
-                                      Image(
-                                        image: AssetImage(
-                                          'images/pakasep_logo.png',
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        'PAKASEP',
-                                        style: title900Light,
-                                        textAlign: TextAlign.center,
-                                        maxLines: 1,
-                                        presetFontSizes: [64, 48, 32],
-                                      ),
-                                      AutoSizeText(
-                                        'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
-                                        textAlign: TextAlign.center,
-                                        style: subtitle600Light,
-                                        maxLines: 1,
-                                        presetFontSizes: [16, 12, 8],
-                                      ),
-                                    ],
+                                  heightFactor: 0.38,
+                                  child: Image(
+                                    image: AssetImage(
+                                      'images/pakasep_logo.png',
+                                    ),
                                   ),
                                 ),
                               ),
-                              Flexible(
-                                child: FractionallySizedBox(
-                                  heightFactor: 1.5,
-                                  child: Image(
-                                    image: AssetImage(
-                                      'images/one_line_art_rumah.png',
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  FractionallySizedBox(
+                                    widthFactor: 0.8,
+                                    child: AutoSizeText(
+                                      'PAKASEP',
+                                      style: title900Light,
+                                      textAlign: TextAlign.center,
+                                      maxLines: 1,
+                                      presetFontSizes: [64, 56, 48],
                                     ),
-                                    fit: BoxFit.fitWidth,
-                                    width: size.width,
+                                  ),
+                                  FractionallySizedBox(
+                                    widthFactor: 0.9,
+                                    child: AutoSizeText(
+                                      'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
+                                      textAlign: TextAlign.center,
+                                      style: subtitle600Light,
+                                      maxLines: 1,
+                                      presetFontSizes: [16, 12, 8],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Flexible(
+                                fit: FlexFit.tight,
+                                child: FractionallySizedBox(
+                                  heightFactor: 1,
+                                  widthFactor: 1,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitHeight,
+                                    child: Image(
+                                      image: AssetImage(
+                                        'images/one_line_art_rumah.png',
+                                      ),
+                                      fit: BoxFit.fitWidth,
+                                      width: size.width,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -258,7 +306,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 _currentPage == _numPages - 1
                     ? Padding(
-                        padding: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                        padding: EdgeInsets.symmetric(
+                            vertical: size.height * 0.01, horizontal: 20),
                         child: FlatButton(
                           onPressed: () {
                             Navigator.push(
@@ -267,8 +316,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   builder: (context) => LocationPermission()),
                             );
                           },
-                          height: 60,
-                          minWidth: size.width,
+                          height: size.height * 0.07,
+                          minWidth: size.width * 0.75,
                           color: Color(0xffEBEAEC),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),

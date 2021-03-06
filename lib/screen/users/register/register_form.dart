@@ -238,7 +238,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: 'Alamat',
+        hintText: 'Alamat Sesuai KTP',
         labelText: 'Alamat',
         labelStyle: form400Light,
         filled: true,
@@ -297,7 +297,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-          hintText: 'Kata Sandi',
+          hintText: 'Harus Memuat Angka dan Huruf',
           labelText: 'Kata Sandi',
           labelStyle: form400Light,
           filled: true,
@@ -352,7 +352,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-          hintText: 'Kata Sandi',
+          hintText: 'Masukkan Kata Sandi Kembali',
           labelText: 'Konfirmasi Kata Sandi',
           labelStyle: form400Light,
           filled: true,
@@ -408,7 +408,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: 'Nomor KTP (16 Digit)',
+        hintText: '16 Digit Nomor KTP Anda',
         labelText: 'Nomor KTP',
         counterText: '',
         labelStyle: form400Light,
@@ -466,7 +466,7 @@ class _RegisterFormState extends State<RegisterForm> {
       style: form200Light,
       decoration: InputDecoration(
         counterText: '',
-        hintText: 'Nomor KTP (16 Digit)',
+        hintText: 'Masukkan 16 Digit Nomor KTP Anda Kembali',
         labelText: 'Konfirmasi Nomor KTP',
         labelStyle: form400Light,
         filled: true,
@@ -531,7 +531,7 @@ class _RegisterFormState extends State<RegisterForm> {
       style: form200Light,
       decoration: InputDecoration(
         counterText: '',
-        hintText: 'Nomor NPWP (15 Digit)',
+        hintText: 'Boleh Tidak Diisi (Opsional)',
         labelText: 'Nomor NPWP',
         labelStyle: form400Light,
         filled: true,
@@ -561,7 +561,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ],
       validator: (String telepon) {
         if (telepon.isEmpty) {
-          return 'Nomor telepon tidak boleh kosong';
+          return 'Nomor Telepon Harus Diisi';
         }
         // VALIDATOR EMAIL
         // if (!RegExp(
@@ -592,7 +592,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: '89012345678',
+        hintText: 'Masukkan Tanpa Angka 0 Di Depan',
         labelText: 'Nomor Telepon',
         labelStyle: form400Light,
         filled: true,
@@ -621,7 +621,7 @@ class _RegisterFormState extends State<RegisterForm> {
       keyboardType: TextInputType.emailAddress,
       validator: (String email) {
         if (email.isEmpty) {
-          return 'Email tidak boleh kosong';
+          return 'Email Harus Diisi';
         }
         // VALIDATOR EMAIL
         if (!RegExp(
@@ -631,29 +631,28 @@ class _RegisterFormState extends State<RegisterForm> {
         }
       },
       onChanged: (email) {
-        if (email.isNotEmpty) {
-          if (!RegExp(
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-              .hasMatch(email)) {
-            setState(() {
-              emailIcon = new Icon(
-                Icons.check,
-                color: Colors.green,
-              );
-            });
-          } else {
-            setState(() {
-              emailIcon = new Icon(
-                Icons.error,
-                color: Colors.red,
-              );
-            });
-          }
-        } else {
+        if (email.isEmpty) {
           setState(() {
             emailIcon = new Icon(
               Icons.error,
               color: Colors.red,
+            );
+          });
+        }
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(email)) {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
             );
           });
         }
@@ -767,7 +766,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       GestureDetector(
                         onTap: () => _setAgreedToTOS(!_agreedToTOS),
                         child: const AutoSizeText(
-                          'Saya Setuju dengan Syarat dan Ketentuan',
+                          'Saya Setuju Untuk Mendaftarkan Diri',
                           presetFontSizes: [9, 6.75, 4.5],
                           maxLines: 1,
                         ),
@@ -806,9 +805,9 @@ class _RegisterFormState extends State<RegisterForm> {
                                       .where("Telepon", isEqualTo: _telepon)
                                       .get();
                               QuerySnapshot _userHavingSameEmail =
-                              await _searchUser
-                                  .where("Email", isEqualTo: _email)
-                                  .get();
+                                  await _searchUser
+                                      .where("Email", isEqualTo: _email)
+                                      .get();
                               if (_userHavingSameTelepon.docs.length > 0 ||
                                   _userHavingSameKTP.docs.length > 0 ||
                                   _userHavingSameEmail.docs.length > 0) {

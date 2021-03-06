@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class IntroBackground extends StatelessWidget {
@@ -19,12 +21,12 @@ class IntroBackground extends StatelessWidget {
             top: 0,
             left: 0,
             child: Image(
-                image: AssetImage(
-                  'images/intro.png',
-                ),
-                fit: BoxFit.fitWidth,
-                width: size.width,
+              image: AssetImage(
+                'images/intro.png',
               ),
+              fit: BoxFit.fitWidth,
+              width: size.width,
+            ),
           ),
           child,
         ],
