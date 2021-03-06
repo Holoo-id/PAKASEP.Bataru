@@ -1,12 +1,15 @@
+import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
-import 'package:pakasep/screen/users/login/login_otp.dart';
 import 'package:pakasep/screen/users/password/phone_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
+import 'package:pakasep/screen/users/register/register_success.dart';
 import 'package:pakasep/utility/style.dart';
 
 class LoginForm extends StatefulWidget {
@@ -18,32 +21,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   String _ktp;
   String _kataSandi;
-  String _nomorTelepon;
+  String _email;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<String> createAlertDialog(BuildContext context) {
-    TextEditingController TE_VerifikasiKode = TextEditingController();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(
-                "Masukkan kode verifikasi yang telah dikirim ke nomor anda:"),
-            content: TextField(
-              controller: TE_VerifikasiKode,
-            ),
-            actions: <Widget>[
-              MaterialButton(
-                elevation: 5.0,
-                child: Text('Submit'),
-                onPressed: () {
-                  Navigator.of(context).pop(TE_VerifikasiKode.text.toString());
-                },
-              )
-            ],
-          );
-        });
-  }
 
   Widget _buildKataSandi() {
     return TextFormField(
@@ -123,6 +102,15 @@ class _LoginFormState extends State<LoginForm> {
     );
   }
 
+  _loginProcess({String email, String password})async{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => RegisterSuccess()),
+    );
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -177,17 +165,15 @@ class _LoginFormState extends State<LoginForm> {
                               _formKey.currentState.save();
                               print(_kataSandi);
                               print(_ktp);
+                              var bytes = utf8.encode(_kataSandi);
+                              var digest = sha1.convert(bytes);
                               CollectionReference _searchUser = _firestore.collection("Pengguna");
-                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: _kataSandi).get().then((QuerySnapshot _snapshot) {
+                              await _searchUser.where("KTP", isEqualTo: _ktp).where("Kata Sandi", isEqualTo: digest.toString().trim()).get().then((QuerySnapshot _snapshot) {
                                 if (_snapshot.docs.length > 0) {
                                   _snapshot.docs.forEach((element) {
-                                    print(element.data()["Telepon"]);
-                                    _nomorTelepon = element.data()["Telepon"];
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginOtp(noTelepon: _nomorTelepon)),
-                                    );
+                                    print(element.data()["Email"]);
+                                    _email = element.data()["Email"];
+                                    _loginProcess(email: _email, password: _kataSandi);
                                   });
                                 } else {
                                   print("empty query");

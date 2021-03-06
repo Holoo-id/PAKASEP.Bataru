@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
@@ -13,6 +14,7 @@ class RegisterSuccess extends StatefulWidget {
 class _RegisterSuccessState extends State<RegisterSuccess> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.signOut();
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: WaveBackground(

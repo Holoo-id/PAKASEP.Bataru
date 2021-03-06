@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
@@ -24,7 +22,8 @@ class _CheckEmailState extends State<CheckEmail> {
 
   _registerAndSendEmail()async{
     await auth.createUserWithEmailAndPassword(email: widget.userData["Email"], password: widget.userData["Kata Sandi"]).then((value)async {
-      await value.user.sendEmailVerification();
+      print(widget.userData["Kata Sandi"]);
+      print("mencoba mengirim email verifikasi");
       String _userID = auth.currentUser.uid;
       DocumentReference docRefToNewUser = firestore.collection("Pengguna").doc(_userID);
       widget.userData.update("Kata Sandi", (value) {
@@ -32,26 +31,19 @@ class _CheckEmailState extends State<CheckEmail> {
         var digest = sha1.convert(bytes);
         return digest;
       });
-      docRefToNewUser.set(widget.userData);
+      await docRefToNewUser.set(widget.userData);
       print('user berhasil terdaftar pada Database');
     });
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterSuccess()));
   }
 
-  Future<void> _checkEmailVerified() async{
-    await auth.currentUser.reload();
-    if(auth.currentUser.emailVerified){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterSuccess()));
-    }
-  }
 
   @override
   void initState() {
-    if(auth.currentUser != null){
+    if(auth.currentUser == null){
+      print("belum ada user yang login");
       _registerAndSendEmail();
     }
-    Timer.periodic(Duration(seconds: 5), (timer) {
-      _checkEmailVerified();
-    });
     super.initState();
 
   }

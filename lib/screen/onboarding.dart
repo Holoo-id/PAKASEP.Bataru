@@ -1,12 +1,8 @@
 import 'dart:ui';
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/location_permission.dart';
-import 'package:pakasep/screen/users/register/check_email.dart';
 import 'package:pakasep/utility/style.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -20,17 +16,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
   }
 
-  pindah(context) async {
-    FirebaseAuth _auth = FirebaseAuth.instance;
-    if (_auth.currentUser != null) {
-      if(_auth.currentUser.emailVerified){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-      }
-      else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CheckEmail()));
-      }
-    }
-  }
 
   final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
@@ -63,7 +48,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    pindah(context);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
