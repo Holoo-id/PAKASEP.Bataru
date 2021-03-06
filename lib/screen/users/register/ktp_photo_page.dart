@@ -39,126 +39,118 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
       body: Background(
         child: Container(
           height: size.height,
+          padding: EdgeInsets.all(20),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10.0),
-                  height: size.height - 115,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Verifikasi Foto KTP',
-                        style: title900Dark,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(
-                        flex: 0,
-                        child: _imageFile == null
-                            ? Container(height: 0, width: 0)
-                            : Image.file(
-                          File(_imageFile.path),
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                      AutoSizeText.rich(
-                        TextSpan(
-                          style: text500Grey,
-                          children: [
-                            TextSpan(
-                              text: 'Klik ',
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // mainAxisSize:,
+              children: <Widget>[
+                Text(
+                  'Verifikasi Foto KTP',
+                  style: title900Dark,
+                  textAlign: TextAlign.center,
+                ),
+                Flexible(
+                  flex: 0,
+                  child: _imageFile == null
+                      ? Container(height: 0, width: 0)
+                      : FractionallySizedBox(
+                          widthFactor: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Image.file(
+                              File(_imageFile.path),
+                              fit: BoxFit.fitWidth,
                             ),
-                            TextSpan(
-                              text: 'LANJUTKAN ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'untuk pengambilan foto KTP.',
-                            ),
-                          ],
-                        ),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        presetFontSizes: [16, 12, 8],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: FlatButton(
-                          onPressed: () async {
-                            final pickedFile = await ImagePicker()
-                                .getImage(source: ImageSource.camera);
-                            setState(() {
-                              if (pickedFile != null) {
-                                _imageFile = pickedFile;
-                              } else {
-                                print("no image");
-                              }
-                            });
-                            final FirebaseVisionImage visionImage =
-                                FirebaseVisionImage.fromFile(
-                                    File(_imageFile.path));
-                            final TextRecognizer textRecognizer =
-                                FirebaseVision.instance.textRecognizer();
-                            final VisionText visionText =
-                                await textRecognizer.processImage(visionImage);
-                            bool isKtpNotValid = true;
-                            for (TextBlock block in visionText.blocks) {
-                              for (TextLine line in block.lines) {
-                                result += line.text + '\n';
-                                if (line.text == widget.userData["KTP"] ||
-                                    line.text == ":${widget.userData['KTP']}" ||
-                                    line.text == ": ${widget.userData['KTP']}") {
-                                  print("KTP valid");
-                                  isKtpNotValid = false;
-                                }
-                              }
-                            }
-                            print(result);
-                            if (isKtpNotValid) {
-                              print("ktp gagal : ");
-                              print(isKtpNotValid);
-                              popupWithButton(
-                                context,
-                                'Verifikasi KTP Gagal',
-                                'Mohon ulangi prosesnya kembali',
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        KtpPhotoPage(userData: widget.userData)),
-                              );
-                            } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CheckEmail(userData: widget.userData)),
-                              );
-                            }
-                          },
-                          height: 60,
-                          minWidth: size.width,
-                          color: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Text(
-                            'LANJUTKAN',
-                            style: buttonTextLight,
                           ),
                         ),
+                ),
+                AutoSizeText.rich(
+                  TextSpan(
+                    style: text500Grey,
+                    children: [
+                      TextSpan(
+                        text: 'Klik ',
+                      ),
+                      TextSpan(
+                        text: 'LANJUTKAN ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'untuk pengambilan foto KTP.',
                       ),
                     ],
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  presetFontSizes: [16, 12, 8],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: FlatButton(
+                    onPressed: () async {
+                      final pickedFile = await ImagePicker()
+                          .getImage(source: ImageSource.camera);
+                      setState(() {
+                        if (pickedFile != null) {
+                          _imageFile = pickedFile;
+                        } else {
+                          print("no image");
+                        }
+                      });
+                      final FirebaseVisionImage visionImage =
+                          FirebaseVisionImage.fromFile(File(_imageFile.path));
+                      final TextRecognizer textRecognizer =
+                          FirebaseVision.instance.textRecognizer();
+                      final VisionText visionText =
+                          await textRecognizer.processImage(visionImage);
+                      bool isKtpNotValid = true;
+                      for (TextBlock block in visionText.blocks) {
+                        for (TextLine line in block.lines) {
+                          result += line.text + '\n';
+                          if (line.text == widget.userData["KTP"] ||
+                              line.text == ":${widget.userData['KTP']}" ||
+                              line.text == ": ${widget.userData['KTP']}") {
+                            print("KTP valid");
+                            isKtpNotValid = false;
+                          }
+                        }
+                      }
+                      print(result);
+                      if (isKtpNotValid) {
+                        print("ktp gagal : ");
+                        print(isKtpNotValid);
+                        popupWithButton(
+                          context,
+                          'Verifikasi KTP Gagal',
+                          'Mohon ulangi prosesnya kembali',
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  KtpPhotoPage(userData: widget.userData)),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  CheckEmail(userData: widget.userData)),
+                        );
+                      }
+                    },
+                    height: 60,
+                    minWidth: size.width,
+                    color: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      'LANJUTKAN',
+                      style: buttonTextLight,
+                    ),
                   ),
                 ),
               ],

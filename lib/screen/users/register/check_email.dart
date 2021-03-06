@@ -8,6 +8,8 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/utility/style.dart';
 
+import '../login/login_form.dart';
+
 class CheckEmail extends StatefulWidget {
   final Map<String, dynamic> userData;
   const CheckEmail({Key key, this.userData}) : super(key: key);
@@ -72,7 +74,8 @@ class _CheckEmailState extends State<CheckEmail> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 25),
                   child: AutoSizeText(
-                    'Cek E-mail Anda',
+                    // 'Cek E-mail Anda',
+                    'Pendaftaran Selesai',
                     style: title900Dark,
                     textAlign: TextAlign.center,
                     presetFontSizes: [28, 25, 20],
@@ -82,10 +85,29 @@ class _CheckEmailState extends State<CheckEmail> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5),
                   child: AutoSizeText(
-                    'Periksa E-mail anda untuk melakukan verifikasi data dari PAKASEP agar data anda terverifikasi.',
+                    'Harap menunggu konfirmasi dari Admin PAKASEP setelah tahap pra-registrasi selesai. Data Anda sudah kami terima dan terdaftar di database kami',
+                    // 'Periksa E-mail anda untuk melakukan verifikasi data dari PAKASEP agar data anda terverifikasi.',
                     textAlign: TextAlign.center,
                     style: subtitle600Light2,
                     presetFontSizes: [16, 15, 10],
+                  ),
+                ),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginForm()),
+                    );
+                  },
+                  height: 60,
+                  minWidth: size.width,
+                  color: Theme.of(context).primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    'MASUK',
+                    style: buttonTextLight,
                   ),
                 ),
               ],
