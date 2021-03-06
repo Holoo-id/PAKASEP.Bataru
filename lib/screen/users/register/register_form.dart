@@ -718,15 +718,23 @@ class _RegisterFormState extends State<RegisterForm> {
                       style: title900Dark,
                     ),
                   ),
+                  _buildTelepon(),
+                  SizedBox(
+                    height: 10,
+                  ),
                   _buildNamaLengkap(),
                   SizedBox(
                     height: 10,
                   ),
-                  _buildKataSandi(),
+                  _buildTempatLahir(),
                   SizedBox(
                     height: 10,
                   ),
-                  _buildKonfirmasiKataSandi(),
+                  _buildTanggalLahir(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildAlamat(),
                   SizedBox(
                     height: 10,
                   ),
@@ -742,23 +750,15 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  _buildTelepon(),
+                  _buildEmail(),
                   SizedBox(
                     height: 10,
                   ),
-                  _buildAlamat(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildTempatLahir(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildTanggalLahir(),
+                  _buildKataSandi(),
                   SizedBox(
                     height: 10.0,
                   ),
-                  _buildEmail(),
+                  _buildKonfirmasiKataSandi(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
