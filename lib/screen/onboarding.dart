@@ -16,7 +16,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     super.initState();
   }
 
-
   final int _numPages = 4;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
@@ -310,11 +309,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             vertical: size.height * 0.01, horizontal: 20),
                         child: FlatButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LocationPermission()),
-                            );
+                            Navigator.of(context).pushNamed('/intro');
                           },
                           height: size.height * 0.07,
                           minWidth: size.width * 0.75,

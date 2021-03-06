@@ -53,11 +53,8 @@ class _RegisterSuccessState extends State<RegisterSuccess> {
                       ),
                       FlatButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AlreadyRegistered()),
-                          );
+                          Navigator.popUntil(
+                              context, ModalRoute.withName('/intro'));
                         },
                         height: 60,
                         minWidth: size.width,

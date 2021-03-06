@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/phase1/welcome.dart';
 import 'package:pakasep/utility/theme.dart';
+import 'package:pakasep/screen/intro.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,6 +33,9 @@ class _MyApp extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: WelcomeScreen(),
       theme: mainTheme(),
+      routes: <String, WidgetBuilder>{
+        '/intro': (BuildContext context) => new Intro(),
+      },
     );
   }
 }

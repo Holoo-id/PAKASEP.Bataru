@@ -96,11 +96,11 @@ class _CheckEmailState extends State<CheckEmail> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginForm()),
-                      );
+                      Navigator.popUntil(context, ModalRoute.withName('/intro'));
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => LoginForm()),
+                      // );
                     },
                     height: 60,
                     minWidth: size.width,

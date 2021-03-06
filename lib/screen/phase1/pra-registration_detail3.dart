@@ -4,6 +4,7 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/screen/intro.dart';
 
 class PraRegistration3 extends StatefulWidget {
   @override
@@ -72,10 +73,7 @@ class _PraRegistration3State extends State<PraRegistration3> {
                   padding: const EdgeInsets.only(bottom: 10, top: 25),
                   child: FlatButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterForm()),
-                      );
+                      Navigator.of(context).pushNamed('/intro');
                     },
                     height: 60,
                     minWidth: size.width,

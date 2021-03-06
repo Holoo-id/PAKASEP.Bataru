@@ -139,7 +139,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                                   KtpPhotoPage(userData: widget.userData)),
                         );
                       } else {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
