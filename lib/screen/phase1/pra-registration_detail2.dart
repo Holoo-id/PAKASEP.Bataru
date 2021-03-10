@@ -60,7 +60,7 @@ class _PraRegistration2State extends State<PraRegistration2> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: AutoSizeText(
-                        'Semakin awal anda melakukan pengajuan, data anda akan diproritaskan setelah tahap pra-registrasi selesai. Di tahap registrasi anda hanya tinggal memilih rumah yang diinginkan.',
+                        'Semakin awal anda melakukan pengajuan, data anda akan diproritaskan. Setelah tahap pra-registrasi selesai, anda hanya tinggal memilih rumah yang diinginkan.',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
                         presetFontSizes: [16, 15, 10],

@@ -25,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Flexible(
               child: FractionallySizedBox(
-                heightFactor: 0.38,
+                heightFactor: 0.35,
                 child: Image(
                   image: AssetImage(
                     'images/pakasep_logo.png',
@@ -36,20 +36,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                FractionallySizedBox(
-                  widthFactor: 0.8,
+FractionallySizedBox(
+                  widthFactor: 1,
                   child: AutoSizeText(
                     'PAKASEP',
                     style: title900Light,
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     presetFontSizes: [64, 56, 48],
-                  ),
+
+                    ),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
                   child: AutoSizeText(
-                    'PERKUMPULAN AHLI KPR SUBSIDI PERUMAHAN',
+                    'PERKUMPULAN AHLI KEPEMILIKAN SUBSIDI PERUMAHAN',
                     textAlign: TextAlign.center,
                     style: subtitle600Light,
                     maxLines: 1,

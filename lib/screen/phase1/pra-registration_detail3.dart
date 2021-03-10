@@ -61,7 +61,7 @@ class _PraRegistration3State extends State<PraRegistration3> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: AutoSizeText(
-                        'Akan ada tahap registrasi setelah tahap ini. Tahap registrasi akan diberitahukan lewat aplikasi maupun oleh tim admin PAKASEP ke nomor handphone yang terdaftar.',
+                        'Akan ada tahap registrasi setelah tahap ini. Tahap registrasi akan diberitahukan lewat aplikasi maupun oleh tim admin PAKASEP ke nomor handphone yang anda daftarkan.',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
                         presetFontSizes: [16, 15, 10],

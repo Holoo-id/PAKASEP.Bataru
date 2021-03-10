@@ -1,4 +1,4 @@
-package com.holoo.pakasep
+package com.marketpreneur.pakasep
 
 import io.flutter.embedding.android.FlutterActivity
 

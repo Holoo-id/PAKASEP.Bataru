@@ -1,18 +1,35 @@
 {
   "project_info": {
     "project_number": "713714126223",
+    "firebase_url": "https://pakasep-f37aa-default-rtdb.firebaseio.com",
     "project_id": "pakasep-f37aa",
     "storage_bucket": "pakasep-f37aa.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:713714126223:android:0cfbbbc4ab1bd4c066cffa",
+        "mobilesdk_app_id": "1:713714126223:android:401671372beddbf666cffa",
         "android_client_info": {
-          "package_name": "com.holoo.pakasep"
+          "package_name": "com.marketpreneur.pakasep"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "713714126223-05br5npv0u42b5fc83gt8sesgajdg2f2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marketpreneur.pakasep",
+            "certificate_hash": "15a2cd656090a2e7e9691f0943188a93b5ff4493"
+          }
+        },
+        {
+          "client_id": "713714126223-ll4s2sisuauodp2vi5ohlsa49jgjksmu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marketpreneur.pakasep",
+            "certificate_hash": "87e2a40d743dad2256a1250ed76e0bc9c99467cb"
+          }
+        },
         {
           "client_id": "713714126223-63es5k9je03u66546kkn083jjtmv5290.apps.googleusercontent.com",
           "client_type": 3
@@ -20,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyANSiGLSt2Hj2i9RkbShjCu9iqNCx8D4es"
+          "current_key": "AIzaSyC67CsQug2J1U2WUSUHpjuEYpNLyvqt1A8"
         }
       ],
       "services": {
@@ -29,6 +46,13 @@
             {
               "client_id": "713714126223-63es5k9je03u66546kkn083jjtmv5290.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "713714126223-atsr2mn7vpqeel5l1vnb8qffe2ekgg86.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.marketpreneur.pakasep"
+              }
             }
           ]
         }
