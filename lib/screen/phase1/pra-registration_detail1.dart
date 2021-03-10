@@ -60,7 +60,7 @@ class _PraRegistration1State extends State<PraRegistration1> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: AutoSizeText(
-                        'Tahap Pra-Registrasi merupakan tahap pengumpulan data nasabah yang ingin memiliki rumah subsidi dari program BATARU namun baru sebatas pengisian data pribadi belum sampai tahap pemilihan rumah yang diinginkan.',
+                        'Tahap Pra-Registrasi merupakan tahap pengumpulan data nasabah yang ingin memiliki rumah subsidi dari program BATARU. Di tahap ini baru sebatas pengisian data pribadi.',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
                         presetFontSizes: [16, 15, 10],
