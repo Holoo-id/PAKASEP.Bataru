@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class KprCalcSimulation extends StatefulWidget {
   @override
@@ -355,7 +355,6 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
             child: AutoSizeText(
               'Hitung',
               textAlign: TextAlign.center,
-              maxLines: 1,
               style: buttonTextLight,
             ),
           ),
@@ -408,23 +407,22 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   : Container(height: 0, width: 0),
               flexibleSpace: Container(
                 width: size.width,
-                color: Colors.white,
+                color: Colors.transparent,
                 child: WaveBackground(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        AutoSizeText(
-                          'Kalkulator KPR\nSimulasi KPR',
-                          textAlign: TextAlign.center,
-                          style: title900Dark,
-                          maxLines: 2,
-                          presetFontSizes: [28, 21, 14],
-                        ),
-                        SizedBox(
-                          height: 25,
+                        FractionallySizedBox(
+                          widthFactor: 0.84,
+                          child: AutoSizeText(
+                            'Kalkulator KPR Simulasi KPR',
+                            textAlign: TextAlign.center,
+                            style: title900Dark,
+                            presetFontSizes: [28, 25, 20, 15, 10, 5],
+                          ),
                         ),
                       ],
                     ),
@@ -442,8 +440,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
               AutoSizeText(
                 'Hasil Perhitungan',
                 style: title600Dark,
-                maxLines: 1,
-                presetFontSizes: [24, 18, 12],
+                presetFontSizes: [24, 20, 15, 10, 5],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,8 +448,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'HARGA RUMAH',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,
@@ -477,8 +473,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'ANGSURAN PER BULAN [36 BULAN PERTAMA]',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,
@@ -503,8 +498,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'UANG MUKA YANG HARUS DISIAPKAN',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,
@@ -529,8 +523,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'POKOK PINJAMAN',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,
@@ -555,8 +548,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'TOTAL BUNGA',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,
@@ -581,8 +573,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   AutoSizeText(
                     'TOTAL PINJAMAN',
                     style: formTitle700Dark,
-                    maxLines: 1,
-                    presetFontSizes: [12, 8, 6],
+                    presetFontSizes: [12, 10, 5],
                   ),
                   Container(
                       height: 55,

@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/phase1/pra-registration_detail1.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override

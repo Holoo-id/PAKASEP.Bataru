@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/password/new_password_complete.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class NewPasswordForm extends StatefulWidget {
   const NewPasswordForm({Key key}) : super(key: key);
@@ -141,88 +141,85 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
         ),
       ),
       body: Background(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              BackOnlyAppbar(child: null),
-              Form(
-                key: _formKey,
-                child: Container(
-                  height: size.height,
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
+        child: Container(
+          height: size.height,
+          alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 25.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: AutoSizeText(
+                    'Lupa Kata Sandi?',
+                    textAlign: TextAlign.center,
+                    style: title900Dark,
+                    presetFontSizes: [28, 25, 20, 15, 10, 5],
+                  ),
+                ),
+                Form(
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       AutoSizeText(
-                        'Lupa Kata Sandi?',
+                        'Masukkan Kata Sandi',
                         textAlign: TextAlign.center,
-                        style: title900Dark,
-                        maxLines: 1,
+                        style: title600Dark,
+                        presetFontSizes: [23, 20, 15, 10, 5],
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            'Masukkan Kata Sandi',
-                            textAlign: TextAlign.center,
-                            style: title600Dark,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            'Kata sandi pengganti harus mengandung huruf dan angka',
-                            textAlign: TextAlign.center,
-                            style: subtitle600Light2,
-                            maxLines: 2,
-                          ),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          _buildKataSandi(),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          _buildKonfirmasiKataSandi(),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              if (!_formKey.currentState.validate()) {
-                                return;
-                              }
-                              _formKey.currentState.save();
-                              print(_kataSandi);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        NewPasswordComplete()),
-                              );
-                            },
-                            height: 60,
-                            minWidth: size.width,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Text(
-                              'KIRIM',
-                              style: buttonTextLight,
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: AutoSizeText(
+                          'Kata sandi pengganti harus mengandung huruf dan angka',
+                          textAlign: TextAlign.center,
+                          style: subtitle600Light2,
+                          presetFontSizes: [16, 15, 10, 5],
+                        ),
                       ),
-                      SizedBox(
-                        height: 1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKataSandi(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKonfirmasiKataSandi(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 25),
+                        child: FlatButton(
+                          onPressed: () {
+                            if (!_formKey.currentState.validate()) {
+                              return;
+                            }
+                            _formKey.currentState.save();
+                            print(_kataSandi);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewPasswordComplete()),
+                            );
+                          },
+                          height: 60,
+                          minWidth: size.width,
+                          color: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Text(
+                            'KIRIM',
+                            style: buttonTextLight,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

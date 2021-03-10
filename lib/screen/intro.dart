@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/intro_background.dart';
 import 'package:pakasep/screen/users/login/login_form.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class Intro extends StatefulWidget {
   @override

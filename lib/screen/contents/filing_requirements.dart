@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class FilingRequirements extends StatefulWidget {
@@ -17,9 +17,9 @@ class _FilingRequirementsState extends State<FilingRequirements> {
       backgroundColor: Colors.transparent,
       elevation: 0,
       insetPadding: EdgeInsets.symmetric(
-      vertical: (MediaQuery.of(context).size.height / 4) * 1.5,
-      horizontal: 25,
-    ),
+        vertical: (MediaQuery.of(context).size.height / 4) * 1.5,
+        horizontal: 25,
+      ),
       child: Center(
         child: Container(
           decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 'aplikasi masih dalam tahap pra-registrasi. silahkan input data anda terlebih dahulu\n'
                     .toUpperCase(),
                 textAlign: TextAlign.center,
-                presetFontSizes: [20, 18],
+                presetFontSizes: [20, 15, 10, 5],
                 style: text600Dark,
               ),
               AutoSizeText.rich(
@@ -43,7 +43,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                   style: text400Grey,
                   children: [
                     TextSpan(
-                      text: 'Untuk informasi bisa di cek di Int',
+                      text: 'Untuk informasi bisa di cek di Instagram',
                     ),
                     TextSpan(
                         style: text500Grey,
@@ -60,7 +60,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                           }),
                   ],
                 ),
-                presetFontSizes: [16, 15],
+                presetFontSizes: [16, 15, 10, 5],
                 textAlign: TextAlign.center,
               ),
             ],
@@ -70,7 +70,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
     );
   }
 
-  bool filHouse = false;
+  bool filHouse = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -80,7 +80,6 @@ class _FilingRequirementsState extends State<FilingRequirements> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              // toolbarHeight: size.height * 0.125,
               toolbarHeight: 130,
               leadingWidth: 70,
               backgroundColor: Colors.transparent,
@@ -114,23 +113,22 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                   : Container(height: 0, width: 0),
               flexibleSpace: Container(
                 width: size.width,
-                color: Colors.white,
+                color: Colors.transparent,
                 child: WaveBackground(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        AutoSizeText(
-                          'Persyaratan Pengajuan',
-                          textAlign: TextAlign.center,
-                          style: title900Dark,
-                          maxLines: 1,
-                          presetFontSizes: [28, 21, 14],
-                        ),
-                        SizedBox(
-                          height: 25,
+                        FractionallySizedBox(
+                          widthFactor: 0.84,
+                          child: AutoSizeText(
+                            'Persyaratan Pengajuan',
+                            textAlign: TextAlign.center,
+                            style: title900Dark,
+                            presetFontSizes: [28, 25, 20, 15, 10, 5],
+                          ),
                         ),
                       ],
                     ),
@@ -141,33 +139,37 @@ class _FilingRequirementsState extends State<FilingRequirements> {
           ];
         },
         body: SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 25),
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              AutoSizeText.rich(
-                TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text:
-                          'Pusat Pengelolaan Dana Pembiayaan Perumahan (PPDPP) bekerjasama dengan bank pelaksana memberikan Fasilitas Likuiditas Pembiayaan Perumahan (FLPP) untuk perumahan subsidi.\n',
-                    ),
-                    TextSpan(
-                      text: '\nSyaratnya sendiri terdiri dari:\n',
-                    ),
-                    TextSpan(
-                      text:
-                          '- Penerima adalah Warga Negara Indonesia (WNI) dan berdomisili di Indonesia;\n- Penerima telah berusia 21 tahun atau telah menikah;\n- Penerima maupun pasangan (suami/istri) belum memiliki rumah dan belum pernah menerima subsidi pemerintah untuk pemilikan rumah;\n- Penghasilan maksimum 8 juta untuk rumah tapak dan susun;\n- Memiliki masa kerja atau usaha minimal 1 tahun;\n- Memilki Nomor Pokok Wajib Pajak (NPWP) atau Surat Pemberitahuan (SPT) Tahunan Pajak Penghasilan (PPh) orang pribadi sesuai perundang-undangan yang berlaku.\n',
-                    ),
-                    TextSpan(
-                      text:
-                          '\nAnda dapat memilih rumah dan mengajukan KPR ke bank yang terdaftar dibawah ini:',
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: AutoSizeText.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text:
+                            'Pusat Pengelolaan Dana Pembiayaan Perumahan (PPDPP) bekerjasama dengan bank pelaksana memberikan Fasilitas Likuiditas Pembiayaan Perumahan (FLPP) untuk perumahan subsidi.\n',
+                      ),
+                      TextSpan(
+                        text: '\nSyaratnya sendiri terdiri dari:\n',
+                      ),
+                      TextSpan(
+                        text:
+                            '- Penerima adalah Warga Negara Indonesia (WNI) dan berdomisili di Indonesia;\n- Penerima telah berusia 21 tahun atau telah menikah;\n- Penerima maupun pasangan (suami/istri) belum memiliki rumah dan belum pernah menerima subsidi pemerintah untuk pemilikan rumah;\n- Penghasilan maksimum 8 juta untuk rumah tapak dan susun;\n- Memiliki masa kerja atau usaha minimal 1 tahun;\n- Memilki Nomor Pokok Wajib Pajak (NPWP) atau Surat Pemberitahuan (SPT) Tahunan Pajak Penghasilan (PPh) orang pribadi sesuai perundang-undangan yang berlaku.\n',
+                      ),
+                      TextSpan(
+                        text:
+                            '\nAnda dapat memilih rumah dan mengajukan KPR ke bank yang terdaftar dibawah ini:',
+                      ),
+                    ],
+                  ),
                 ),
               ),
               GridView.count(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 primary: false,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
@@ -176,6 +178,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 childAspectRatio: (183 / 56),
                 children: <Widget>[
                   Container(
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffF2F3F7),
@@ -184,9 +187,16 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    child: Image.asset('images/b1.png'),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        'images/b1.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
                   ),
                   Container(
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffF2F3F7),
@@ -195,9 +205,16 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    child: Image.asset('images/b2.png'),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        'images/b2.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
                   ),
                   Container(
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffF2F3F7),
@@ -206,9 +223,16 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    child: Image.asset('images/b3.png'),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        'images/b3.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
                   ),
                   Container(
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffF2F3F7),
@@ -217,9 +241,16 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    child: Image.asset('images/b4.png'),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        'images/b4.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
                   ),
                   Container(
+                    padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: Color(0xffF2F3F7),
@@ -228,18 +259,27 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    child: Image.asset('images/b5.png'),
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        'images/b5.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
                   ),
                 ],
               ),
               SizedBox(
                 height: 50,
               ),
-              AutoSizeText(
-                'Rumah yang Diajukan',
-                style: title600Dark,
-                maxLines: 1,
-                presetFontSizes: [24, 18, 12],
+              FractionallySizedBox(
+                widthFactor: 0.7,
+                child: AutoSizeText(
+                  'Rumah yang Diajukan',
+                  style: title600Dark,
+                  textAlign: TextAlign.center,
+                  presetFontSizes: [24, 20, 15, 10, 5],
+                ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -250,7 +290,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
               ButtonBar(
                 alignment: MainAxisAlignment.center,
                 buttonHeight: 48,
-                buttonMinWidth: size.width * 0.3,
+                buttonMinWidth: size.width * 0.4,
                 children: [
                   RaisedButton(
                     onPressed: () => showDialog(
@@ -270,7 +310,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                     child: AutoSizeText(
                       'Pilih Rumah',
                       textAlign: TextAlign.center,
-                      maxLines: 1,
+                      // maxLines: 1,
                       style: buttonTextDark,
                     ),
                   ),
@@ -292,7 +332,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                     child: AutoSizeText(
                       'Ajukan',
                       textAlign: TextAlign.center,
-                      maxLines: 1,
+                      // maxLines: 1,
                       style: buttonTextLight,
                     ),
                   ),
@@ -309,7 +349,6 @@ class _FilingRequirementsState extends State<FilingRequirements> {
     return Column(
       children: [
         Container(
-          // height: size.width / 2,
           height: 240,
           width: 185,
           decoration: BoxDecoration(
@@ -324,21 +363,19 @@ class _FilingRequirementsState extends State<FilingRequirements> {
         Padding(
           padding: EdgeInsets.all(10),
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               AutoSizeText(
                 'Perumahan Griya Caraka Indah',
                 style: title600Dark,
                 textAlign: TextAlign.center,
-                maxLines: 2,
-                presetFontSizes: [15, 10.75, 7.5],
+                presetFontSizes: [15, 10, 5],
               ),
               AutoSizeText(
                 'Cimalaka, Kab. Sumedang Jawa Barat',
                 style: text400Grey,
                 textAlign: TextAlign.center,
-                maxLines: 2,
-                presetFontSizes: [12, 9, 6],
+                // maxLines: 2,
+                presetFontSizes: [12, 10, 5],
               ),
               SizedBox(
                 height: 5,
@@ -347,8 +384,7 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 'PT TRI KARYA LINGGA (ASPRUMNAS)',
                 style: text400Grey,
                 textAlign: TextAlign.center,
-                maxLines: 1,
-                presetFontSizes: [6, 4.5, 3],
+                presetFontSizes: [6, 5],
               ),
             ],
           ),
@@ -360,27 +396,29 @@ class _FilingRequirementsState extends State<FilingRequirements> {
   _buildEmptyText() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        AutoSizeText(
-          'BELUM MEMILIH RUMAH',
-          style: title700Red,
-          maxLines: 1,
-          presetFontSizes: [24, 18, 12],
-          textAlign: TextAlign.center,
+        FractionallySizedBox(
+          widthFactor: 0.7,
+          child: AutoSizeText(
+            'BELUM MEMILIH RUMAH',
+            style: title700Red,
+            presetFontSizes: [24, 20, 15, 10, 5],
+            textAlign: TextAlign.center,
+          ),
         ),
-        SizedBox(
-          height: 15,
-        ),
-        AutoSizeText(
-          'Silahkan memilih rumah terlebih dahulu sebelum melanjutkan ke proses pilih bank',
-          style: text500Grey,
-          maxLines: 2,
-          presetFontSizes: [16, 12, 8],
-          textAlign: TextAlign.center,
+        FractionallySizedBox(
+          widthFactor: 0.85,
+          child: AutoSizeText(
+            'Silahkan memilih rumah terlebih dahulu sebelum melanjutkan ke proses pengajuan',
+            style: text500Grey,
+            presetFontSizes: [16, 15, 10, 5],
+            textAlign: TextAlign.center,
+          ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 50),
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.125),
           child: Divider(
             thickness: 0.75,
             height: 60,

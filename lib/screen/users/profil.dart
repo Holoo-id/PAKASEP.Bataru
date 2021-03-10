@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/intro.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class EditProfilForm extends StatefulWidget {
   const EditProfilForm({Key key}) : super(key: key);
@@ -18,7 +18,13 @@ class _EditProfilFormState extends State<EditProfilForm> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
-  String _userId, _namaLengkap, _kataSandi, _npwp, _tempatLahir, _tanggalLahir, _alamat;
+  String _userId,
+      _namaLengkap,
+      _kataSandi,
+      _npwp,
+      _tempatLahir,
+      _tanggalLahir,
+      _alamat;
   String _telepon = "89012345678";
 
   Icon namaIcon = new Icon(null);
@@ -481,59 +487,71 @@ class _EditProfilFormState extends State<EditProfilForm> {
         ],
       ),
       body: Background(
-        child: Container(
-          height: size.height,
-          alignment: Alignment.center,
-          child: SingleChildScrollView(
-            padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-            child: Form(
-              key: _formKey,
-              child: Container(
-                alignment: Alignment.center,
-                height: size.height,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text(
-                      'Data Diri',
-                      textAlign: TextAlign.center,
-                      style: title900Dark,
+        child: Form(
+          key: _formKey,
+          child: Container(
+            height: size.height,
+            alignment: Alignment.center,
+            child: SingleChildScrollView(
+              padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 25.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: FractionallySizedBox(
+                      widthFactor: 0.92,
+                      child: AutoSizeText(
+                        'Data Diri',
+                        textAlign: TextAlign.center,
+                        style: title900Dark,
+                        presetFontSizes: [28, 25, 20, 15, 10, 5],
+                      ),
                     ),
-                    CircleAvatar(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: CircleAvatar(
                       backgroundImage: AssetImage('images/p1.png'),
                       radius: 40,
                     ),
-                    Column(
-                      children: [
-                        _buildNpwp(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildNamaLengkap(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildTempatLahir(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildTanggalLahir(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildAlamat(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildKataSandi(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _buildTelepon(),
-                      ],
-                    ),
-                    Container(
+                  ),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildNpwp(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildNamaLengkap(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildTempatLahir(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildTanggalLahir(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildAlamat(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKataSandi(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildTelepon(),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
                       width: size.width * 0.75,
                       child: AutoSizeText.rich(
                         TextSpan(
@@ -565,12 +583,15 @@ class _EditProfilFormState extends State<EditProfilForm> {
                             ),
                           ],
                         ),
-                        maxLines: 3,
+                        // maxLines: 3,
                         textAlign: TextAlign.center,
                         presetFontSizes: [14, 10.5, 7],
                       ),
                     ),
-                    FlatButton(
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: FlatButton(
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -583,7 +604,10 @@ class _EditProfilFormState extends State<EditProfilForm> {
                           print(_tempatLahir);
                           print(_tanggalLahir);
                           print(_alamat);
-                          DocumentReference docRefToCurUser = FirebaseFirestore.instance.collection("Pengguna").doc(_userId);
+                          DocumentReference docRefToCurUser = FirebaseFirestore
+                              .instance
+                              .collection("Pengguna")
+                              .doc(_userId);
                         }
                       },
                       height: 60,
@@ -597,8 +621,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
                         style: buttonTextLight,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -621,10 +645,11 @@ class _EditProfilFormState extends State<EditProfilForm> {
         _dateController.text = date;
       });
   }
+
   _getUserData() async {
     _userId = FirebaseAuth.instance.currentUser.uid;
     DocumentSnapshot docSnapToUser =
-    await _firestore.collection("Pengguna").doc(_userId).get();
+        await _firestore.collection("Pengguna").doc(_userId).get();
     _namaLengkap = docSnapToUser.data()["Nama Lengkap"];
     _tanggalLahir = docSnapToUser.data()["Tanggal Lahir"];
     _npwp = docSnapToUser.data()["NPWP"];

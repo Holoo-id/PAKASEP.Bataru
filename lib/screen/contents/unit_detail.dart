@@ -4,10 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 
-import '../../utility/style.dart';
+import '../../utility/typhography.dart';
 
 class UnitDetail extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class UnitDetail extends StatefulWidget {
 }
 
 class _UnitDetailState extends State<UnitDetail> {
+  GoogleMapController _mapControl;
   String _alamat,
       _asosiasi,
       _deskripsi,
@@ -29,7 +31,6 @@ class _UnitDetailState extends State<UnitDetail> {
   double _bunga, _tenor;
   int _kamar, _kamarMandi, _unit;
   List _gambar = [];
-  // CarouselController buttonCarouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     dynamic id = widget.idUnit;
@@ -51,10 +52,6 @@ class _UnitDetailState extends State<UnitDetail> {
           _ukuran = documentSnapshot.data()["ukuran"];
           _unit = documentSnapshot.data()["unit"];
           _web = documentSnapshot.data()["kontak.web"];
-          // print(documentSnapshot.data()["kontak.email"]);
-          // print(documentSnapshot.data()["kontak.telepon"]);
-          // print(documentSnapshot.data()["kontak.web"]);
-          print(documentSnapshot.data()["kontak"]);
         } else {
           print('Document does not exist on the database');
         }
@@ -63,7 +60,6 @@ class _UnitDetailState extends State<UnitDetail> {
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
@@ -103,7 +99,7 @@ class _UnitDetailState extends State<UnitDetail> {
               flexibleSpace: Stack(
                 children: [
                   Container(
-                    height: size.height * 0.33,
+                    height: size.height * 0.36,
                     child: Carousel(
                       autoplay: false,
                       boxFit: BoxFit.cover,
@@ -135,10 +131,8 @@ class _UnitDetailState extends State<UnitDetail> {
                           builder: (context) {
                             return GestureDetector(
                               onTap: () => Navigator.of(context).pop(),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(25),
                                 child: CachedNetworkImage(
                                   imageUrl: _gambar[index],
                                   fit: BoxFit.fitWidth,
@@ -157,211 +151,239 @@ class _UnitDetailState extends State<UnitDetail> {
                       },
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, size.height * 0.3 + 9, 0, 0),
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    height: size.height > 800 ? size.height * 0.25 : 150,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        AutoSizeText.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Rp200.000.000,00',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '/unit',
-                                style: TextStyle(
-                                  height: 2,
-                                ),
-                              ),
-                            ],
-                          ),
-                          style: text400Grey,
-                          presetFontSizes: [14, 10.5, 7],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: size.width * 0.3,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.article_outlined,
-                                    color: Theme.of(context).accentColor,
-                                    size: 40,
+                  FractionallySizedBox(
+                    heightFactor: 1,
+                    child: Container(
+                      margin:
+                          EdgeInsets.fromLTRB(0, size.height * 0.3 + 9, 0, 0),
+                      padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          AutoSizeText.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Rp200.000.000,00',
+                                  style: TextStyle(
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  AutoSizeText.rich(
-                                    TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'Tenor\n',
-                                          style: iconText400Dark,
+                                ),
+                                TextSpan(
+                                  text: '/unit',
+                                  style: TextStyle(
+                                    height: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            style: text400Grey,
+                            presetFontSizes: [14, 10.5, 7],
+                          ),
+                          Table(
+                            columnWidths: {0: FlexColumnWidth(1)},
+                            children: [
+                              TableRow(
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: Icon(
+                                            Icons.article_outlined,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 26,
+                                          ),
                                         ),
-                                        TextSpan(
-                                          text: '$_tenor Tahun',
-                                          style: iconText600Dark,
+                                        Flexible(
+                                          child: FractionallySizedBox(
+                                            widthFactor: 1,
+                                            child: AutoSizeText.rich(
+                                              TextSpan(
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: 'Tenor\n',
+                                                    style: iconText400Dark,
+                                                  ),
+                                                  TextSpan(
+                                                    text: '$_tenor Tahun',
+                                                    style: iconText600Dark,
+                                                  ),
+                                                ],
+                                              ),
+                                              maxLines: 2,
+                                              presetFontSizes: [12, 10, 5],
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    maxLines: 2,
-                                    presetFontSizes: [12, 9, 6],
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: Icon(
+                                            Icons.money,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 26,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: FractionallySizedBox(
+                                            widthFactor: 1,
+                                            // heightFactor: 1,
+                                            child: AutoSizeText.rich(
+                                              TextSpan(
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                    text: 'Bunga\n',
+                                                    style: iconText400Dark,
+                                                  ),
+                                                  TextSpan(
+                                                    text: '$_bunga% per Tahun',
+                                                    style: iconText600Dark,
+                                                  ),
+                                                ],
+                                              ),
+                                              maxLines: 2,
+                                              presetFontSizes: [12, 10, 5],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: Icon(
+                                            Icons.home_outlined,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 26,
+                                          ),
+                                        ),
+                                        Flexible(
+                                          child: AutoSizeText.rich(
+                                            TextSpan(
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                  text: 'Unit\n',
+                                                  style: iconText400Dark,
+                                                ),
+                                                TextSpan(
+                                                  text: '$_unit Tersedia',
+                                                  style: iconText600Dark,
+                                                ),
+                                              ],
+                                            ),
+                                            maxLines: 2,
+                                            presetFontSizes: [12, 10, 5],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Container(
-                              width: size.width * 0.3,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.money,
-                                    color: Theme.of(context).accentColor,
-                                    size: 40,
-                                    // size: size.width > 480 ? 40 : 0,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AutoSizeText(
-                                        'Bunga',
-                                        maxLines: 1,
-                                        presetFontSizes: [12, 9, 6],
-                                        style: iconText400Dark,
-                                      ),
-                                      AutoSizeText(
-                                        '$_bunga% per Tahun',
-                                        maxLines: 1,
-                                        presetFontSizes: [12, 9, 6],
-                                        style: iconText600Dark,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: size.width * 0.3,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.home_outlined,
-                                    color: Theme.of(context).accentColor,
-                                    size: 40,
-                                    // size: size.width > 480 ? 40 : 0,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AutoSizeText(
-                                        'Unit',
-                                        maxLines: 1,
-                                        presetFontSizes: [12, 9, 6],
-                                        style: iconText400Dark,
-                                      ),
-                                      AutoSizeText(
-                                        '$_unit Tersedia',
-                                        maxLines: 1,
-                                        presetFontSizes: [12, 9, 6],
-                                        style: iconText600Dark,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.architecture,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  AutoSizeText(
-                                    '30x60',
-                                    maxLines: 1,
-                                    style: iconText600Dark,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.room,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  AutoSizeText(
-                                    // '1',
-                                    _kamarMandi.toString(),
-                                    maxLines: 1,
-                                    style: iconText600Dark,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.single_bed,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                  AutoSizeText(
-                                    // '1',
-                                    _kamar.toString(),
-                                    maxLines: 1,
-                                    style: iconText600Dark,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 65),
-                          child: Divider(
-                            thickness: 0.75,
-                            height: 1,
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
+                          FractionallySizedBox(
+                            widthFactor: 0.6,
+                            child: Table(
+                              columnWidths: {0: FlexColumnWidth(1.5)},
+                              children: [
+                                TableRow(
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.architecture,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 16,
+                                          ),
+                                          AutoSizeText(
+                                            '30x60',
+                                            style: iconText600Dark,
+                                            presetFontSizes: [12, 10, 5],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.room,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 16,
+                                          ),
+                                          AutoSizeText(
+                                            _kamarMandi.toString(),
+                                            style: iconText600Dark,
+                                            presetFontSizes: [12, 10, 5],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.single_bed,
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            size: 16,
+                                          ),
+                                          AutoSizeText(
+                                            _kamar.toString(),
+                                            style: iconText600Dark,
+                                            presetFontSizes: [12, 10, 5],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: size.height * 0.125),
+                            child: Divider(
+                              thickness: 0.75,
+                              height: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Container(
                     margin:
                         EdgeInsets.fromLTRB(20, size.height * 0.3 - 10, 20, 0),
-                    padding: EdgeInsets.symmetric(vertical: 7.5),
-                    width: size.width,
+                    padding: EdgeInsets.symmetric(vertical: 7.5, horizontal: 5),
+                    width: size.width * 0.92,
                     decoration: BoxDecoration(
                       color: Theme.of(context).accentColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: AutoSizeText(
                       _namaTempat,
-                      // 'Perumahan Griya Caraka Indah',
                       style: title700Light2,
-                      maxLines: 1,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -370,62 +392,76 @@ class _UnitDetailState extends State<UnitDetail> {
             ),
           ];
         },
-        body: Container(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(30),
-            child: Column(
-              children: [
-                AutoSizeText.rich(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: AutoSizeText.rich(
                   TextSpan(
                     text: _deskripsi,
-                    // children: <TextSpan>[
-                    //   TextSpan(
-                    //     text:
-                    //         'Podomoro River View adalah perumahan dengan konsep garden house yang dikembangkan PT. Agung Podomoro Land Tbk. Terletak di Gunung Putri, Bogor, perumahan ini menawarkan desain yang cantik dan minimalis sehingga ideal dijadikan rumah keluarga.\n',
-                    //   ),
-                    //   TextSpan(
-                    //     text:
-                    //         '\nPodomoro River View memiliki sejumlah fasilitas memadai seperti:\n',
-                    //   ),
-                    //   TextSpan(
-                    //     text:
-                    //         '• Club House\n• Gym\n• Jogging Track\n• Kolam Renang\n• Keamanan\n• One Gate System\n• Masjid\n• Ruang Komunitas\n',
-                    //   ),
-                    //   TextSpan(
-                    //     text:
-                    //         '\nTak hanya fasilitas yang mumpuni, Podomoro River View terletak di lokasi strategis. Perumahan di Bogor ini dikelilingi area dan akses penting dengan jarak temuh yang dekat seperti:\n',
-                    //   ),
-                    //   TextSpan(
-                    //     text:
-                    //         '• 12 menit ke Exit Tol Cimanggis 3\n• 20 menit ke Stasiun LRT\n• 25 menit ke Bandara Halim Perdanakusuma\n• 25 menit ke Universitas Guadarma\n• 30 menit ke Tol Jagorawi\n',
-                    //   ),
-                    //   TextSpan(
-                    //     text:
-                    //         '\nPodomoro River View pun memiliki sejumlah unit yang tersedia dengan spesifikasi berbeda dengan harga mulai dari Rp 1,5 miliar. Podomoro River Vew dengan konsep hunian hijau yang asri dapat menjadi pilihan menarik hanya untuk Anda\n',
-                    //   ),
-                    // ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 65),
-                  child: Divider(
-                    thickness: 0.5,
-                    height: 35,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: AutoSizeText(
+                        'Peta Lokasi',
+                        presetFontSizes: [14, 10, 5],
+                        style: text600Dark,
+                      ),
+                    ),
+                    AspectRatio(
+                      aspectRatio: 2 / 1.25,
+                      child: Container(
+                        child: GoogleMap(
+                          myLocationEnabled: true,
+                          myLocationButtonEnabled: true,
+                          mapType: MapType.normal,
+                          onMapCreated: (GoogleMapController controller) {
+                            _mapControl = controller;
+                          },
+                          initialCameraPosition: CameraPosition(
+                            zoom: 10,
+                            // target: LatLng(_lat, _lng),
+                            target: LatLng(0, 0),
+                          ),
+                          // markers: Set<Marker>.of(markers.values),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                AutoSizeText.rich(
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.125),
+                child: Divider(
+                  thickness: 0.5,
+                  height: 35,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: AutoSizeText.rich(
                   TextSpan(
                     children: [
                       TextSpan(
                         text: '$_perusahaan\n$_asosiasi',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
                         text: '\nKANTOR PEMASARAN',
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       TextSpan(
@@ -444,66 +480,65 @@ class _UnitDetailState extends State<UnitDetail> {
                   ),
                   textAlign: TextAlign.center,
                   style: text400Dark,
-                  presetFontSizes: [14, 10.5, 7],
+                  presetFontSizes: [14, 10, 5],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                ButtonBar(
-                  alignment: MainAxisAlignment.center,
-                  buttonHeight: 48,
-                  buttonMinWidth: size.width * 0.3,
-                  children: [
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => KprCalcSimulation()),
-                        );
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(
-                          width: 2,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      color: Colors.white,
-                      child: AutoSizeText(
-                        'Simulasi KPR',
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        style: buttonTextDark,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.center,
+                buttonHeight: 48,
+                buttonMinWidth: size.width * 0.3,
+                children: [
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => KprCalcSimulation()),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FilingStatus()),
-                        );
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(
-                          width: 2,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      color: Theme.of(context).primaryColor,
-                      child: AutoSizeText(
-                        'Ajukan',
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        style: buttonTextLight,
+                    color: Colors.white,
+                    child: AutoSizeText(
+                      'Simulasi KPR',
+                      textAlign: TextAlign.center,
+                      // maxLines: 1,
+                      style: buttonTextDark,
+                    ),
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FilingStatus()),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      side: BorderSide(
+                        width: 2,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                    color: Theme.of(context).primaryColor,
+                    child: AutoSizeText(
+                      'Ajukan',
+                      textAlign: TextAlign.center,
+                      // maxLines: 1,
+                      style: buttonTextLight,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -1,7 +1,8 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/users/login/login_form.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class NewPasswordComplete extends StatefulWidget {
   @override
@@ -17,22 +18,20 @@ class _NewPasswordCompleteState extends State<NewPasswordComplete> {
         child: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
-          height: size.height,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Text(
+              AutoSizeText(
                 'Selesai!',
                 style: title600Dark,
+                presetFontSizes: [25, 20, 15, 10, 5],
               ),
-              Text(
+              AutoSizeText(
                 'Kata sandi telah dirubah\nSilahkan masuk ke aplikasi',
                 textAlign: TextAlign.center,
                 style: subtitle600Light2,
-              ),
-              SizedBox(
-                height: 20,
+                presetFontSizes: [16, 15, 10, 5],
               ),
               FlatButton(
                 height: 60,
@@ -47,8 +46,9 @@ class _NewPasswordCompleteState extends State<NewPasswordComplete> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text(
+                child: AutoSizeText(
                   'MASUK',
+                  presetFontSizes: [14, 10, 5],
                   style: buttonTextLight,
                 ),
               ),

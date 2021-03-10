@@ -1,10 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/contents/unit_detail.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class AllAvailableUnits extends StatefulWidget {
   @override
@@ -205,7 +206,6 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
           return <Widget>[
             SliverAppBar(
               toolbarHeight: size.height * 0.25,
-              // toolbarHeight: 400,
               leadingWidth: 70,
               backgroundColor: Colors.transparent,
               elevation: 0.0,
@@ -247,18 +247,18 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
-                        AutoSizeText(
-                          'Galeri Perumahan',
-                          textAlign: TextAlign.center,
-                          style: title900Dark,
-                          maxLines: 1,
-                          presetFontSizes: [28, 21, 14],
+                        FractionallySizedBox(
+                          widthFactor: 0.92,
+                          child: AutoSizeText(
+                            'Galeri Perumahan',
+                            textAlign: TextAlign.center,
+                            style: title900Dark,
+                            presetFontSizes: [28, 25, 20, 15, 10, 5],
+                            maxLines: 1,
+                          ),
                         ),
                         GridView.count(
                           primary: false,
@@ -266,16 +266,13 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                           mainAxisSpacing: 10,
                           shrinkWrap: true,
                           crossAxisCount: 2,
-                          childAspectRatio: (1 / 0.25),
+                          childAspectRatio: 1 / 0.25,
                           children: <Widget>[
                             _buildProvinces(),
                             _buildCities(),
                             _buildDistricts(),
                             _buildAssociations(),
                           ],
-                        ),
-                        SizedBox(
-                          height: 10,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -325,7 +322,6 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
               .where("kota", isEqualTo: citiesChoose)
               .where("kecamatan", isEqualTo: districtsChoose)
               .where("provinsi", isEqualTo: provincesChoose)
-              // .orderBy("tanggal_dibuat", descending: true)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -359,7 +355,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 12,
                   mainAxisSpacing: 12,
-                  childAspectRatio: (188 / 265),
+                  childAspectRatio: 1 / 2,
                 ),
                 children: documents
                     .map(
@@ -376,41 +372,44 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                         },
                         child: GridTile(
                           child: Container(
+                            alignment: Alignment.center,
                             child: Column(
                               children: [
-                                Container(
-                                  // child: Text(doc["gambar"].toString()),
-                                  height: 188,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xffc4c4c4),
+                                AspectRatio(
+                                  aspectRatio: 1 / 1,
+                                  child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    image: DecorationImage(
-                                      image: NetworkImage(
-                                        // 'images/one_line_art_rumah.png',
-                                        doc["gambar"][0],
-                                      ),
+                                    child: CachedNetworkImage(
+                                      imageUrl: doc["gambar"][0],
                                       fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.all(10),
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       AutoSizeText(
                                         doc["nama_tempat"],
                                         style: title600Dark,
                                         textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        presetFontSizes: [16, 12, 8],
+                                        presetFontSizes: [16, 15, 10, 5],
                                       ),
                                       AutoSizeText(
                                         doc["alamat"],
                                         style: text400Grey,
                                         textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        presetFontSizes: [12, 9, 6],
+                                        presetFontSizes: [12, 10, 5],
                                       ),
                                       SizedBox(
                                         height: 5,
@@ -419,8 +418,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                         doc["asosiasi"],
                                         style: text400Grey,
                                         textAlign: TextAlign.center,
-                                        maxLines: 1,
-                                        presetFontSizes: [8, 6, 4],
+                                        presetFontSizes: [8, 5],
                                       ),
                                     ],
                                   ),

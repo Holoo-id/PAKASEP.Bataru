@@ -8,7 +8,7 @@ import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/screen/users/register/register_success.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class OtpPhone extends StatefulWidget {
   final Map<String, dynamic> userData;

@@ -4,40 +4,42 @@ import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/users/password/verify_form.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
-class PhoneForm extends StatefulWidget {
-  const PhoneForm({Key key}) : super(key: key);
+class EmailForm extends StatefulWidget {
+  const EmailForm({Key key}) : super(key: key);
   @override
-  _PhoneFormState createState() => _PhoneFormState();
+  _EmailFormState createState() => _EmailFormState();
 }
 
-class _PhoneFormState extends State<PhoneForm> {
-  String _telepon;
+class _EmailFormState extends State<EmailForm> {
+  String _email;
 
-  Widget _buildTelepon() {
+  Widget _buildEmail() {
     return TextFormField(
-      keyboardType: TextInputType.phone,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-      ],
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Nomor telepon tidak boleh kosong';
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.emailAddress,
+      validator: (String email) {
+        if (email.isEmpty) {
+          return 'Email Harus Diisi';
+        }
+        // VALIDATOR EMAIL
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(email)) {
+          return 'Email Tidak Valid';
         }
       },
-      onSaved: (String value) {
-        _telepon = value;
+      onSaved: (String email) {
+        _email = email;
       },
       style: form200Light,
       decoration: InputDecoration(
-        hintText: '89012345678',
-        labelText: 'Nomor Telepon',
+        hintText: 'emailanda@contoh.com',
+        labelText: 'E-Mail',
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
-        prefixText: '+62 ',
-        prefixStyle: text600Dark,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
@@ -77,13 +79,16 @@ class _PhoneFormState extends State<PhoneForm> {
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
-                      AutoSizeText(
-                        'Lupa Kata Sandi?',
-                        textAlign: TextAlign.center,
-                        style: title900Dark,
-                        maxLines: 1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        child: AutoSizeText(
+                          'Lupa Kata Sandi?',
+                          textAlign: TextAlign.center,
+                          style: title900Dark,
+                          presetFontSizes: [28, 25, 20, 15, 10, 5],
+                        ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,18 +98,18 @@ class _PhoneFormState extends State<PhoneForm> {
                             'Masukkan Nomor Handphone',
                             textAlign: TextAlign.center,
                             style: title600Dark,
-                            maxLines: 1,
+                            // maxLines: 1,
                           ),
                           AutoSizeText(
                             'Kode verifikasi akan muncul di nomor handphone  yang terdaftar',
                             textAlign: TextAlign.center,
                             style: subtitle600Light2,
-                            maxLines: 2,
+                            // maxLines: 2,
                           ),
                           SizedBox(
                             height: 25.0,
                           ),
-                          _buildTelepon(),
+                          _buildEmail(),
                           SizedBox(
                             height: 25.0,
                           ),
@@ -114,7 +119,7 @@ class _PhoneFormState extends State<PhoneForm> {
                                 return;
                               }
                               _formKey.currentState.save();
-                              print(_telepon);
+                              print(_email);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -133,9 +138,6 @@ class _PhoneFormState extends State<PhoneForm> {
                             ),
                           ),
                         ],
-                      ),
-                      SizedBox(
-                        height: 1,
                       ),
                     ],
                   ),

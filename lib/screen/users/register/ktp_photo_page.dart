@@ -9,7 +9,7 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/popup_with_button.dart';
 import 'package:pakasep/screen/users/register/check_email.dart';
 
-import '../../../utility/style.dart';
+import '../../../utility/typhography.dart';
 import '../../components/background.dart';
 
 class KtpPhotoPage extends StatefulWidget {

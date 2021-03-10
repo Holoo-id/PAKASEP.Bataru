@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/screen/intro.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class LocationPermission extends StatefulWidget {
   @override

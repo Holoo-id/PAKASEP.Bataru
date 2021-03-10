@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class FilingStatus extends StatefulWidget {
   @override
@@ -90,14 +90,17 @@ class _FilingStatusState extends State<FilingStatus> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
+      extendBody: false,
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              toolbarHeight: 180,
+              toolbarHeight:
+                  size.height > 512 ? size.height * 0.24 : size.height * 0.4,
               leadingWidth: 70,
-              backgroundColor: Colors.transparent,
+              backgroundColor:
+                  _hasChoose == false ? Colors.transparent : Colors.white,
               elevation: 0.0,
               floating: true,
               pinned: true,
@@ -128,34 +131,38 @@ class _FilingStatusState extends State<FilingStatus> {
                   : Container(height: 0, width: 0),
               flexibleSpace: Container(
                 width: size.width,
-                color: Colors.white,
                 child: WaveBackground(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
-                        AutoSizeText(
-                          'Status Pengajuan',
-                          textAlign: TextAlign.center,
-                          style: title900Dark,
-                          maxLines: 1,
-                          presetFontSizes: [28, 21, 14],
+                        FractionallySizedBox(
+                          widthFactor: 0.84,
+                          child: AutoSizeText(
+                            'Status Pengajuan',
+                            textAlign: TextAlign.center,
+                            style: title900Dark,
+                            presetFontSizes: [28, 25, 20, 15, 10, 5],
+                            maxLines: 1,
+                          ),
                         ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        AutoSizeText(
-                          'Setelah memilih rumah dan mengajukan permohonan, data anda akan kami kirim ke bank untuk proses lanjutan.',
-                          style: text500Grey,
-                          maxLines: 3,
-                          textAlign: TextAlign.center,
-                          presetFontSizes: [16, 12, 8],
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
+                        _hasChoose == true
+                            ? FractionallySizedBox(
+                                widthFactor: 0.81,
+                                child: AutoSizeText(
+                                  'Setelah memilih rumah dan mengajukan permohonan, data anda akan kami kirim ke bank untuk proses lanjutan.',
+                                  style: text500Grey,
+                                  textAlign: TextAlign.center,
+                                  presetFontSizes: [16, 15, 10, 5],
+                                ),
+                              )
+                            : Container(
+                                height: 0,
+                                width: 0,
+                              ),
                       ],
                     ),
                   ),
@@ -166,85 +173,104 @@ class _FilingStatusState extends State<FilingStatus> {
         },
         body: _hasChoose == true
             ? SingleChildScrollView(
-                padding: EdgeInsets.all(20),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _fillProcess(),
-                    AutoSizeText(
-                      'Selamat Anda Punya Rumah!',
-                      style: title600Dark,
-                      textAlign: TextAlign.center,
-                      presetFontSizes: [20, 15, 10],
+                    FractionallySizedBox(
+                      widthFactor: 0.89,
+                      child: _fillProcess(),
+                    ),
+                    FractionallySizedBox(
+                      widthFactor: 0.76,
+                      child: AutoSizeText(
+                        'Selamat Anda Punya Rumah!',
+                        style: title600Dark,
+                        textAlign: TextAlign.center,
+                        presetFontSizes: [20, 15, 10, 5],
+                      ),
                     ),
                     Image.asset(
                       'images/r3.png',
                       fit: BoxFit.fitWidth,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 25,
-                              color: Theme.of(context).accentColor,
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).accentColor,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  'Proses selesai (lanjut tahap berikutnya)',
+                                  style: subName400Dark,
+                                  presetFontSizes: [12, 10, 5],
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff851414),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  'Tidak lolos',
+                                  style: subName400Dark,
+                                  presetFontSizes: [12, 10, 5],
+                                ),
+                              ],
                             ),
-                            AutoSizeText(
-                              'Proses selesai (lanjut tahap berikutnya)',
-                              style: subName400Dark,
-                              // presetFontSizes: [12, 9, 6],
-                              maxLines: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).primaryColor,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  'Sedang di proses',
+                                  style: subName400Dark,
+                                  presetFontSizes: [12, 10, 5],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 25,
-                              color: Color(0xff851414),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              'Tidak lolos',
-                              style: subName400Dark,
-                              // presetFontSizes: [12, 9, 6],
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              height: 25,
-                              width: 25,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              'Sedang di proses',
-                              style: subName400Dark,
-                              // presetFontSizes: [12, 9, 6],
-                              maxLines: 1,
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -256,30 +282,27 @@ class _FilingStatusState extends State<FilingStatus> {
 
   Widget _buildNotChooseYet() {
     return Container(
-      padding: EdgeInsets.all(30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          AutoSizeText(
-            'BELUM MEMILIH RUMAH',
-            style: title700Red,
-            maxLines: 1,
-            presetFontSizes: [24, 18, 12],
-            textAlign: TextAlign.center,
+          FractionallySizedBox(
+            widthFactor: 0.7,
+            child: AutoSizeText(
+              'BELUM MEMILIH RUMAH',
+              style: title700Red,
+              presetFontSizes: [24, 20, 15, 10, 5],
+              textAlign: TextAlign.center,
+            ),
           ),
-          SizedBox(
-            height: 15,
-          ),
-          AutoSizeText(
-            'Silahkan memilih rumah terlebih dahulu sebelum melanjutkan ke proses pengajuan',
-            style: text500Grey,
-            maxLines: 2,
-            presetFontSizes: [16, 12, 8],
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(
-            height: 60,
+          FractionallySizedBox(
+            widthFactor: 0.85,
+            child: AutoSizeText(
+              'Silahkan memilih rumah terlebih dahulu sebelum melanjutkan ke proses pengajuan',
+              style: text500Grey,
+              presetFontSizes: [16, 15, 10, 5],
+              textAlign: TextAlign.center,
+            ),
           ),
           RaisedButton(
             onPressed: () {},
@@ -294,7 +317,6 @@ class _FilingStatusState extends State<FilingStatus> {
             child: AutoSizeText(
               'Pilih Rumah',
               textAlign: TextAlign.center,
-              maxLines: 1,
               style: buttonTextDark,
             ),
           ),

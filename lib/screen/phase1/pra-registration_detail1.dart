@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/phase1/pra-registration_detail2.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class PraRegistration1 extends StatefulWidget {
   @override

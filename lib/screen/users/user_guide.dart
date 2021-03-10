@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
-import 'package:pakasep/utility/style.dart';
+import 'package:pakasep/utility/typhography.dart';
 
 class UserGuide extends StatefulWidget {
   @override
@@ -14,18 +14,20 @@ class _UserGuideState extends State<UserGuide> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
+      extendBodyBehindAppBar: false,
+      extendBody: false,
       body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverAppBar(
-                toolbarHeight: 130,
+                toolbarHeight: size.height * 0.24,
                 leadingWidth: 70,
                 backgroundColor: Colors.transparent,
                 elevation: 0.0,
                 floating: true,
                 pinned: true,
                 snap: false,
+                centerTitle: true,
                 leading: Platform.isIOS
                     ? Container(
                         alignment: Alignment.topLeft,
@@ -52,33 +54,34 @@ class _UserGuideState extends State<UserGuide> {
                     : Container(height: 0, width: 0),
                 flexibleSpace: Container(
                   width: size.width,
-                  color: Colors.white,
+                  color: Colors.transparent,
                   child: WaveBackground(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        FractionallySizedBox(
+                          widthFactor: 0.84,
+                          child: AutoSizeText(
                             'Panduan Pengguna',
                             textAlign: TextAlign.center,
                             style: title900Dark,
-                            maxLines: 1,
-                            presetFontSizes: [28, 21, 14],
+                            presetFontSizes: [28, 25, 20, 15, 10, 5],
                           ),
-                          SizedBox(
-                            height: 25,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ];
           },
-          body: Container(height: 0, width: 0)),
+          body: Container(
+            height: 0,
+            width: 0,
+            padding: EdgeInsets.only(bottom: size.height * 0.05),
+          )),
     );
   }
 }
