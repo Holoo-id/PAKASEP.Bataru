@@ -194,7 +194,10 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
     );
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //global key
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //global key
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

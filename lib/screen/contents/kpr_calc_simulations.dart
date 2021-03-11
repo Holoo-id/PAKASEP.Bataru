@@ -18,7 +18,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
   String _jangkaWaktu;
   String _sukuBungaEfektif;
   String _uangMuka;
-  // String _pokokPinjaman ;
+  String _pokokPinjaman;
   String _angsuranPerbulan;
   String _totalBunga;
   String _totalPinjaman;
