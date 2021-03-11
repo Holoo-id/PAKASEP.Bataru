@@ -22,13 +22,16 @@ class _EmailFormState extends State<EmailForm> {
       validator: (String email) {
         if (email.isEmpty) {
           return 'Email Harus Diisi';
+        } else {
+          if (!RegExp(
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+              .hasMatch(email)) {
+            return 'Email Tidak Valid';
+          } else {
+            return null;
+          }
         }
         // VALIDATOR EMAIL
-        if (!RegExp(
-                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-            .hasMatch(email)) {
-          return 'Email Tidak Valid';
-        }
       },
       onSaved: (String email) {
         _email = email;

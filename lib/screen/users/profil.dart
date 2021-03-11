@@ -42,6 +42,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
       validator: (String namaLengkap) {
         if (namaLengkap.isEmpty) {
           return 'Nama lengkap harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (namaLengkap) {
@@ -95,13 +97,13 @@ class _EditProfilFormState extends State<EditProfilForm> {
       validator: (String kataSandi) {
         if (kataSandi.isEmpty) {
           return 'Kata sandi harus diisi';
+        } else {
+          if (kataSandi.length < 5) {
+            return 'Kata sandi terlalu pendek';
+          } else {
+            return null;
+          }
         }
-        if (kataSandi.length < 5) {
-          return 'Kata sandi terlalu pendek';
-        }
-        // if (!RegExp(r"^(?=.*?[0-9])$").hasMatch(value)) {
-        //   return 'Setidaknya terdapat 1 digit angka';
-        // }
       },
       onChanged: (kataSandi) {
         if (kataSandi.length > 5) {
@@ -155,7 +157,11 @@ class _EditProfilFormState extends State<EditProfilForm> {
         if (npwp.isNotEmpty) {
           if (npwp.length < 15) {
             return 'Harus diisi 15 digit Nomor NPWP atau boleh kosong';
+          } else {
+            return null;
           }
+        } else {
+          return null;
         }
       },
       onChanged: (npwp) {
@@ -220,6 +226,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
       validator: (String telepon) {
         if (telepon.isEmpty) {
           return 'Nomor telepon tidak boleh kosong';
+        } else {
+          return null;
         }
       },
       onChanged: (telepon) {
@@ -274,6 +282,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
       validator: (String tempatLahir) {
         if (tempatLahir.isEmpty) {
           return 'Tempat Lahir harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (tempatLahir) {
@@ -330,6 +340,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
           validator: (String tanggalLahir) {
             if (tanggalLahir.isEmpty) {
               return 'Tanggal Lahir harus diisi';
+            } else {
+              return null;
             }
           },
           onChanged: (tanggalLahir) {
@@ -386,6 +398,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
       validator: (String alamat) {
         if (alamat.isEmpty) {
           return 'Alamat harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (alamat) {

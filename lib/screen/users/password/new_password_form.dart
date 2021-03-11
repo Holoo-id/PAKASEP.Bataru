@@ -25,13 +25,13 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
       validator: (String kataSandi) {
         if (kataSandi.isEmpty) {
           return 'Kata sandi harus diisi';
+        } else {
+          if (kataSandi.length < 5) {
+            return 'Kata sandi terlalu pendek';
+          } else {
+            return null;
+          }
         }
-        if (kataSandi.length < 5) {
-          return 'Kata sandi terlalu pendek';
-        }
-        // if (!RegExp(r"^(?=.*?[0-9])$").hasMatch(value)) {
-        //   return 'Setidaknya terdapat 1 digit angka';
-        // }
       },
       onChanged: (kataSandi) {
         if (kataSandi.length > 5) {
@@ -98,9 +98,12 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
       validator: (String password) {
         if (password.isEmpty) {
           return 'Konfirmasi kata sandi harus diisi';
-        }
-        if (password != _kataSandi) {
-          return 'Konfirmasi kata sandi tidak sama';
+        } else {
+          if (password != _kataSandi) {
+            return 'Konfirmasi kata sandi tidak sama';
+          } else {
+            return null;
+          }
         }
       },
       onSaved: (String password) {

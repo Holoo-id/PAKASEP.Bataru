@@ -27,6 +27,8 @@ class _LoginOtpState extends State<LoginOtp> {
       validator: (String value) {
         if (value.isEmpty) {
           return 'Kode Verifikasi tidak boleh kosong';
+        } else {
+          return null;
         }
       },
       onSaved: (String value) {

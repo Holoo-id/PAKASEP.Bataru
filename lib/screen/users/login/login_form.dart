@@ -30,9 +30,12 @@ class _LoginFormState extends State<LoginForm> {
       validator: (String value) {
         if (value.isEmpty) {
           return 'Kata sandi harus diisi';
-        }
-        if (value.length < 5) {
-          return 'Kata sandi terlalu pendek';
+        } else {
+          if (value.length < 5) {
+            return 'Kata sandi terlalu pendek';
+          } else {
+            return null;
+          }
         }
       },
       onSaved: (String value) {
@@ -70,9 +73,12 @@ class _LoginFormState extends State<LoginForm> {
       validator: (String value) {
         if (value.isEmpty) {
           return 'Nomor KTP harus diisi';
-        }
-        if (value.length < 16) {
-          return 'Harus diisi 16 digit Nomor KTP';
+        } else {
+          if (value.length < 16) {
+            return 'Harus diisi 16 digit Nomor KTP';
+          } else {
+            return null;
+          }
         }
       },
       onSaved: (String value) {

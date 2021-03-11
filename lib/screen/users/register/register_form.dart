@@ -48,6 +48,8 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String namaLengkap) {
         if (namaLengkap.isEmpty) {
           return 'Nama lengkap harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (namaLengkap) {
@@ -100,6 +102,8 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String tempatLahir) {
         if (tempatLahir.isEmpty) {
           return 'Tempat Lahir harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (tempatLahir) {
@@ -156,6 +160,8 @@ class _RegisterFormState extends State<RegisterForm> {
           validator: (String tanggalLahir) {
             if (tanggalLahir.isEmpty) {
               return 'Tanggal Lahir harus diisi';
+            } else {
+              return null;
             }
           },
           onChanged: (tanggalLahir) {
@@ -212,6 +218,8 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String alamat) {
         if (alamat.isEmpty) {
           return 'Alamat harus diisi';
+        } else {
+          return null;
         }
       },
       onChanged: (alamat) {
@@ -265,18 +273,21 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String kataSandi) {
         if (kataSandi.isEmpty) {
           return 'Kata sandi harus diisi';
-        }
-        if (kataSandi.length < 5) {
-          return 'Kata sandi terlalu pendek';
-        }
-        if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$')
-            .hasMatch(kataSandi)) {
-          return 'Harus terdapat angka dan alfabet';
+        } else {
+          if (kataSandi.length < 5) {
+            return 'Kata sandi terlalu pendek';
+          } else {
+            if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$')
+                .hasMatch(kataSandi)) {
+              return 'Harus terdapat angka dan alfabet';
+            } else {
+              return null;
+            }
+          }
         }
       },
       onChanged: (kataSandi) {
-        if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$')
-            .hasMatch(kataSandi)) {
+        if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$').hasMatch(kataSandi)) {
           setState(() {
             passIcon = new Icon(
               Icons.error,
@@ -340,9 +351,12 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String password) {
         if (password.isEmpty) {
           return 'Konfirmasi kata sandi harus diisi';
-        }
-        if (password != _kataSandi) {
-          return 'Konfirmasi kata sandi tidak sama';
+        } else {
+          if (password != _kataSandi) {
+            return 'Konfirmasi kata sandi tidak sama';
+          } else {
+            return null;
+          }
         }
       },
       onSaved: (String password) {
@@ -381,9 +395,12 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String ktp) {
         if (ktp.isEmpty) {
           return 'Nomor KTP harus diisi';
-        }
-        if (ktp.length < 16) {
-          return 'Harus diisi 16 digit Nomor KTP';
+        } else {
+          if (ktp.length < 16) {
+            return 'Harus diisi 16 digit Nomor KTP';
+          } else {
+            return null;
+          }
         }
       },
       onChanged: (ktp) {
@@ -439,6 +456,8 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String konKtp) {
         if (konKtp != _ktp) {
           return 'Konfirmasi nomor KTP tidak sama';
+        } else {
+          return null;
         }
       },
       onChanged: (konKtp) {
@@ -497,7 +516,11 @@ class _RegisterFormState extends State<RegisterForm> {
         if (npwp.isNotEmpty) {
           if (npwp.length < 15) {
             return 'Harus diisi 15 digit Nomor NPWP atau boleh kosong';
+          } else {
+            return null;
           }
+        } else {
+          return null;
         }
       },
       onChanged: (npwp) {
@@ -560,13 +583,9 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String telepon) {
         if (telepon.isEmpty) {
           return 'Nomor Telepon Harus Diisi';
+        } else {
+          return null;
         }
-        // VALIDATOR EMAIL
-        // if (!RegExp(
-        //         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        //     .hasMatch(telepon)) {
-        //   return 'Email Tidak Valid';
-        // }
       },
       onChanged: (telepon) {
         if (telepon.isEmpty) {
@@ -620,12 +639,15 @@ class _RegisterFormState extends State<RegisterForm> {
       validator: (String email) {
         if (email.isEmpty) {
           return 'Email Harus Diisi';
-        }
-        // VALIDATOR EMAIL
-        if (!RegExp(
-                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-            .hasMatch(email)) {
-          return 'Email Tidak Valid';
+        } else {
+          // VALIDATOR EMAIL
+          if (!RegExp(
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+              .hasMatch(email)) {
+            return 'Email Tidak Valid';
+          } else {
+            return null;
+          }
         }
       },
       onChanged: (email) {
