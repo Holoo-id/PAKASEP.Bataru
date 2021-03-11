@@ -307,15 +307,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: size.height * 0.01, horizontal: 20),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed('/intro');
                           },
-                          height: size.height * 0.07,
-                          minWidth: size.width * 0.75,
-                          color: Color(0xffEBEAEC),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                          style: TextButton.styleFrom(
+                            minimumSize:
+                                Size(size.width * 0.75, size.height * 0.07),
+                            onSurface: Colors.black87,
+                            primary: Color(0xffEBEAEC),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                           child: Text(
                             'MULAI SEKARANG',

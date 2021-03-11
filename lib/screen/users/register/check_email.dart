@@ -94,19 +94,21 @@ class _CheckEmailState extends State<CheckEmail> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName('/intro'));
+                      Navigator.popUntil(
+                          context, ModalRoute.withName('/intro'));
                       // Navigator.push(
                       //   context,
                       //   MaterialPageRoute(builder: (context) => LoginForm()),
                       // );
                     },
-                    height: 60,
-                    minWidth: size.width,
-                    color: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: Text(
                       'SELESAI',

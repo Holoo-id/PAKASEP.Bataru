@@ -107,7 +107,7 @@ class _OtpPhoneState extends State<OtpPhone> {
                           SizedBox(
                             height: 25.0,
                           ),
-                          FlatButton(
+                          TextButton(
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -116,21 +116,29 @@ class _OtpPhoneState extends State<OtpPhone> {
                               print(_InVerificationCode);
                               print("Trying to compare verification ID");
                               try {
-                                await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(
-                                    verificationId: _verificationCode,
-                                    smsCode: _InVerificationCode
-                                )).then((value) async {
+                                await FirebaseAuth.instance
+                                    .signInWithCredential(
+                                        PhoneAuthProvider.credential(
+                                            verificationId: _verificationCode,
+                                            smsCode: _InVerificationCode))
+                                    .then((value) async {
                                   if (value.user != null) {
                                     print('user berhasil terdaftar pada Auth');
-                                    _userID = FirebaseAuth.instance.currentUser.uid;
-                                    DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
+                                    _userID =
+                                        FirebaseAuth.instance.currentUser.uid;
+                                    DocumentReference docRefToNewUser =
+                                        _firestore
+                                            .collection("Pengguna")
+                                            .doc(_userID);
                                     docRefToNewUser.set(widget.userData);
-                                    print('user berhasil terdaftar pada Database');
+                                    print(
+                                        'user berhasil terdaftar pada Database');
                                     Navigator.pop(context);
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => RegisterSuccess()),
+                                          builder: (context) =>
+                                              RegisterSuccess()),
                                     );
                                   }
                                 });
@@ -140,11 +148,12 @@ class _OtpPhoneState extends State<OtpPhone> {
                                 _showMyDialog();
                               }
                             },
-                            height: 60,
-                            minWidth: size.width,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(size.width, 60),
+                              primary: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                             child: Text(
                               'KIRIM',
@@ -171,11 +180,14 @@ class _OtpPhoneState extends State<OtpPhone> {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "+62${widget.userData['Telepon']}",
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
+          await FirebaseAuth.instance
+              .signInWithCredential(credential)
+              .then((value) async {
             if (value.user != null) {
               print('user terdaftar di Auth secara otomatis');
               _userID = FirebaseAuth.instance.currentUser.uid;
-              DocumentReference docRefToNewUser = _firestore.collection("Pengguna").doc(_userID);
+              DocumentReference docRefToNewUser =
+                  _firestore.collection("Pengguna").doc(_userID);
               docRefToNewUser.set(widget.userData);
               print('user berhasil terdaftar pada Database');
               Navigator.pop(context);

@@ -1,4 +1,4 @@
- import 'package:auto_size_text/auto_size_text.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -102,7 +102,7 @@ class _LoginOtpState extends State<LoginOtp> {
                           SizedBox(
                             height: 25.0,
                           ),
-                          FlatButton(
+                          TextButton(
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -111,27 +111,35 @@ class _LoginOtpState extends State<LoginOtp> {
                               print(_InVerificationCode);
                               print("Trying to compare verification ID");
                               try {
-                                await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode,smsCode: _InVerificationCode))
+                                await FirebaseAuth.instance
+                                    .signInWithCredential(
+                                        PhoneAuthProvider.credential(
+                                            verificationId: _verificationCode,
+                                            smsCode: _InVerificationCode))
                                     .then((value) async {
-                                      if (value.user != null) {
-                                        print('user berhasil login');
-                                        Navigator.pop(context);
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => Home()));
+                                  if (value.user != null) {
+                                    print('user berhasil login');
+                                    Navigator.pop(context);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Home()));
                                   }
                                 });
                               } catch (e) {
                                 print(e);
-                                _scaffoldKey.currentState.showSnackBar(SnackBar( content:Text("Kode verifikasi tidak cocok!")));
+                                _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                    content:
+                                        Text("Kode verifikasi tidak cocok!")));
                                 Navigator.of(context).pop();
                               }
                             },
-                            height: 60,
-                            minWidth: size.width,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(size.width, 60),
+                              primary: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                             child: Text(
                               'KIRIM',
@@ -165,8 +173,7 @@ class _LoginOtpState extends State<LoginOtp> {
               print('user Auth secara otomatis');
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => Home()),
+                MaterialPageRoute(builder: (context) => Home()),
               );
             }
           });

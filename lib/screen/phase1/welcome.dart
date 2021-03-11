@@ -36,7 +36,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-FractionallySizedBox(
+                FractionallySizedBox(
                   widthFactor: 1,
                   child: AutoSizeText(
                     'PAKASEP',
@@ -44,8 +44,7 @@ FractionallySizedBox(
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     presetFontSizes: [64, 56, 48],
-
-                    ),
+                  ),
                 ),
                 FractionallySizedBox(
                   widthFactor: 0.9,
@@ -79,18 +78,19 @@ FractionallySizedBox(
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: size.height * 0.01, horizontal: 20),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PraRegistration1()),
                   );
                 },
-                height: size.height * 0.07,
-                minWidth: size.width * 0.75,
-                color: Color(0xffEBEAEC),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                style: TextButton.styleFrom(
+                  minimumSize: Size(size.width * 0.75, size.height * 0.07),
+                  primary: Color(0xffEBEAEC),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 child: Text(
                   'MULAI SEKARANG',

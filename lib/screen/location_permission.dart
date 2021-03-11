@@ -46,9 +46,7 @@ class _LocationPermissionState extends State<LocationPermission> {
                 SizedBox(
                   height: 20,
                 ),
-                FlatButton(
-                  height: 60,
-                  minWidth: size.width,
+                TextButton(
                   onPressed: () {
                     _getUserLocation();
                     Navigator.push(
@@ -56,9 +54,13 @@ class _LocationPermissionState extends State<LocationPermission> {
                       MaterialPageRoute(builder: (context) => Intro()),
                     );
                   },
-                  color: Theme.of(context).primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                  style: TextButton.styleFrom(
+                    minimumSize: Size(size.width, 60),
+                    onSurface: Colors.white,
+                    primary: Theme.of(context).primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   child: Text(
                     'AKTIFKAN',

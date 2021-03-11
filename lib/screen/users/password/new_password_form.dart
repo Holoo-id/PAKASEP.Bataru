@@ -190,7 +190,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () {
                             if (!_formKey.currentState.validate()) {
                               return;
@@ -203,11 +203,12 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                                   builder: (context) => NewPasswordComplete()),
                             );
                           },
-                          height: 60,
-                          minWidth: size.width,
-                          color: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                          style: TextButton.styleFrom(
+                            minimumSize: Size(size.width, 60),
+                            primary: Theme.of(context).primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                           ),
                           child: Text(
                             'KIRIM',

@@ -71,15 +71,16 @@ class _PraRegistration3State extends State<PraRegistration3> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 25),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed('/intro');
                     },
-                    height: 60,
-                    minWidth: size.width,
-                    color: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: Text(
                       'DAFTAR',

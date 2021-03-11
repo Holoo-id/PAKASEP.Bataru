@@ -139,10 +139,11 @@ class _LoginFormState extends State<LoginForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text(
+                      AutoSizeText(
                         'Masuk Akun',
                         textAlign: TextAlign.center,
                         style: title900Dark,
+                        presetFontSizes: [28, 25, 20, 15, 10, 5],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +157,7 @@ class _LoginFormState extends State<LoginForm> {
                           SizedBox(
                             height: 55.0,
                           ),
-                          FlatButton(
+                          TextButton(
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -189,11 +190,12 @@ class _LoginFormState extends State<LoginForm> {
                                 }
                               });
                             },
-                            height: 60,
-                            minWidth: size.width,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(size.width, 60),
+                              primary: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
                             child: Text(
                               'MASUK',

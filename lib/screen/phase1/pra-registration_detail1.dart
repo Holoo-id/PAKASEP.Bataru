@@ -70,7 +70,7 @@ class _PraRegistration1State extends State<PraRegistration1> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 25),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -78,11 +78,13 @@ class _PraRegistration1State extends State<PraRegistration1> {
                             builder: (context) => PraRegistration2()),
                       );
                     },
-                    height: 60,
-                    minWidth: size.width,
-                    color: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      onSurface: Colors.white,
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: Text(
                       'MENGERTI',

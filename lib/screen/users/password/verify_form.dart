@@ -100,7 +100,7 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         child: _buildKodeVerifikasi(),
                       ),
-                      FlatButton(
+                      TextButton(
                         onPressed: () {
                           if (!_formKey.currentState.validate()) {
                             return;
@@ -113,11 +113,12 @@ class _VerifyCodeFormState extends State<VerifyCodeForm> {
                                 builder: (context) => NewPasswordForm()),
                           );
                         },
-                        height: 60,
-                        minWidth: size.width,
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                        style: TextButton.styleFrom(
+                          minimumSize: Size(size.width, 60),
+                          primary: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
                         child: Text(
                           'KIRIM',

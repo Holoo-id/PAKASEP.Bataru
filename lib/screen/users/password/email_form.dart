@@ -68,82 +68,79 @@ class _EmailFormState extends State<EmailForm> {
         ),
       ),
       body: Background(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                height: size.height,
-                padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        child: Container(
+          alignment: Alignment.center,
+          height: size.height,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 25.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 50),
+                    child: AutoSizeText(
+                      'Lupa Kata Sandi?',
+                      textAlign: TextAlign.center,
+                      style: title900Dark,
+                      presetFontSizes: [28, 25, 20, 15, 10, 5],
+                    ),
+                  ),
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
+                      AutoSizeText(
+                        'Masukkan Alamat E-mail',
+                        textAlign: TextAlign.center,
+                        style: title600Dark,
+                        presetFontSizes: [23, 20, 15, 10, 5],
+                      ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         child: AutoSizeText(
-                          'Lupa Kata Sandi?',
+                          'Kode verifikasi akan muncul di nomor handphone  yang terdaftar',
                           textAlign: TextAlign.center,
-                          style: title900Dark,
-                          presetFontSizes: [28, 25, 20, 15, 10, 5],
+                          style: subtitle600Light2,
+                          presetFontSizes: [16, 15, 10, 5],
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AutoSizeText(
-                            'Masukkan Nomor Handphone',
-                            textAlign: TextAlign.center,
-                            style: title600Dark,
-                            // maxLines: 1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: _buildEmail(),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
+                          print(_email);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VerifyCodeForm()),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          minimumSize: Size(size.width, 60),
+                          primary: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          AutoSizeText(
-                            'Kode verifikasi akan muncul di nomor handphone  yang terdaftar',
-                            textAlign: TextAlign.center,
-                            style: subtitle600Light2,
-                            // maxLines: 2,
-                          ),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          _buildEmail(),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              if (!_formKey.currentState.validate()) {
-                                return;
-                              }
-                              _formKey.currentState.save();
-                              print(_email);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VerifyCodeForm()),
-                              );
-                            },
-                            height: 60,
-                            minWidth: size.width,
-                            color: Theme.of(context).primaryColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Text(
-                              'KIRIM',
-                              style: buttonTextLight,
-                            ),
-                          ),
-                        ],
+                        ),
+                        child: Text(
+                          'KIRIM',
+                          style: buttonTextLight,
+                        ),
                       ),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

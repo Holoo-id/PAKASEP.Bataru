@@ -491,7 +491,7 @@ class _UnitDetailState extends State<UnitDetail> {
                 buttonHeight: 48,
                 buttonMinWidth: size.width * 0.3,
                 children: [
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -499,40 +499,44 @@ class _UnitDetailState extends State<UnitDetail> {
                             builder: (context) => KprCalcSimulation()),
                       );
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).primaryColor,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
+                      primary: Colors.white,
+                      onPrimary: Theme.of(context).primaryColor,
                     ),
-                    color: Colors.white,
                     child: AutoSizeText(
                       'Simulasi KPR',
                       textAlign: TextAlign.center,
-                      // maxLines: 1,
                       style: buttonTextDark,
                     ),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FilingStatus()),
                       );
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).primaryColor,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
+                      primary: Theme.of(context).primaryColor,
+                      onPrimary: Colors.white,
                     ),
-                    color: Theme.of(context).primaryColor,
                     child: AutoSizeText(
                       'Ajukan',
                       textAlign: TextAlign.center,
-                      // maxLines: 1,
                       style: buttonTextLight,
                     ),
                   ),

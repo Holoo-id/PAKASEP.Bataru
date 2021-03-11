@@ -97,7 +97,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () async {
                       final pickedFile = await ImagePicker()
                           .getImage(source: ImageSource.camera);
@@ -147,11 +147,12 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         );
                       }
                     },
-                    height: 60,
-                    minWidth: size.width,
-                    color: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                    style: TextButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: Text(
                       'LANJUTKAN',

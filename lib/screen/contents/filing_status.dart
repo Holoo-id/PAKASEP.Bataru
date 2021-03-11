@@ -34,7 +34,7 @@ var _process = [
 ];
 
 class _FilingStatusState extends State<FilingStatus> {
-  bool _hasChoose = true;
+  bool _hasChoose = false;
 
   Widget _fillProcess() {
     List<Widget> list = new List<Widget>();
@@ -304,16 +304,19 @@ class _FilingStatusState extends State<FilingStatus> {
               textAlign: TextAlign.center,
             ),
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {},
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-              side: BorderSide(
-                width: 2,
-                color: Theme.of(context).primaryColor,
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+                side: BorderSide(
+                  width: 2,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
+              primary: Colors.white,
+              onPrimary: Theme.of(context).primaryColor,
             ),
-            color: Colors.white,
             child: AutoSizeText(
               'Pilih Rumah',
               textAlign: TextAlign.center,

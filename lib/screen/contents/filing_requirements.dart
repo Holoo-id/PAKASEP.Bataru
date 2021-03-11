@@ -145,7 +145,8 @@ class _FilingRequirementsState extends State<FilingRequirements> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: AutoSizeText.rich(
                   TextSpan(
                     children: <TextSpan>[
@@ -292,47 +293,51 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                 buttonHeight: 48,
                 buttonMinWidth: size.width * 0.4,
                 children: [
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return _buildContructionAlert(context);
                       },
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).primaryColor,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
+                      primary: Colors.white,
+                      onPrimary: Theme.of(context).primaryColor,
                     ),
-                    color: Colors.white,
                     child: AutoSizeText(
                       'Pilih Rumah',
                       textAlign: TextAlign.center,
-                      // maxLines: 1,
                       style: buttonTextDark,
                     ),
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return _buildContructionAlert(context);
                       },
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                      side: BorderSide(
-                        width: 2,
-                        color: Theme.of(context).primaryColor,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
+                      primary: Theme.of(context).primaryColor,
+                      onPrimary: Colors.white,
                     ),
-                    color: Theme.of(context).primaryColor,
                     child: AutoSizeText(
                       'Ajukan',
                       textAlign: TextAlign.center,
-                      // maxLines: 1,
                       style: buttonTextLight,
                     ),
                   ),

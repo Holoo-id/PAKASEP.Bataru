@@ -310,7 +310,7 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
               ])
             ],
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: () {
               pressed = true;
               double pokokPinjaman = (double.parse(_hargaRumahController.text) -
@@ -348,10 +348,13 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
                   _numberFormat.format(cicilan.round() * totalJangkaWaktu);
               _formKey.currentState.save();
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
+              primary: Theme.of(context).primaryColor,
+              onPrimary: Colors.white,
             ),
-            color: Theme.of(context).primaryColor,
             child: AutoSizeText(
               'Hitung',
               textAlign: TextAlign.center,

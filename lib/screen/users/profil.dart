@@ -463,7 +463,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
               )
             : Container(height: 0, width: 0),
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.pop(context);
@@ -591,7 +591,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: FlatButton(
+                    child: TextButton(
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -610,11 +610,12 @@ class _EditProfilFormState extends State<EditProfilForm> {
                               .doc(_userId);
                         }
                       },
-                      height: 60,
-                      minWidth: size.width,
-                      color: Theme.of(context).primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                      style: TextButton.styleFrom(
+                        minimumSize: Size(size.width, 60),
+                        primary: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                       child: Text(
                         'SIMPAN',
