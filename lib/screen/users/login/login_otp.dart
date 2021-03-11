@@ -16,7 +16,7 @@ class LoginOtp extends StatefulWidget {
 
 class _LoginOtpState extends State<LoginOtp> {
   String _verificationCode;
-  String _InVerificationCode;
+  String _inVerificationCode;
 
   Widget _buildKodeVerifikasi() {
     return TextFormField(
@@ -30,7 +30,7 @@ class _LoginOtpState extends State<LoginOtp> {
         }
       },
       onSaved: (String value) {
-        _InVerificationCode = value;
+        _inVerificationCode = value;
       },
       style: form200Light,
       decoration: InputDecoration(
@@ -108,14 +108,14 @@ class _LoginOtpState extends State<LoginOtp> {
                                 return;
                               }
                               _formKey.currentState.save();
-                              print(_InVerificationCode);
+                              print(_inVerificationCode);
                               print("Trying to compare verification ID");
                               try {
                                 await FirebaseAuth.instance
                                     .signInWithCredential(
                                         PhoneAuthProvider.credential(
                                             verificationId: _verificationCode,
-                                            smsCode: _InVerificationCode))
+                                            smsCode: _inVerificationCode))
                                     .then((value) async {
                                   if (value.user != null) {
                                     print('user berhasil login');

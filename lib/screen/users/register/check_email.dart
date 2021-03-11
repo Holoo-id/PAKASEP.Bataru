@@ -8,7 +8,6 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/utility/typhography.dart';
 
-import '../login/login_form.dart';
 
 class CheckEmail extends StatefulWidget {
   final Map<String, dynamic> userData;

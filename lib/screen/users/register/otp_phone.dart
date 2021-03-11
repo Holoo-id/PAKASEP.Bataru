@@ -19,7 +19,7 @@ class OtpPhone extends StatefulWidget {
 
 class _OtpPhoneState extends State<OtpPhone> {
   String _verificationCode;
-  String _InVerificationCode;
+  String _inVerificationCode;
   String _userID;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -35,7 +35,7 @@ class _OtpPhoneState extends State<OtpPhone> {
         }
       },
       onSaved: (String value) {
-        _InVerificationCode = value;
+        _inVerificationCode = value;
       },
       style: form200Light,
       decoration: InputDecoration(
@@ -113,14 +113,14 @@ class _OtpPhoneState extends State<OtpPhone> {
                                 return;
                               }
                               _formKey.currentState.save();
-                              print(_InVerificationCode);
+                              print(_inVerificationCode);
                               print("Trying to compare verification ID");
                               try {
                                 await FirebaseAuth.instance
                                     .signInWithCredential(
                                         PhoneAuthProvider.credential(
                                             verificationId: _verificationCode,
-                                            smsCode: _InVerificationCode))
+                                            smsCode: _inVerificationCode))
                                     .then((value) async {
                                   if (value.user != null) {
                                     print('user berhasil terdaftar pada Auth');

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -47,13 +45,13 @@ class _RegisterFormState extends State<RegisterForm> {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.name,
-      validator: (String nama_lengkap) {
-        if (nama_lengkap.isEmpty) {
+      validator: (String namaLengkap) {
+        if (namaLengkap.isEmpty) {
           return 'Nama lengkap harus diisi';
         }
       },
-      onChanged: (nama_lengkap) {
-        if (nama_lengkap.isEmpty) {
+      onChanged: (namaLengkap) {
+        if (namaLengkap.isEmpty) {
           setState(() {
             namaIcon = new Icon(
               Icons.error,
@@ -69,8 +67,8 @@ class _RegisterFormState extends State<RegisterForm> {
           });
         }
       },
-      onSaved: (String nama_lengkap) {
-        _namaLengkap = nama_lengkap;
+      onSaved: (String namaLengkap) {
+        _namaLengkap = namaLengkap;
       },
       style: form200Light,
       decoration: InputDecoration(
@@ -99,13 +97,13 @@ class _RegisterFormState extends State<RegisterForm> {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
-      validator: (String tempat_lahir) {
-        if (tempat_lahir.isEmpty) {
+      validator: (String tempatLahir) {
+        if (tempatLahir.isEmpty) {
           return 'Tempat Lahir harus diisi';
         }
       },
-      onChanged: (tempat_lahir) {
-        if (tempat_lahir.isEmpty) {
+      onChanged: (tempatLahir) {
+        if (tempatLahir.isEmpty) {
           setState(() {
             tempatLahirIcon = new Icon(
               Icons.error,
@@ -121,8 +119,8 @@ class _RegisterFormState extends State<RegisterForm> {
           });
         }
       },
-      onSaved: (String tempat_lahir) {
-        _tempatLahir = tempat_lahir;
+      onSaved: (String tempatLahir) {
+        _tempatLahir = tempatLahir;
       },
       style: form200Light,
       decoration: InputDecoration(
@@ -155,13 +153,13 @@ class _RegisterFormState extends State<RegisterForm> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.datetime,
           controller: _dateController,
-          validator: (String tanggal_lahir) {
-            if (tanggal_lahir.isEmpty) {
+          validator: (String tanggalLahir) {
+            if (tanggalLahir.isEmpty) {
               return 'Tanggal Lahir harus diisi';
             }
           },
-          onChanged: (tanggal_lahir) {
-            if (tanggal_lahir.isEmpty) {
+          onChanged: (tanggalLahir) {
+            if (tanggalLahir.isEmpty) {
               setState(() {
                 tanggalLahirIcon = new Icon(
                   Icons.error,
@@ -177,8 +175,8 @@ class _RegisterFormState extends State<RegisterForm> {
               });
             }
           },
-          onSaved: (String tanggal_lahir) {
-            _tanggalLahir = tanggal_lahir;
+          onSaved: (String tanggalLahir) {
+            _tanggalLahir = tanggalLahir;
           },
           style: form200Light,
           decoration: InputDecoration(
@@ -264,21 +262,21 @@ class _RegisterFormState extends State<RegisterForm> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
-      validator: (String kata_sandi) {
-        if (kata_sandi.isEmpty) {
+      validator: (String kataSandi) {
+        if (kataSandi.isEmpty) {
           return 'Kata sandi harus diisi';
         }
-        if (kata_sandi.length < 5) {
+        if (kataSandi.length < 5) {
           return 'Kata sandi terlalu pendek';
         }
         if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$')
-            .hasMatch(kata_sandi)) {
+            .hasMatch(kataSandi)) {
           return 'Harus terdapat angka dan alfabet';
         }
       },
-      onChanged: (kata_sandi) {
+      onChanged: (kataSandi) {
         if (!RegExp(r'^(?=.*[0-9])(?=.*[a-zA-Z])\w{5,}$')
-            .hasMatch(kata_sandi)) {
+            .hasMatch(kataSandi)) {
           setState(() {
             passIcon = new Icon(
               Icons.error,
@@ -293,7 +291,7 @@ class _RegisterFormState extends State<RegisterForm> {
             );
           });
         }
-        _kataSandi = kata_sandi;
+        _kataSandi = kataSandi;
       },
       style: form200Light,
       decoration: InputDecoration(

@@ -11,8 +11,7 @@ import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import '../../utility/typhography.dart';
 
 class UnitDetail extends StatefulWidget {
-  @override
-  String idUnit;
+  final String idUnit;
   UnitDetail({Key key, this.idUnit}) : super(key: key);
   _UnitDetailState createState() => _UnitDetailState();
 }
@@ -125,7 +124,7 @@ class _UnitDetailState extends State<UnitDetail> {
                         );
                       }).toList(),
                       onImageTap: (index) {
-                        var image_id = index + 1;
+                        // var image_id = index + 1;
                         return showDialog(
                           context: context,
                           builder: (context) {

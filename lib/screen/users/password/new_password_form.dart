@@ -22,19 +22,19 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.visiblePassword,
       obscureText: true,
-      validator: (String kata_sandi) {
-        if (kata_sandi.isEmpty) {
+      validator: (String kataSandi) {
+        if (kataSandi.isEmpty) {
           return 'Kata sandi harus diisi';
         }
-        if (kata_sandi.length < 5) {
+        if (kataSandi.length < 5) {
           return 'Kata sandi terlalu pendek';
         }
         // if (!RegExp(r"^(?=.*?[0-9])$").hasMatch(value)) {
         //   return 'Setidaknya terdapat 1 digit angka';
         // }
       },
-      onChanged: (kata_sandi) {
-        if (kata_sandi.length > 5) {
+      onChanged: (kataSandi) {
+        if (kataSandi.length > 5) {
           setState(() {
             passIcon = new Icon(
               Icons.check,
@@ -49,7 +49,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
             );
           });
         }
-        _kataSandi = kata_sandi;
+        _kataSandi = kataSandi;
       },
       style: form200Light,
       decoration: InputDecoration(
