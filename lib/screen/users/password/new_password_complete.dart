@@ -33,14 +33,14 @@ class _NewPasswordCompleteState extends State<NewPasswordComplete> {
                 style: subtitle600Light2,
                 presetFontSizes: [16, 15, 10, 5],
               ),
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginForm()),
                   );
                 },
-                style: TextButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                   minimumSize: Size(size.width, 60),
                   primary: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(

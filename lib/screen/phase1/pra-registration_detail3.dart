@@ -69,11 +69,11 @@ class _PraRegistration3State extends State<PraRegistration3> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 25),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed('/intro');
                     },
-                    style: TextButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
                       minimumSize: Size(size.width, 60),
                       primary: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

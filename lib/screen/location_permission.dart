@@ -26,45 +26,47 @@ class _LocationPermissionState extends State<LocationPermission> {
     return Scaffold(
       body: WaveBackground(
         child: Center(
-          // heightFactor: 4.125,
+          heightFactor: 1,
           child: Container(
+            alignment: Alignment.center,
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                AutoSizeText(
                   'Akses Lokasi',
                   style: title600Dark,
+                  presetFontSizes: [25, 20, 15, 10, 5],
                 ),
                 AutoSizeText(
                   'Aktifkan setting lokasi di handphone anda sebelum mulai',
                   textAlign: TextAlign.center,
                   style: subtitle600Light2,
-                  maxLines: 2,
+                  presetFontSizes: [16, 15, 10, 5],
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                  onPressed: () {
-                    _getUserLocation();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Intro()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    minimumSize: Size(size.width, 60),
-                    onSurface: Colors.white,
-                    primary: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _getUserLocation();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Intro()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      onSurface: Colors.white,
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                  ),
-                  child: Text(
-                    'AKTIFKAN',
-                    style: buttonTextLight,
+                    child: Text(
+                      'AKTIFKAN',
+                      style: buttonTextLight,
+                    ),
                   ),
                 ),
               ],

@@ -98,6 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                         style: title900Light,
                                         textAlign: TextAlign.center,
                                         maxLines: 1,
+                                        wrapWords: false,
                                         presetFontSizes: [64, 56, 48],
                                       ),
                                     ),
@@ -240,7 +241,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Padding(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Flexible(
                                 child: FractionallySizedBox(
@@ -306,11 +307,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: size.height * 0.01, horizontal: 20),
-                        child: TextButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed('/intro');
                           },
-                          style: TextButton.styleFrom(
+                          style: ElevatedButton.styleFrom(
                             minimumSize:
                                 Size(size.width * 0.75, size.height * 0.07),
                             onSurface: Colors.black87,

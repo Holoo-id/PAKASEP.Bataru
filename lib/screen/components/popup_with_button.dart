@@ -16,7 +16,7 @@ Future<void> popupWithButton(BuildContext context, String title, String message,
           ),
         ),
         actions: <Widget>[
-          TextButton(
+          ElevatedButton(
             child: Text('OK'),
             onPressed: () {
               Navigator.push(

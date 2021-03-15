@@ -39,20 +39,23 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
       body: Background(
         child: Container(
           height: size.height,
-          padding: EdgeInsets.all(20),
           alignment: Alignment.center,
           child: SingleChildScrollView(
+            padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // mainAxisSize:,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Text(
-                    'Verifikasi Foto KTP',
-                    style: title900Dark,
-                    textAlign: TextAlign.center,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.92,
+                    child: AutoSizeText(
+                      'Verifikasi Foto KTP',
+                      textAlign: TextAlign.center,
+                      style: title900Dark,
+                      presetFontSizes: [28, 25, 20, 15, 10, 5],
+                    ),
                   ),
                 ),
                 Flexible(
@@ -92,12 +95,12 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                     ),
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    presetFontSizes: [16, 12, 8],
+                    presetFontSizes: [16, 15, 10, 5],
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () async {
                       final pickedFile = await ImagePicker()
                           .getImage(source: ImageSource.camera);
@@ -147,7 +150,7 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                         );
                       }
                     },
-                    style: TextButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
                       minimumSize: Size(size.width, 60),
                       primary: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

@@ -114,7 +114,7 @@ class _EmailFormState extends State<EmailForm> {
                         padding: const EdgeInsets.symmetric(vertical: 25),
                         child: _buildEmail(),
                       ),
-                      TextButton(
+                      ElevatedButton(
                         onPressed: () {
                           if (!_formKey.currentState.validate()) {
                             return;
@@ -127,7 +127,7 @@ class _EmailFormState extends State<EmailForm> {
                                 builder: (context) => VerifyCodeForm()),
                           );
                         },
-                        style: TextButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
                           minimumSize: Size(size.width, 60),
                           primary: Theme.of(context).primaryColor,
                           shape: RoundedRectangleBorder(

@@ -78,14 +78,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(
                   vertical: size.height * 0.01, horizontal: 20),
-              child: TextButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => PraRegistration1()),
                   );
                 },
-                style: TextButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                   minimumSize: Size(size.width * 0.75, size.height * 0.07),
                   primary: Color(0xffEBEAEC),
                   shape: RoundedRectangleBorder(

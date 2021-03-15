@@ -104,7 +104,7 @@ class _LoginOtpState extends State<LoginOtp> {
                           SizedBox(
                             height: 25.0,
                           ),
-                          TextButton(
+                          ElevatedButton(
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -136,7 +136,7 @@ class _LoginOtpState extends State<LoginOtp> {
                                 Navigator.of(context).pop();
                               }
                             },
-                            style: TextButton.styleFrom(
+                            style: ElevatedButton.styleFrom(
                               minimumSize: Size(size.width, 60),
                               primary: Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(

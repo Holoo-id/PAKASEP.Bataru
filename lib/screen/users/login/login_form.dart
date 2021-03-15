@@ -163,7 +163,7 @@ class _LoginFormState extends State<LoginForm> {
                           SizedBox(
                             height: 55.0,
                           ),
-                          TextButton(
+                          ElevatedButton(
                             onPressed: () async {
                               if (!_formKey.currentState.validate()) {
                                 return;
@@ -196,7 +196,7 @@ class _LoginFormState extends State<LoginForm> {
                                 }
                               });
                             },
-                            style: TextButton.styleFrom(
+                            style: ElevatedButton.styleFrom(
                               minimumSize: Size(size.width, 60),
                               primary: Theme.of(context).primaryColor,
                               shape: RoundedRectangleBorder(

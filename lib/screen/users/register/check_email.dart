@@ -8,7 +8,6 @@ import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/wave_background.dart';
 import 'package:pakasep/utility/typhography.dart';
 
-
 class CheckEmail extends StatefulWidget {
   final Map<String, dynamic> userData;
   const CheckEmail({Key key, this.userData}) : super(key: key);
@@ -93,7 +92,7 @@ class _CheckEmailState extends State<CheckEmail> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.popUntil(
                           context, ModalRoute.withName('/intro'));
@@ -102,7 +101,7 @@ class _CheckEmailState extends State<CheckEmail> {
                       //   MaterialPageRoute(builder: (context) => LoginForm()),
                       // );
                     },
-                    style: TextButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
                       minimumSize: Size(size.width, 60),
                       primary: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

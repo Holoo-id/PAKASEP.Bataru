@@ -722,7 +722,6 @@ class _RegisterFormState extends State<RegisterForm> {
           height: size.height,
           alignment: Alignment.center,
           child: SingleChildScrollView(
-            // height: size.height,
             padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
             child: Form(
               key: _formKey,
@@ -732,10 +731,11 @@ class _RegisterFormState extends State<RegisterForm> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
-                    child: Text(
+                    child: AutoSizeText(
                       'Isi Data Diri',
                       textAlign: TextAlign.center,
                       style: title900Dark,
+                      presetFontSizes: [28, 25, 20, 15, 10, 5],
                     ),
                   ),
                   _buildTelepon(),
@@ -798,7 +798,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       ),
                     ],
                   ),
-                  TextButton(
+                  ElevatedButton(
                     onPressed: _submitable()
                         ? () async {
                             if (!_formKey.currentState.validate()) {
@@ -859,7 +859,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             }
                           }
                         : null,
-                    style: TextButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
                       minimumSize: Size(size.width, 60),
                       primary: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

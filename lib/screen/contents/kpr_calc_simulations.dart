@@ -310,55 +310,59 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
               ])
             ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              pressed = true;
-              double pokokPinjaman = (double.parse(_hargaRumahController.text) -
-                  double.parse(_uangMukaController.text));
-              int totalJangkaWaktu =
-                  int.parse(_jangkaWaktuController.text) * 12;
-              double angsuranPerbulan = pokokPinjaman *
-                  double.parse(_sukuBungaEfektifController.text) /
-                  100 *
-                  double.parse(_jangkaWaktuController.text) /
-                  totalJangkaWaktu;
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ElevatedButton(
+              onPressed: () {
+                pressed = true;
+                double pokokPinjaman = (double.parse(_hargaRumahController.text) -
+                    double.parse(_uangMukaController.text));
+                int totalJangkaWaktu =
+                    int.parse(_jangkaWaktuController.text) * 12;
+                double angsuranPerbulan = pokokPinjaman *
+                    double.parse(_sukuBungaEfektifController.text) /
+                    100 *
+                    double.parse(_jangkaWaktuController.text) /
+                    totalJangkaWaktu;
 
-              var intr = int.parse(_sukuBungaEfektifController.text) / 1200;
-              // var cicilan = (int.parse(_hargaRumahController.text) * intr / (1 - ( pow(1 / (1 + intr), totalJangkaWaktu))));
-              var cicilan = (int.parse(_hargaRumahController.text) -
-                      int.parse(_uangMukaController.text)) *
-                  intr /
-                  (1 - (pow(1 / (1 + intr), totalJangkaWaktu)));
+                var intr = int.parse(_sukuBungaEfektifController.text) / 1200;
+                // var cicilan = (int.parse(_hargaRumahController.text) * intr / (1 - ( pow(1 / (1 + intr), totalJangkaWaktu))));
+                var cicilan = (int.parse(_hargaRumahController.text) -
+                        int.parse(_uangMukaController.text)) *
+                    intr /
+                    (1 - (pow(1 / (1 + intr), totalJangkaWaktu)));
 
-              _detailPokokPinjamanController.text = "Rp" +
-                  _numberFormat.format(int.parse(_hargaRumahController.text) -
-                      int.parse(_uangMukaController.text));
-              // .toStringAsFixed(0);
-              _detailAngsuranPerbulanController.text =
-                  "Rp" + _numberFormat.format(cicilan.round());
-              _detailUangMukaController.text = "Rp" +
-                  _numberFormat.format(int.parse(_uangMukaController.text));
-              _detailHargaRumahController.text = "Rp" +
-                  _numberFormat.format(int.parse(_hargaRumahController.text));
-              _detailTotalBungaController.text = "Rp" +
-                  _numberFormat.format(
-                      (cicilan.round() * totalJangkaWaktu) - pokokPinjaman);
-              // .toStringAsFixed(0);
-              _detailTotalPinjamanController.text = "Rp" +
-                  _numberFormat.format(cicilan.round() * totalJangkaWaktu);
-              _formKey.currentState.save();
-            },
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5),
+                _detailPokokPinjamanController.text = "Rp" +
+                    _numberFormat.format(int.parse(_hargaRumahController.text) -
+                        int.parse(_uangMukaController.text));
+                // .toStringAsFixed(0);
+                _detailAngsuranPerbulanController.text =
+                    "Rp" + _numberFormat.format(cicilan.round());
+                _detailUangMukaController.text = "Rp" +
+                    _numberFormat.format(int.parse(_uangMukaController.text));
+                _detailHargaRumahController.text = "Rp" +
+                    _numberFormat.format(int.parse(_hargaRumahController.text));
+                _detailTotalBungaController.text = "Rp" +
+                    _numberFormat.format(
+                        (cicilan.round() * totalJangkaWaktu) - pokokPinjaman);
+                // .toStringAsFixed(0);
+                _detailTotalPinjamanController.text = "Rp" +
+                    _numberFormat.format(cicilan.round() * totalJangkaWaktu);
+                _formKey.currentState.save();
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  primary: Theme.of(context).primaryColor,
+                  onPrimary: Colors.white,
+                  minimumSize:
+                      Size(MediaQuery.of(context).size.width * 0.44, 56)),
+              child: AutoSizeText(
+                'Hitung',
+                textAlign: TextAlign.center,
+                style: buttonTextLight,
               ),
-              primary: Theme.of(context).primaryColor,
-              onPrimary: Colors.white,
-            ),
-            child: AutoSizeText(
-              'Hitung',
-              textAlign: TextAlign.center,
-              style: buttonTextLight,
             ),
           ),
         ],
@@ -440,10 +444,13 @@ class _KprCalcSimulationState extends State<KprCalcSimulation> {
           child: Column(
             children: [
               _formInput(),
-              AutoSizeText(
-                'Hasil Perhitungan',
-                style: title600Dark,
-                presetFontSizes: [24, 20, 15, 10, 5],
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: AutoSizeText(
+                  'Hasil Perhitungan',
+                  style: title600Dark,
+                  presetFontSizes: [24, 20, 15, 10, 5],
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -309,7 +309,6 @@ class _FilingRequirementsState extends State<FilingRequirements> {
                         ),
                       ),
                       primary: Colors.white,
-                      onPrimary: Theme.of(context).primaryColor,
                     ),
                     child: AutoSizeText(
                       'Pilih Rumah',

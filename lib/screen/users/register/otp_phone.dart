@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
 import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
@@ -69,109 +68,100 @@ class _OtpPhoneState extends State<OtpPhone> {
     return Scaffold(
       key: _scaffoldKey,
       body: Background(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              BackOnlyAppbar(child: null),
-              Container(
-                height: size.height - 115,
-                padding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-                child: Form(
+        child: Container(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 25.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: AutoSizeText(
+                    'Cek Ponsel Anda!',
+                    textAlign: TextAlign.center,
+                    style: title900Dark,
+                    presetFontSizes: [28, 25, 20, 15, 10, 5],
+                  ),
+                ),
+                Form(
                   key: _formKey,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       AutoSizeText(
-                        'Cek Ponsel Anda!',
+                        'Masukkan Kode Verifikasi',
                         textAlign: TextAlign.center,
-                        style: title900Dark,
-                        maxLines: 1,
+                        style: title600Dark,
+                        presetFontSizes: [23, 20, 15, 10, 5],
                       ),
-                      Column(
-                        children: <Widget>[
-                          AutoSizeText(
-                            'Masukkan Kode Verifikasi',
-                            textAlign: TextAlign.center,
-                            style: title600Dark,
-                            maxLines: 1,
-                          ),
-                          AutoSizeText(
-                            'Kode verifikasi dikirim via SMS digunakan untuk menkonfirmasi akun anda',
-                            textAlign: TextAlign.center,
-                            style: subtitle600Light2,
-                            maxLines: 2,
-                          ),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          _buildKodeVerifikasi(),
-                          SizedBox(
-                            height: 25.0,
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              if (!_formKey.currentState.validate()) {
-                                return;
-                              }
-                              _formKey.currentState.save();
-                              print(_inVerificationCode);
-                              print("Trying to compare verification ID");
-                              try {
-                                await FirebaseAuth.instance
-                                    .signInWithCredential(
-                                        PhoneAuthProvider.credential(
-                                            verificationId: _verificationCode,
-                                            smsCode: _inVerificationCode))
-                                    .then((value) async {
-                                  if (value.user != null) {
-                                    print('user berhasil terdaftar pada Auth');
-                                    _userID =
-                                        FirebaseAuth.instance.currentUser.uid;
-                                    DocumentReference docRefToNewUser =
-                                        _firestore
-                                            .collection("Pengguna")
-                                            .doc(_userID);
-                                    docRefToNewUser.set(widget.userData);
-                                    print(
-                                        'user berhasil terdaftar pada Database');
-                                    Navigator.pop(context);
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              RegisterSuccess()),
-                                    );
-                                  }
-                                });
-                              } catch (e) {
-                                FocusScope.of(context).unfocus();
-                                print(e);
-                                _showMyDialog();
-                              }
-                            },
-                            style: TextButton.styleFrom(
-                              minimumSize: Size(size.width, 60),
-                              primary: Theme.of(context).primaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                            ),
-                            child: Text(
-                              'KIRIM',
-                              style: buttonTextLight,
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: AutoSizeText(
+                          'Kode verifikasi dikirim via SMS digunakan untuk menkonfirmasi akun anda',
+                          textAlign: TextAlign.center,
+                          style: subtitle600Light2,
+                          presetFontSizes: [16, 15, 10, 5],
+                        ),
                       ),
-                      SizedBox(
-                        height: 1,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: _buildKodeVerifikasi(),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
+                          print(_inVerificationCode);
+                          print("Trying to compare verification ID");
+                          try {
+                            await FirebaseAuth.instance
+                                .signInWithCredential(
+                                    PhoneAuthProvider.credential(
+                                        verificationId: _verificationCode,
+                                        smsCode: _inVerificationCode))
+                                .then((value) async {
+                              if (value.user != null) {
+                                print('user berhasil terdaftar pada Auth');
+                                _userID = FirebaseAuth.instance.currentUser.uid;
+                                DocumentReference docRefToNewUser = _firestore
+                                    .collection("Pengguna")
+                                    .doc(_userID);
+                                docRefToNewUser.set(widget.userData);
+                                print('user berhasil terdaftar pada Database');
+                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RegisterSuccess()),
+                                );
+                              }
+                            });
+                          } catch (e) {
+                            FocusScope.of(context).unfocus();
+                            print(e);
+                            _showMyDialog();
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(size.width, 60),
+                          primary: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        child: Text(
+                          'KIRIM',
+                          style: buttonTextLight,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -241,7 +231,7 @@ class _OtpPhoneState extends State<OtpPhone> {
             ),
           ),
           actions: <Widget>[
-            TextButton(
+            ElevatedButton(
               child: Text('Oke'),
               onPressed: () {
                 Navigator.pushReplacement(

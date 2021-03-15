@@ -30,26 +30,25 @@ class _IntroState extends State<Intro> {
                   'Cari Rumah Tak Lagi Susah',
                   style: title600Dark,
                   textAlign: TextAlign.center,
-                  maxLines: 1,
+                  presetFontSizes: [25, 20, 15, 10, 5],
                 ),
                 AutoSizeText(
                   'Telusuri berbagai macam pilihan perumahan dari berbagai developer',
                   style: subtitle600Light2,
                   textAlign: TextAlign.center,
-                  maxLines: 2,
-                  presetFontSizes: [16, 12, 8],
+                  presetFontSizes: [16, 15, 10, 5],
                 ),
                 SizedBox(
                   height: 60.0,
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterForm()),
                     );
                   },
-                  style: TextButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                     minimumSize: Size(size.width, 60),
                     onSurface: Colors.white,
                     primary: Theme.of(context).primaryColor,
@@ -77,7 +76,7 @@ class _IntroState extends State<Intro> {
                       style: linkTextLight,
                       textAlign: TextAlign.center,
                       maxLines: 1,
-                      presetFontSizes: [14, 12, 8],
+                      presetFontSizes: [14, 10, 5],
                     ),
                   ),
                 ),

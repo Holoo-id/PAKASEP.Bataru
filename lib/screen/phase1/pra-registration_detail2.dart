@@ -70,7 +70,7 @@ class _PraRegistration2State extends State<PraRegistration2> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10, top: 25),
-                  child: TextButton(
+                  child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -78,7 +78,7 @@ class _PraRegistration2State extends State<PraRegistration2> {
                             builder: (context) => PraRegistration3()),
                       );
                     },
-                    style: TextButton.styleFrom(
+                    style: ElevatedButton.styleFrom(
                       minimumSize: Size(size.width, 60),
                       primary: Theme.of(context).primaryColor,
                       shape: RoundedRectangleBorder(

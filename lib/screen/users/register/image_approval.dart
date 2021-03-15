@@ -54,7 +54,7 @@ class _ImageApprovalState extends State<ImageApproval> {
                     ),
                   ],
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -62,7 +62,7 @@ class _ImageApprovalState extends State<ImageApproval> {
                           builder: (context) => RegisterSuccess()),
                     );
                   },
-                  style: TextButton.styleFrom(
+                  style: ElevatedButton.styleFrom(
                     minimumSize: Size(size.width, 60),
                     primary: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(

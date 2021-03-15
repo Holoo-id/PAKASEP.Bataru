@@ -193,7 +193,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 25),
-                        child: TextButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             if (!_formKey.currentState.validate()) {
                               return;
@@ -206,7 +206,7 @@ class _NewPasswordFormState extends State<NewPasswordForm> {
                                   builder: (context) => NewPasswordComplete()),
                             );
                           },
-                          style: TextButton.styleFrom(
+                          style: ElevatedButton.styleFrom(
                             minimumSize: Size(size.width, 60),
                             primary: Theme.of(context).primaryColor,
                             shape: RoundedRectangleBorder(

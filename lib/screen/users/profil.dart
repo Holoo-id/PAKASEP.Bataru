@@ -477,7 +477,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
               )
             : Container(height: 0, width: 0),
         actions: [
-          TextButton(
+          ElevatedButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.pop(context);
@@ -605,7 +605,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: TextButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -628,9 +628,10 @@ class _EditProfilFormState extends State<EditProfilForm> {
 
                         }
                       },
-                      style: TextButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
                         minimumSize: Size(size.width, 60),
                         primary: Theme.of(context).primaryColor,
+                        onSurface: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
