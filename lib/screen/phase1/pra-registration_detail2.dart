@@ -40,7 +40,6 @@ class _PraRegistration2State extends State<PraRegistration2> {
                     style: title900Dark,
                     textAlign: TextAlign.center,
                     presetFontSizes: [28, 25, 20],
-                    maxLines: 2,
                   ),
                 ),
                 Column(
@@ -53,7 +52,6 @@ class _PraRegistration2State extends State<PraRegistration2> {
                         'Keuntungan Mengikuti Tahap Pra-Registrasi?',
                         textAlign: TextAlign.center,
                         style: title600Dark,
-                        maxLines: 2,
                         presetFontSizes: [25, 20, 15],
                       ),
                     ),

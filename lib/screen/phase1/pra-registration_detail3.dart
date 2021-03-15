@@ -39,7 +39,6 @@ class _PraRegistration3State extends State<PraRegistration3> {
                     style: title900Dark,
                     textAlign: TextAlign.center,
                     presetFontSizes: [28, 25, 20],
-                    maxLines: 2,
                   ),
                 ),
                 Column(
@@ -52,14 +51,13 @@ class _PraRegistration3State extends State<PraRegistration3> {
                         ' Kapan Tahap Pra-Registrasi Selesai?',
                         textAlign: TextAlign.center,
                         style: title600Dark,
-                        maxLines: 2,
                         presetFontSizes: [25, 20, 15],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: AutoSizeText(
-                        'Akan ada tahap registrasi setelah tahap ini. Tahap registrasi akan diberitahukan lewat aplikasi maupun oleh tim admin PAKASEP ke nomor handphone yang anda daftarkan.',
+                        'Akan ada tahap registrasi setelah tahap ini. Tahap registrasi akan diberitahukan lewat aplikasi maupun oleh tim admin PAKASEP ke nomor handphone yang terdaftar.',
                         textAlign: TextAlign.center,
                         style: subtitle600Light2,
                         presetFontSizes: [16, 15, 10],
