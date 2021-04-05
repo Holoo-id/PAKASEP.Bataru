@@ -83,23 +83,33 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                           text: 'Klik ',
                         ),
                         TextSpan(
+                          text: 'AMBIL GAMBAR ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text:
+                              'untuk pengambilan foto KTP dan mengambil ulang bila merasa foto kurang jelas. Dan klik ',
+                        ),
+                        TextSpan(
                           text: 'LANJUTKAN ',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         TextSpan(
-                          text: 'untuk pengambilan foto KTP.',
+                          text: 'untuk melanjutkan proses pendaftaran.',
                         ),
                       ],
                     ),
                     textAlign: TextAlign.center,
-                    maxLines: 2,
                     presetFontSizes: [16, 15, 10, 5],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: ElevatedButton(
                     onPressed: () async {
                       final pickedFile = await ImagePicker()
@@ -141,6 +151,28 @@ class _KtpPhotoPageState extends State<KtpPhotoPage> {
                               builder: (context) =>
                                   KtpPhotoPage(userData: widget.userData)),
                         );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(size.width, 60),
+                      primary: Theme.of(context).primaryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: Text(
+                      'AMBIL GAMBAR',
+                      style: buttonTextLight,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_imageFile == null) {
+                        return null;
                       } else {
                         Navigator.pushReplacement(
                           context,

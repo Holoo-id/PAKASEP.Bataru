@@ -253,16 +253,6 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        FractionallySizedBox(
-                          widthFactor: 0.92,
-                          child: AutoSizeText(
-                            'Galeri Perumahan',
-                            textAlign: TextAlign.center,
-                            style: title900Dark,
-                            presetFontSizes: [28, 25, 20, 15, 10, 5],
-                            maxLines: 1,
-                          ),
-                        ),
                         GridView.count(
                           primary: false,
                           crossAxisSpacing: 25,
