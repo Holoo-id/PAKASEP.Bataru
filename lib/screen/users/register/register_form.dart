@@ -20,11 +20,16 @@ class _RegisterFormState extends State<RegisterForm> {
   String _alamat,
       _email,
       _kataSandi,
+      _kecamatan,
+      _kelurahan,
+      _kodePos,
+      _kota,
       _ktp,
       _namaLengkap,
       _npwp,
       _tanggalLahir,
       _telepon,
+      _tempatKerja,
       _tempatLahir;
   Map<String, dynamic> _registeringUserData;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -37,7 +42,12 @@ class _RegisterFormState extends State<RegisterForm> {
   Icon npwpIcon = new Icon(null);
   Icon teleponIcon = new Icon(null);
   Icon alamatIcon = new Icon(null);
+  Icon kelurahanIcon = new Icon(null);
+  Icon kecamatanIcon = new Icon(null);
+  Icon kotaIcon = new Icon(null);
+  Icon posIcon = new Icon(null);
   Icon tempatLahirIcon = new Icon(null);
+  Icon tempatKerjaIcon = new Icon(null);
   Icon tanggalLahirIcon = new Icon(null);
   Icon emailIcon = new Icon(null);
 
@@ -250,6 +260,225 @@ class _RegisterFormState extends State<RegisterForm> {
         filled: true,
         suffixIcon: alamatIcon,
         fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+  Widget _buildKelurahan() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String kelurahan) {
+        if (kelurahan.isEmpty) {
+          return 'Kelurahan harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kelurahan) {
+        if (kelurahan.isEmpty) {
+          setState(() {
+            kelurahanIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kelurahanIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kelurahan) {
+        _kelurahan = kelurahan;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kelurahan',
+        labelText: 'Kelurahan',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+  Widget _buildKecamatan() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String kecamatan) {
+        if (kecamatan.isEmpty) {
+          return 'Kecamatan harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kecamatan) {
+        if (kecamatan.isEmpty) {
+          setState(() {
+            kecamatanIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kecamatanIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kecamatan) {
+        _kecamatan = kecamatan;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kecamatan',
+        labelText: 'Kecamatan',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+  Widget _buildKota() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String kota) {
+        if (kota.isEmpty) {
+          return 'Kota / Kabupaten harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kota) {
+        if (kota.isEmpty) {
+          setState(() {
+            kotaIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kotaIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kota) {
+        _kota = kota;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kabupaten / Kota',
+        labelText: 'Kabupaten / Kota',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+  Widget _buildKodePos() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.number,
+      maxLength: 5,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (String pos) {
+        if (pos.isEmpty) {
+          return 'Kode Pos harus diisi';
+        } else {
+          if (pos.length < 5) {
+            return 'Harus diisi 5 digit Kode Pos';
+          } else {
+            return null;
+          }
+        }
+      },
+      onChanged: (pos) {
+        if (pos.isEmpty) {
+          setState(() {
+            posIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            posIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+        _kodePos = pos;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kode Pos',
+        labelText: 'Kode Pos',
+        counterText: '',
+        labelStyle: form400Light,
+        filled: true,
+        fillColor: Color(0xffF2F3F7),
+        suffixIcon: ktpIcon,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
@@ -703,6 +932,60 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
+  Widget _buildTempatKerja() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      validator: (String tempatLahir) {
+        if (tempatLahir.isEmpty) {
+          return 'Tempat Bekerja harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (tempatKerja) {
+        if (tempatKerja.isEmpty) {
+          setState(() {
+            tempatKerjaIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            tempatKerjaIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String tempatKerja) {
+        _tempatKerja = tempatKerja;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Tempat Bekerja',
+        labelText: 'Tempat Bekerja',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: tempatLahirIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _agreedToTOS = false;
 
@@ -755,6 +1038,26 @@ class _RegisterFormState extends State<RegisterForm> {
                     height: 10,
                   ),
                   _buildAlamat(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKelurahan(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKecamatan(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKota(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildKodePos(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildTempatKerja(),
                   SizedBox(
                     height: 10,
                   ),

@@ -17,6 +17,10 @@ Future<void> popupWithButton(BuildContext context, String title, String message,
         ),
         actions: <Widget>[
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+              onPrimary: Colors.white,
+            ),
             child: Text('OK'),
             onPressed: () {
               Navigator.push(

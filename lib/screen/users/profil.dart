@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/components/popup_with_button.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/intro.dart';
 import 'package:pakasep/utility/typhography.dart';
 
@@ -15,30 +17,46 @@ class EditProfilForm extends StatefulWidget {
 }
 
 class _EditProfilFormState extends State<EditProfilForm> {
+  bool _disable = true;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   TextEditingController _dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   String _userId,
       _namaLengkap,
+      _email,
       _kataSandi,
       _npwp,
       _tempatLahir,
       _tanggalLahir,
-      _alamat;
-  String _telepon = "89012345678";
+      _alamat,
+      _kecamatan,
+      _kelurahan,
+      _kodePos,
+      _kota,
+      _ktp,
+      _tempatKerja,
+      _telepon;
 
   Icon namaIcon = new Icon(null);
   Icon tempatLahirIcon = new Icon(null);
   Icon tanggalLahirIcon = new Icon(null);
   Icon alamatIcon = new Icon(null);
+  Icon kelurahanIcon = new Icon(null);
+  Icon kecamatanIcon = new Icon(null);
+  Icon kotaIcon = new Icon(null);
+  Icon posIcon = new Icon(null);
   Icon passIcon = new Icon(null);
   Icon npwpIcon = new Icon(null);
   Icon teleponIcon = new Icon(null);
+  Icon ktpIcon = new Icon(null);
+  Icon tempatKerjaIcon = new Icon(null);
+  Icon emailIcon = new Icon(null);
 
   Widget _buildNamaLengkap() {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.name,
+      readOnly: _disable,
       validator: (String namaLengkap) {
         if (namaLengkap.isEmpty) {
           return 'Nama lengkap harus diisi';
@@ -150,6 +168,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.number,
       maxLength: 15,
+      readOnly: _disable,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
       ],
@@ -218,7 +237,8 @@ class _EditProfilFormState extends State<EditProfilForm> {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.phone,
-      enabled: false,
+      // enabled: _enable,
+      readOnly: _disable,
       initialValue: _telepon,
       inputFormatters: [
         FilteringTextInputFormatter.digitsOnly,
@@ -257,6 +277,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
         labelStyle: form400Light,
         filled: true,
         fillColor: Color(0xffF2F3F7),
+        // suffixIcon: teleponIcon,
         suffixIcon: teleponIcon,
         prefixText: '+62 ',
         prefixStyle: text600Dark,
@@ -279,6 +300,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
     return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: TextInputType.text,
+      readOnly: _disable,
       validator: (String tempatLahir) {
         if (tempatLahir.isEmpty) {
           return 'Tempat Lahir harus diisi';
@@ -337,6 +359,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: TextInputType.datetime,
           controller: _dateController,
+          readOnly: _disable,
           validator: (String tanggalLahir) {
             if (tanggalLahir.isEmpty) {
               return 'Tanggal Lahir harus diisi';
@@ -395,6 +418,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
       keyboardType: TextInputType.multiline,
       minLines: 2,
       maxLines: 5,
+      readOnly: _disable,
       validator: (String alamat) {
         if (alamat.isEmpty) {
           return 'Alamat harus diisi';
@@ -430,6 +454,422 @@ class _EditProfilFormState extends State<EditProfilForm> {
         filled: true,
         suffixIcon: namaIcon,
         fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKelurahan() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      readOnly: _disable,
+      validator: (String kelurahan) {
+        if (kelurahan.isEmpty) {
+          return 'Kelurahan harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kelurahan) {
+        if (kelurahan.isEmpty) {
+          setState(() {
+            kelurahanIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kelurahanIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kelurahan) {
+        _kelurahan = kelurahan;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kelurahan',
+        labelText: 'Kelurahan',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKecamatan() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      readOnly: _disable,
+      validator: (String kecamatan) {
+        if (kecamatan.isEmpty) {
+          return 'Kecamatan harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kecamatan) {
+        if (kecamatan.isEmpty) {
+          setState(() {
+            kecamatanIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kecamatanIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kecamatan) {
+        _kecamatan = kecamatan;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kecamatan',
+        labelText: 'Kecamatan',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKota() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      readOnly: _disable,
+      validator: (String kota) {
+        if (kota.isEmpty) {
+          return 'Kota / Kabupaten harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (kota) {
+        if (kota.isEmpty) {
+          setState(() {
+            kotaIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            kotaIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String kota) {
+        _kota = kota;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kabupaten / Kota',
+        labelText: 'Kabupaten / Kota',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: alamatIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKodePos() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.number,
+      maxLength: 5,
+      readOnly: _disable,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (String pos) {
+        if (pos.isEmpty) {
+          return 'Kode Pos harus diisi';
+        } else {
+          if (pos.length < 5) {
+            return 'Harus diisi 5 digit Kode Pos';
+          } else {
+            return null;
+          }
+        }
+      },
+      onChanged: (pos) {
+        if (pos.isEmpty) {
+          setState(() {
+            posIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            posIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+        _kodePos = pos;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Kode Pos',
+        labelText: 'Kode Pos',
+        counterText: '',
+        labelStyle: form400Light,
+        filled: true,
+        fillColor: Color(0xffF2F3F7),
+        suffixIcon: ktpIcon,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTempatKerja() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.text,
+      readOnly: _disable,
+      validator: (String tempatLahir) {
+        if (tempatLahir.isEmpty) {
+          return 'Tempat Bekerja harus diisi';
+        } else {
+          return null;
+        }
+      },
+      onChanged: (tempatKerja) {
+        if (tempatKerja.isEmpty) {
+          setState(() {
+            tempatKerjaIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            tempatKerjaIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String tempatKerja) {
+        _tempatKerja = tempatKerja;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'Instansi Tempat Bekerja',
+        labelText: 'Tempat Bekerja',
+        labelStyle: form400Light,
+        filled: true,
+        suffixIcon: tempatLahirIcon,
+        fillColor: Color(0xffF2F3F7),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildKtp() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.number,
+      maxLength: 16,
+      readOnly: _disable,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      validator: (String ktp) {
+        if (ktp.isEmpty) {
+          return 'Nomor KTP harus diisi';
+        } else {
+          if (ktp.length < 16) {
+            return 'Harus diisi 16 digit Nomor KTP';
+          } else {
+            return null;
+          }
+        }
+      },
+      onChanged: (ktp) {
+        if (ktp.isEmpty) {
+          setState(() {
+            ktpIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            ktpIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+        _ktp = ktp;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: '16 Digit Nomor KTP Anda',
+        labelText: 'Nomor KTP',
+        counterText: '',
+        labelStyle: form400Light,
+        filled: true,
+        fillColor: Color(0xffF2F3F7),
+        suffixIcon: ktpIcon,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(width: 0, style: BorderStyle.none),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmail() {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      keyboardType: TextInputType.emailAddress,
+      readOnly: _disable,
+      validator: (String email) {
+        if (email.isEmpty) {
+          return 'Email Harus Diisi';
+        } else {
+          // VALIDATOR EMAIL
+          if (!RegExp(
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+              .hasMatch(email)) {
+            return 'Email Tidak Valid';
+          } else {
+            return null;
+          }
+        }
+      },
+      onChanged: (email) {
+        if (email.isEmpty) {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        }
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(email)) {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.error,
+              color: Colors.red,
+            );
+          });
+        } else {
+          setState(() {
+            emailIcon = new Icon(
+              Icons.check,
+              color: Colors.green,
+            );
+          });
+        }
+      },
+      onSaved: (String email) {
+        _email = email;
+      },
+      style: form200Light,
+      decoration: InputDecoration(
+        hintText: 'emailanda@contoh.com',
+        labelText: 'E-Mail',
+        labelStyle: form400Light,
+        filled: true,
+        fillColor: Color(0xffF2F3F7),
+        suffixIcon: emailIcon,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(
@@ -486,6 +926,10 @@ class _EditProfilFormState extends State<EditProfilForm> {
                 MaterialPageRoute(builder: (context) => Intro()),
               );
             },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.transparent,
+              elevation: 0,
+            ),
             child: Text(
               'logout',
               style: TextStyle(
@@ -535,7 +979,7 @@ class _EditProfilFormState extends State<EditProfilForm> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: _buildNpwp(),
+                        child: _buildTelepon(),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -555,11 +999,39 @@ class _EditProfilFormState extends State<EditProfilForm> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: _buildKataSandi(),
+                        child: _buildKelurahan(),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: _buildTelepon(),
+                        child: _buildKecamatan(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKota(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKodePos(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildTempatKerja(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKtp(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildNpwp(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildEmail(),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: _buildKataSandi(),
                       ),
                     ],
                   ),
@@ -607,25 +1079,53 @@ class _EditProfilFormState extends State<EditProfilForm> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ElevatedButton(
                       onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
+                        if (_disable == true) {
+                          return _disable = !_disable;
                         } else {
-                          _formKey.currentState.save();
-                          print(_namaLengkap);
-                          print(_kataSandi);
-                          print(_npwp);
-                          print(_telepon);
-                          print(_tempatLahir);
-                          print(_tanggalLahir);
-                          print(_alamat);
-
-                          // Buat logout
-                          // DocumentReference docRefToCurUser = FirebaseFirestore
-                          //     .instance
-                          //     .collection("Pengguna")
-                          //     .doc(_userId);
-                          // Buat logout
-
+                          return null;
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(size.width, 60),
+                        primary: Theme.of(context).primaryColor,
+                        onSurface: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'EDIT',
+                        style: buttonTextLight,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_disable == false) {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          } else {
+                            _formKey.currentState.save();
+                            popupWithButton(
+                              context,
+                              "Simpan Data",
+                              "Konfirmasi perubahan Anda yang baru saja dirubah",
+                              MaterialPageRoute(
+                                  builder: (context) => EditProfilForm()),
+                            );
+                            print(_namaLengkap);
+                            print(_kataSandi);
+                            print(_npwp);
+                            print(_telepon);
+                            print(_tempatLahir);
+                            print(_tanggalLahir);
+                            print(_alamat);
+                            _disable = true;
+                          }
+                        } else {
+                          return null;
                         }
                       },
                       style: ElevatedButton.styleFrom(
