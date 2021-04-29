@@ -311,10 +311,10 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
         },
         body: StreamBuilder<QuerySnapshot>(
           stream: units
-              .where("asosiasi", isEqualTo: associationsChoose)
-              .where("kota", isEqualTo: citiesChoose)
-              .where("kecamatan", isEqualTo: districtsChoose)
-              .where("provinsi", isEqualTo: provincesChoose)
+              // .where("asosiasi", isEqualTo: associationsChoose)
+              // .where("kota", isEqualTo: citiesChoose)
+              // .where("kecamatan", isEqualTo: districtsChoose)
+              // .where("provinsi", isEqualTo: provincesChoose)
               .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -373,7 +373,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: CachedNetworkImage(
-                                      imageUrl: doc["gambar"][0],
+                                      imageUrl: doc["Foto"][1],
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Center(
                                         child: CircularProgressIndicator(),
@@ -393,13 +393,13 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       AutoSizeText(
-                                        doc["nama_tempat"],
+                                        doc["Nama Perumahan"],
                                         style: title600Dark,
                                         textAlign: TextAlign.center,
                                         presetFontSizes: [16, 15, 10, 5],
                                       ),
                                       AutoSizeText(
-                                        doc["alamat"],
+                                        doc["Kelurahan"]+', '+doc["Kecamatan"]+', '+doc["Kota"]+', '+doc["Provinsi"],
                                         style: text400Grey,
                                         textAlign: TextAlign.center,
                                         presetFontSizes: [12, 10, 5],
@@ -408,7 +408,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                                         height: 5,
                                       ),
                                       AutoSizeText(
-                                        doc["asosiasi"],
+                                        doc["Asosiasi"] == "" ? doc["Instansi"] : doc["Instansi"]+' ('+doc["Asosiasi"]+')',
                                         style: text400Grey,
                                         textAlign: TextAlign.center,
                                         presetFontSizes: [8, 5],
