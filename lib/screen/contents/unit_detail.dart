@@ -5,6 +5,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:pakasep/screen/contents/filing_status.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 
@@ -18,39 +19,57 @@ class UnitDetail extends StatefulWidget {
 
 class _UnitDetailState extends State<UnitDetail> {
   GoogleMapController _mapControl;
-  String _alamat,
-      _asosiasi,
-      _deskripsi,
+  String _asosiasi,
       _email,
+      _hargaText,
+      _kecamatan,
+      _kelurahan,
+      _kota,
       _namaTempat,
       _perusahaan,
+      _pemasaran,
+      _provinsi,
       _telepon,
-      _ukuran,
       _web;
-  double _bunga, _tenor;
-  int _kamar, _kamarMandi, _unit;
-  List _gambar = [];
+  double _bunga, _lat, _lng, _tenor;
+  int _harga, _kamar, _kamarMandi, _unit, _lt, _lb;
+  List _deskripsi, _gambar = [];
+  var _numberFormat = NumberFormat(",###.##", "id");
+
   @override
   Widget build(BuildContext context) {
     dynamic id = widget.idUnit;
     FirebaseFirestore.instance.collection("Rumah").doc(id).get().then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          _alamat = documentSnapshot.data()["alamat"];
-          _asosiasi = documentSnapshot.data()["asosiasi"];
-          _bunga = documentSnapshot.data()["bunga"];
-          _deskripsi = documentSnapshot.data()["deskripsi"];
-          _email = documentSnapshot.data()["kontak.email"];
-          _gambar = documentSnapshot.data()["gambar"];
-          _kamar = documentSnapshot.data()["kamar"];
-          _kamarMandi = documentSnapshot.data()["kamar_mandi"];
-          _namaTempat = documentSnapshot.data()["nama_tempat"];
-          _perusahaan = documentSnapshot.data()["perusahaan"];
-          _telepon = documentSnapshot.data()["kontak.telepon"];
-          _tenor = documentSnapshot.data()["tenor"] / 12;
-          _ukuran = documentSnapshot.data()["ukuran"];
-          _unit = documentSnapshot.data()["unit"];
-          _web = documentSnapshot.data()["kontak.web"];
+          _asosiasi = documentSnapshot.data()["Asosiasi"];
+          _deskripsi = documentSnapshot.data()["Deskripsi"];
+          _email = documentSnapshot.data()["Email"];
+          _gambar = documentSnapshot.data()["Foto"];
+          _harga = documentSnapshot.data()["Deskripsi"][0]["Harga"];
+          _hargaText = _numberFormat.format(_harga);
+          _kamar = documentSnapshot.data()["Deskripsi"][0]["Kamar Tidur"];
+          _kamarMandi = documentSnapshot.data()["Deskripsi"][0]["Kamar Mandi"];
+          _kecamatan = documentSnapshot.data()["Kecamatan"];
+          _kelurahan = documentSnapshot.data()["Kelurahan"];
+          _kota = documentSnapshot.data()["Kota"];
+          _lat = documentSnapshot.data()["Koordinat"].latitude;
+          _lb = documentSnapshot.data()["Deskripsi"][0]["Luas Bangunan"];
+          _lt = documentSnapshot.data()["Deskripsi"][0]["Luas Lahan"];
+          _lng = documentSnapshot.data()["Koordinat"].longitude;
+          _namaTempat = documentSnapshot.data()["Nama Perumahan"];
+          _perusahaan = documentSnapshot.data()["Instansi"];
+          _pemasaran = documentSnapshot.data()["Alamat Pemasaran"];
+          _provinsi = documentSnapshot.data()["Provinsi"];
+          _telepon = documentSnapshot.data()["Telepon"];
+          _unit = documentSnapshot.data()["Unit Subsidi"];
+          _web = documentSnapshot.data()["Website"];
+          print(_deskripsi.toString());
+          // if (documentSnapshot.data().containsKey("Deskripsi")) {
+
+          // } else {
+          //   print('Document does not exist on the database');
+          // }
         } else {
           print('Document does not exist on the database');
         }
@@ -157,13 +176,13 @@ class _UnitDetailState extends State<UnitDetail> {
                           EdgeInsets.fromLTRB(0, size.height * 0.3 + 9, 0, 0),
                       padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           AutoSizeText.rich(
                             TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'Rp200.000.000,00',
+                                  text: 'Rp$_hargaText',
                                   style: TextStyle(
                                     color: Colors.green,
                                     fontWeight: FontWeight.bold,
@@ -207,7 +226,8 @@ class _UnitDetailState extends State<UnitDetail> {
                                                     style: iconText400Dark,
                                                   ),
                                                   TextSpan(
-                                                    text: '$_tenor Tahun',
+                                                    text: 'Alamat',
+                                                    // text: '$_tenor Tahun',
                                                     style: iconText600Dark,
                                                   ),
                                                 ],
@@ -243,7 +263,8 @@ class _UnitDetailState extends State<UnitDetail> {
                                                     style: iconText400Dark,
                                                   ),
                                                   TextSpan(
-                                                    text: '$_bunga% per Tahun',
+                                                    text: 'Alamat',
+                                                    // text: '$_bunga% per Tahun',
                                                     style: iconText600Dark,
                                                   ),
                                                 ],
@@ -309,7 +330,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                             size: 16,
                                           ),
                                           AutoSizeText(
-                                            '30x60',
+                                            'LB $_lb / LT $_lt',
                                             style: iconText600Dark,
                                             presetFontSizes: [12, 10, 5],
                                           ),
@@ -326,7 +347,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                             size: 16,
                                           ),
                                           AutoSizeText(
-                                            _kamarMandi.toString(),
+                                            '$_kamarMandi',
                                             style: iconText600Dark,
                                             presetFontSizes: [12, 10, 5],
                                           ),
@@ -343,7 +364,7 @@ class _UnitDetailState extends State<UnitDetail> {
                                             size: 16,
                                           ),
                                           AutoSizeText(
-                                            _kamar.toString(),
+                                            '$_kamar',
                                             style: iconText600Dark,
                                             presetFontSizes: [12, 10, 5],
                                           ),
@@ -397,12 +418,43 @@ class _UnitDetailState extends State<UnitDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 child: AutoSizeText.rich(
                   TextSpan(
-                    text: _deskripsi,
+                    text:
+                        '$_namaTempat berlokasi di $_kelurahan, Kec. $_kecamatan, $_kota, $_provinsi menyediakan $_unit unit perumahan subsidi dengan ${_deskripsi.length} tipe perumahan, yaitu:',
                   ),
+                  style: text400Grey,
+                  presetFontSizes: [13, 10, 5],
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 150,
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 0,
+                ),
+                child: ListView.builder(
+                  itemCount: _deskripsi.length,
+                  itemBuilder: (context, index) {
+                    return AutoSizeText.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text:
+                                'Tipe ke-${index + 1} yaitu ${_deskripsi[index]["Tipe Rumah"]} dengan luas bangunan ${_deskripsi[index]["Luas Bangunan"]}m persegi dan luas lahan ${_deskripsi[index]["Luas Lahan"]}m persegi dijual dengan harga sekitar Rp${_numberFormat.format(_deskripsi[index]["Harga"])}. Menggunakan ${_deskripsi[index]["Atap"]} untuk pembuatan atap, spesifikasi dinding ${_deskripsi[index]["Dinding"]}, serta lantai dan pondasi yang dibangun menggunakan ${_deskripsi[index]["Lantai Pondasi"]}. Tipe ${_deskripsi[index]["Tipe Rumah"]} ini dilengkapi dengan ${_deskripsi[index]["Kamar Tidur"]} kamar tidur dan ${_deskripsi[index]["Kamar Mandi"]} kamar mandi.\n',
+                          ),
+                        ],
+                      ),
+                      style: text400Grey,
+                      presetFontSizes: [13, 10, 5],
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -422,7 +474,7 @@ class _UnitDetailState extends State<UnitDetail> {
                       child: Container(
                         child: GoogleMap(
                           myLocationEnabled: true,
-                          myLocationButtonEnabled: true,
+                          myLocationButtonEnabled: false,
                           mapType: MapType.normal,
                           onMapCreated: (GoogleMapController controller) {
                             _mapControl = controller;
@@ -434,6 +486,15 @@ class _UnitDetailState extends State<UnitDetail> {
                           ),
                           // markers: Set<Marker>.of(markers.values),
                         ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: AutoSizeText(
+                        '$_kelurahan, $_kecamatan, $_kota, $_provinsi',
+                        presetFontSizes: [12, 10, 5],
+                        style: text400Grey,
+                        textAlign: TextAlign.center,
                       ),
                     )
                   ],
@@ -452,28 +513,30 @@ class _UnitDetailState extends State<UnitDetail> {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: '$_perusahaan\n$_asosiasi',
+                        text: _asosiasi == ""
+                            ? '$_perusahaan'
+                            : '$_perusahaan\n$_asosiasi',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       TextSpan(
-                        text: '\nKANTOR PEMASARAN',
+                        text: '\n\nKANTOR PEMASARAN',
                         style: TextStyle(
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                       TextSpan(
-                        text: '\n$_alamat',
+                        text: _pemasaran == "" ? '' : '\n$_pemasaran',
                       ),
                       TextSpan(
-                        text: '\n$_telepon',
+                        text: _telepon == "" ? '' : '\n+62$_telepon',
                       ),
                       TextSpan(
-                        text: '\n$_email',
+                        text: _email == "" ? '' : '\n$_email',
                       ),
                       TextSpan(
-                        text: '\n$_web',
+                        text: _web == "" ? '' : '\n$_web',
                       ),
                     ],
                   ),
