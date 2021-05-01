@@ -9,13 +9,13 @@ import 'package:pakasep/utility/typhography.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
+  String userID, userName, userKTP;
   @override
-  Home({Key key}) : super(key: key);
+  Home({Key key, this.userID, this.userKTP, this.userName}) : super(key: key);
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String _userID, _userName, _userKTP;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
           return <Widget>[
             SliverAppBar(
               toolbarHeight:
-                  _userID == null ? size.height * 0.15 : size.height * 0.3,
+                  widget.userID == null ? size.height * 0.15 : size.height * 0.3,
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               floating: true,
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                     // ),
                     GestureDetector(
                       onTap: () {
-                        _userID == null
+                        widget.userID == null
                             ? print('No Data')
                             : Navigator.push(
                                 context,
@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             width: 20,
                           ),
-                          _userID == null
+                          widget.userID == null
                               ? Container(
                                   width: 0,
                                   height: 0,
@@ -85,13 +85,13 @@ class _HomeState extends State<Home> {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       AutoSizeText(
-                                        _userName,
+                                        widget.userName,
                                         style: name500Dark,
                                         // maxLines: 1,
                                         presetFontSizes: [22, 20, 15, 10, 5],
                                       ),
                                       AutoSizeText(
-                                        _userKTP,
+                                        widget.userKTP,
                                         style: subName400Dark,
                                         presetFontSizes: [14, 10, 5],
                                       ),
@@ -99,43 +99,6 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: size.width * 0.1),
-                      margin: EdgeInsets.symmetric(vertical: 15),
-                      child: TextField(
-                        onChanged: (value) {},
-                        textInputAction: TextInputAction.search,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xffF2F3F7),
-                          hintText: 'Cari',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(32),
-                            borderSide: BorderSide.none,
-                          ),
-                          contentPadding: EdgeInsets.only(left: 25),
-                          suffixIcon: Container(
-                            width: 32,
-                            height: 32,
-                            margin: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
-                              shape: BoxShape.circle,
-                            ),
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.search_rounded,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                // showSearch(context: context, delegate: DataSearch());
-                              },
-                            ),
-                          ),
-                        ),
                       ),
                     ),
                   ],
@@ -246,18 +209,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _getUserData() async {
-    _userID = FirebaseAuth.instance.currentUser.uid;
-    await _firestore.collection("Pengguna").doc(_userID).get().then((value) {
-      _userName = value.data()["Nama Lengkap"];
-      _userKTP = value.data()["KTP"];
-    });
-  }
-
   @override
   void initState() {
-    _getUserData();
     super.initState();
-    _getUserData();
   }
 }
