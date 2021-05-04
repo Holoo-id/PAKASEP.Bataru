@@ -1114,9 +1114,14 @@ class _RegisterFormState extends State<RegisterForm> {
                               print(_npwp);
                               print(_telepon);
                               print(_alamat);
+                              print(_kelurahan);
+                              print(_kecamatan);
+                              print(_kota);
+                              print(_kodePos);
                               print(_tanggalLahir);
                               print(_tempatLahir);
                               print(_email);
+                              print(_tempatKerja);
                               CollectionReference _searchUser =
                                   _firestore.collection("Pengguna");
                               QuerySnapshot _userHavingSameKTP =
@@ -1149,8 +1154,13 @@ class _RegisterFormState extends State<RegisterForm> {
                                   "Email": _email.trim(),
                                   "Telepon": _telepon.trim(),
                                   "Alamat": _alamat.trim(),
+                                  "Kelurahan": _kelurahan.trim(),
+                                  "Kecamatan": _kecamatan.trim(),
+                                  "Kota": _kota.trim(),
+                                  "Kode Pos": _kodePos.trim(),
                                   "Tempat Lahir": _tempatLahir.trim(),
-                                  "Tanggal Lahir": _tanggalLahir.trim()
+                                  "Tanggal Lahir": _tanggalLahir.trim(),
+                                  "Tempat Kerja": _tempatKerja.trim()
                                 };
                                 return Navigator.push(
                                   context,

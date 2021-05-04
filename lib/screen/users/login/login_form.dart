@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
 import 'package:pakasep/screen/components/background.dart';
+import 'package:pakasep/screen/home.dart';
 import 'package:pakasep/screen/users/register/register_form.dart';
 import 'package:pakasep/utility/typhography.dart';
 import 'package:pakasep/screen/users/register/already_registered.dart';
@@ -108,11 +109,17 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   _loginProcess({String email, String password}) async {
+    String _userID, _userName, _userKTP;
     await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
+    _userID = FirebaseAuth.instance.currentUser.uid;
+    await _firestore.collection("Pengguna").doc(_userID).get().then((value) {
+      _userName = value.data()["Nama Lengkap"];
+      _userKTP = value.data()["KTP"];
+    });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => AlreadyRegistered()),
+      MaterialPageRoute(builder: (context) => Home(userID: _userID,userKTP: _userKTP,userName: _userName,)),
     );
   }
 
