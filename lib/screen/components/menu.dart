@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pakasep/screen/contents/all_available_units.dart';
 import 'package:pakasep/screen/contents/filing_requirements.dart';
+import 'package:pakasep/screen/contents/find_units.dart';
 import 'package:pakasep/screen/contents/kpr_calc_simulations.dart';
 import 'package:pakasep/utility/typhography.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -81,12 +83,14 @@ class _MenuHomeState extends State<MenuHome> {
         scrollDirection: Axis.vertical,
         children: <Widget>[
           GestureDetector(
-            onTap: () => showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return _buildContructionAlert(context);
-              },
-            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AllAvailableUnits(),
+                ),
+              );
+            },
             child: GridTile(
               child: Container(
                 padding: EdgeInsets.all(10),
@@ -122,12 +126,14 @@ class _MenuHomeState extends State<MenuHome> {
             ),
           ),
           GestureDetector(
-            onTap: () => showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return _buildContructionAlert(context);
-              },
-            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FindUnits(),
+                ),
+              );
+            },
             child: GridTile(
               child: Container(
                 padding: EdgeInsets.all(10),

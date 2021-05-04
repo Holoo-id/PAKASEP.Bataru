@@ -35,10 +35,25 @@ class _UnitDetailState extends State<UnitDetail> {
   int _harga, _kamar, _kamarMandi, _unit, _lt, _lb;
   List _deskripsi, _gambar = [];
   var _numberFormat = NumberFormat(",###.##", "id");
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     dynamic id = widget.idUnit;
+
+    createMarker() {
+      return <Marker>[
+        Marker(
+          markerId: MarkerId(id),
+          position: LatLng(_lat, _lng),
+          icon: BitmapDescriptor.defaultMarker,
+        )
+      ].toSet();
+    }
+
     FirebaseFirestore.instance.collection("Rumah").doc(id).get().then(
       (DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
@@ -65,11 +80,6 @@ class _UnitDetailState extends State<UnitDetail> {
           _unit = documentSnapshot.data()["Unit Subsidi"];
           _web = documentSnapshot.data()["Website"];
           print(_deskripsi.toString());
-          // if (documentSnapshot.data().containsKey("Deskripsi")) {
-
-          // } else {
-          //   print('Document does not exist on the database');
-          // }
         } else {
           print('Document does not exist on the database');
         }
@@ -143,7 +153,6 @@ class _UnitDetailState extends State<UnitDetail> {
                         );
                       }).toList(),
                       onImageTap: (index) {
-                        // var image_id = index + 1;
                         return showDialog(
                           context: context,
                           builder: (context) {
@@ -254,7 +263,6 @@ class _UnitDetailState extends State<UnitDetail> {
                                         Flexible(
                                           child: FractionallySizedBox(
                                             widthFactor: 1,
-                                            // heightFactor: 1,
                                             child: AutoSizeText.rich(
                                               TextSpan(
                                                 children: <TextSpan>[
@@ -480,11 +488,10 @@ class _UnitDetailState extends State<UnitDetail> {
                             _mapControl = controller;
                           },
                           initialCameraPosition: CameraPosition(
-                            zoom: 10,
-                            // target: LatLng(_lat, _lng),
-                            target: LatLng(0, 0),
+                            zoom: 15,
+                            target: LatLng(_lat, _lng),
                           ),
-                          // markers: Set<Marker>.of(markers.values),
+                          markers: createMarker(),
                         ),
                       ),
                     ),

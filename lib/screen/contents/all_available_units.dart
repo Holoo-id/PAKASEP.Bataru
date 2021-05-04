@@ -30,7 +30,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
     "Ciamis",
     "Cimahi",
     "Depok",
-    "Sumedang",
+    "Kab. Ciamis",
   ];
   List districtsItem = [
     "Cimahi Selatan",
@@ -38,12 +38,7 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
     "Cimahi Utara",
   ];
   List provincesItem = [
-    "Banten",
-    "DKI Jakarta",
-    "DIY Yogyakarta",
     "Jawa Barat",
-    "Jawa Tengah",
-    "Jawa Timur",
   ];
   @override
   void initState() {
@@ -241,10 +236,8 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                   : Container(height: 0, width: 0),
               centerTitle: true,
               flexibleSpace: Container(
-                // margin: EdgeInsets.only(top: 50),
                 width: size.width,
                 height: size.height * 0.315,
-                // height: 400,
                 color: Colors.white,
                 child: WaveBackground(
                   child: Padding(
@@ -324,7 +317,6 @@ class _AllAvailableUnitsState extends State<AllAvailableUnits> {
                 child: CircularProgressIndicator(),
               );
             }
-            print(provincesChoose);
             switch (snapshot.connectionState) {
               case ConnectionState.none:
                 print('No Data');

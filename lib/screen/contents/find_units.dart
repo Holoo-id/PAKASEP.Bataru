@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pakasep/screen/components/back_only_appbar.dart';
+import 'package:pakasep/screen/contents/unit_detail.dart';
 
 class FindUnits extends StatefulWidget {
   // Position current;
@@ -32,33 +33,43 @@ class _FindUnitsState extends State<FindUnits> {
     });
   }
 
-  void myMarker(specify, specifyId) async {
+  getMarkerData() {
+    FirebaseFirestore.instance.collection("Rumah").get().then((dataRumah) {
+      if (dataRumah.docs.isNotEmpty) {
+        print(dataRumah.toString());
+        for (var i = 0; i < dataRumah.docs.length; i++) {
+          myMarker(dataRumah.docs[i].data(), dataRumah.docs[i].id);
+        }
+      }
+    });
+  }
+
+  void myMarker(specify, specifyId) {
     var _markValue = specifyId;
     final MarkerId _markId = MarkerId(_markValue);
     final Marker marker = Marker(
       markerId: _markId,
-      icon: BitmapDescriptor.defaultMarkerWithHue(
-        BitmapDescriptor.hueRed,
-      ),
+      icon: BitmapDescriptor.defaultMarker,
       position:
-          LatLng(specify['geolokasi'].latitude, specify['geolokasi'].longitude),
+          LatLng(specify["Koordinat"].latitude, specify["Koordinat"].longitude),
       infoWindow: InfoWindow(
-        title: specify["nama_tempat"],
-        snippet: 'Ini Jaraknya',
+        title: specify["Nama Perumahan"],
+        snippet: specify["Alamat Pemasaran"],
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UnitDetail(
+                idUnit: specifyId,
+              ),
+            ),
+          );
+        },
       ),
     );
     setState(() {
+      print(_markId);
       markers[_markId] = marker;
-    });
-  }
-
-  getMarkerData() async {
-    FirebaseFirestore.instance.collection('Rumah').get().then((dataRumah) {
-      if (dataRumah.docs.isNotEmpty) {
-        for (var i = 0; i < dataRumah.docs.length; i++) {
-          myMarker(dataRumah.docs[i].data, dataRumah.docs[i].id);
-        }
-      }
     });
   }
 
@@ -69,8 +80,8 @@ class _FindUnitsState extends State<FindUnits> {
 
   @override
   void initState() {
-    _getUserLocation();
     getMarkerData();
+    _getUserLocation();
     _setMarkerIcon();
     super.initState();
   }
@@ -83,13 +94,13 @@ class _FindUnitsState extends State<FindUnits> {
         width: MediaQuery.of(context).size.width,
         child: GoogleMap(
           myLocationEnabled: true,
-          myLocationButtonEnabled: true,
+          myLocationButtonEnabled: false,
           mapType: MapType.normal,
           onMapCreated: (GoogleMapController controller) {
             _mapControl = controller;
           },
           initialCameraPosition: CameraPosition(
-            zoom: 25,
+            zoom: 20,
             target: LatLng(_lat, _lng),
           ),
           markers: Set<Marker>.of(markers.values),
@@ -102,6 +113,7 @@ class _FindUnitsState extends State<FindUnits> {
         children: <Widget>[
           _buildGoogleMap(),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               BackOnlyAppbar(
                 child: null,
